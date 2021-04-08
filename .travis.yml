@@ -1,0 +1,30 @@
+sudo:
+  false
+
+language:
+  node_js
+
+node_js:
+  - 10
+  - 12
+
+script:
+  - npm run test
+  - npm run build
+
+after_script:
+  - npm run coveralls
+
+jobs:
+  include:
+    - stage: release
+      if: tag IS present
+      node_js: 12
+      deploy:
+        provider: npm
+        email: eskarev@gmail.com
+        skip_cleanup: true
+        on:
+          tags: true
+        api_key:
+          secure: J/dZ8NA3yxVOgl9u1hEku2KuMpxI9isMDZ1/0RH+Av5NtIYoufJynmY2wFuE25hh28/8vxFDNRbMjZHjWvmqwYfOve0u6yMGptAqvXWeHFFTKk1UR0OPKd59rVyz/thnJuaoIwARrQMhl3oqUrryFe5Bz1ieuVQLzp+9tQDpMVRd+uLxWsVwofcoGXTuuaLeHfUKb/L6TSsvEnOC7O79b/jvW6Is+jq+cfk7ZqmGiY/occMxqoy4Ktz34Jwi/Hru9tIVlGY1C9itkNXn7TrC1crm7MtmCkrvFqXEMFqJB5NTTAPlIMbccRV9eGtjLBcxV5oEkZ1mtTeyZVU36vGxtk0JBDjxA3WYrbyGqVYGimjxGzojK0ft3xRjawa8b3YqM3owGWUGkTefSnFB/xMjrzwiGul19tjZXbQW+GAALC1iWCuOs6M4swWjI5k8emQejFwizVJHi7CzFQ+U4pXbGMuSQCMPKwCr+FTUnVALsmbobTxcAxnH+85lL/NLfvvxLuPIREr8Lu7BabTsL+R06Y0lFy+SaGDxIDPdwZlBnGtR0kXaLnVorB9/kA0Nd/QxvkNuTxw9wIaFSzWQJZ7MlOtwmD8u1tgsLhEPWJf4DImA/UQKJFJwuO0kgdBE4TbzLaa0lWGF6739YVJjXAyssd68gQr0qGIjPTjkSFNzibE=

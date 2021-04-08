@@ -1,0 +1,44 @@
+{
+  "error-count": 2,
+  "preset": "table",
+  "table-count": 1,
+  "tables": [
+    {
+      "encoding": "utf-8",
+      "error-count": 2,
+      "errors": [
+        {
+          "code": "blank-header",
+          "column-number": 5,
+          "message": "Header in column 5 is blank",
+          "message-data": {}
+        },
+        {
+          "code": "duplicate-row",
+          "message": "Row 6 is duplicated to row(s) 2",
+          "message-data": {
+            "row_numbers": "2"
+          },
+          "row-number": 6
+        }
+      ],
+      "format": "csv",
+      "headers": [
+        "col1",
+        "col2",
+        "col3",
+        "col4",
+        ""
+      ],
+      "row-count": 8,
+      "schema": "table-schema",
+      "scheme": "s3",
+      "source": "test_errors.csv",
+      "time": 0.044,
+      "valid": false
+    }
+  ],
+  "time": 0.102,
+  "valid": false,
+  "warnings": null
+}
