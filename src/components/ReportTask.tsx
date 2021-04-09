@@ -2,50 +2,50 @@ import React from 'react'
 import classNames from 'classnames'
 import defaultSpec from '../spec.json'
 import { ErrorGroup } from './ErrorGroup'
-import { getTableErrorGroups, removeBaseUrl, splitFilePath } from '../helpers'
-import { ISpec, IReportTable } from '../common'
+import { getTaskErrorGroups, removeBaseUrl, splitFilePath } from '../helpers'
+import { ISpec, IReportTask } from '../common'
 
-export interface ITableProps {
-  table: IReportTable
-  tableNumber: number
-  tablesCount: number
+export interface IReportTaskProps {
+  task: IReportTask
+  taskNumber: number
+  tasksCount: number
   spec?: ISpec
   skipHeaderIndex?: boolean
 }
 
-export function Table(props: ITableProps) {
-  const { table, tableNumber, tablesCount, spec, skipHeaderIndex } = props
-  const tableFile = removeBaseUrl(table.source)
-  const splitTableFile = splitFilePath(tableFile)
-  const errorGroups = getTableErrorGroups(table)
+export function ReportTask(props: IReportTaskProps) {
+  const { task, taskNumber, tasksCount, spec, skipHeaderIndex } = props
+  const taskFile = removeBaseUrl(task.source)
+  const splitTableFile = splitFilePath(taskFile)
+  const errorGroups = getTaskErrorGroups(task)
   return (
-    <div className={classNames({ file: true, valid: table.valid, invalid: !table.valid })}>
+    <div className={classNames({ file: true, valid: task.valid, invalid: !task.valid })}>
       {/* Heading */}
       <h4 className="file-heading">
         <div className="inner">
-          <a className="file-name" href={table.source}>
+          <a className="file-name" href={task.source}>
             <strong>{splitTableFile.base}</strong>
             <strong>{splitTableFile.sep}</strong>
             <strong>{splitTableFile.name}</strong>
-            {!table.valid && (
+            {!task.valid && (
               <span
                 className="badge"
                 data-toggle="tooltip"
                 data-placement="right"
-                title={`${table['error-count']} errors found for this table`}
+                title={`${task['error-count']} errors found for this task`}
               >
-                {table['error-count']}
+                {task['error-count']}
               </span>
             )}
           </a>
           <span className="file-count">
-            Table {tableNumber} of {tablesCount}
+            Table {taskNumber} of {tasksCount}
           </span>
         </div>
       </h4>
 
       {/* Valid message */}
-      {table.valid && (
+      {task.valid && (
         <ul className="passed-tests result">
           <li>
             <span className="badge badge-success">Valid Table</span>

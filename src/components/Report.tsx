@@ -5,7 +5,7 @@ import profileSpec from '../profiles/spec.json'
 import profileReport from '../profiles/report.json'
 import { removeBaseUrl } from '../helpers'
 import { IReport, ISpec } from '../common'
-import { Table } from './Table'
+import { ReportTask } from './ReportTask'
 
 export interface IReportProps {
   report: IReport
@@ -58,7 +58,7 @@ export function Report(props: IReportProps) {
 
   // Valid report/spec
   const processedWarnings = getProcessedWarnings(report)
-  const tables = getTables(report)
+  const tasks = getTasks(report)
   return (
     <div className="frictionless-ui-report">
       {/* Warnings */}
@@ -81,13 +81,13 @@ export function Report(props: IReportProps) {
         </div>
       )}
 
-      {/* Tables */}
-      {tables.map((table, index) => (
-        <Table
-          key={table.source}
-          table={table}
-          tableNumber={index + 1}
-          tablesCount={tables.length}
+      {/* Tasks */}
+      {tasks.map((task, index) => (
+        <ReportTask
+          key={task.source}
+          task={task}
+          taskNumber={index + 1}
+          tasksCount={tasks.length}
           spec={spec || defaultSpec}
           skipHeaderIndex={skipHeaderIndex}
         />
@@ -111,7 +111,7 @@ function getProcessedWarnings(report: IReport) {
   return (report.warnings || []).map((warning) => removeBaseUrl(warning))
 }
 
-function getTables(report: IReport) {
+function getTasks(report: IReport) {
   return [
     ...report.tables.filter((table) => !table.valid),
     ...report.tables.filter((table) => table.valid),

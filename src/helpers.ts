@@ -1,10 +1,10 @@
-import { IReportTable, IErrorGroup } from './common'
+import { IReportTask, IErrorGroup } from './common'
 
 // General
 
-export function getTableErrorGroups(table: IReportTable) {
+export function getTaskErrorGroups(task: IReportTask) {
   const groups: { [code: string]: IErrorGroup } = {}
-  for (const error of table.errors) {
+  for (const error of task.errors) {
     // Get group
     let group = groups[error.code]
 
@@ -14,7 +14,7 @@ export function getTableErrorGroups(table: IReportTable) {
         code: error.code,
         rows: {},
         count: 0,
-        headers: table.headers,
+        headers: task.headers,
         messages: [],
       }
     }
@@ -26,7 +26,7 @@ export function getTableErrorGroups(table: IReportTable) {
     if (!row) {
       let values = error.row || []
       if (!error['row-number']) {
-        values = table.headers || []
+        values = task.headers || []
       }
       row = {
         values,

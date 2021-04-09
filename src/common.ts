@@ -22,12 +22,12 @@ export interface IReport {
   valid: boolean
   preset: string
   warnings: string[]
-  tables: IReportTable[]
+  tables: IReportTask[]
   'error-count': number
   'table-count': number
 }
 
-export interface IReportTable {
+export interface IReportTask {
   time: number
   valid: boolean
   source: string
@@ -36,13 +36,13 @@ export interface IReportTable {
   encoding?: string
   schema?: string
   headers: string[]
-  errors: IReportTableError[]
+  errors: IReportTaskError[]
   'error-count': number
   'row-count': number
 }
 
 // TODO: for now, there is a mix undefined/null between frictionless@1/2 (in profiles also)
-export interface IReportTableError {
+export interface IReportTaskError {
   code: string
   message: string
   'row-number'?: number | null
