@@ -3,7 +3,7 @@ import '@testing-library/jest-dom/extend-expect'
 import { render, screen } from '@testing-library/react'
 import { getTaskErrorGroups } from '../../src/helpers'
 import { ErrorGroup } from '../../src/components/ErrorGroup'
-import * as report from '../fixtures/report.json'
+import * as report from '../../data/report-test.json'
 
 // Tests
 
