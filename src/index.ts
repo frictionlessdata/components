@@ -1,8 +1,16 @@
-import { render } from './render'
-import { Report } from './components/Report'
-import spec from './spec.json'
+// Legacy
+
+import * as spec from './spec.json'
+export { spec }
+
+// Styles
+
 require('./styles/base.css')
 
-// TODO: consider droping this duplication for v3
-export default { render, Report, spec }
-export { render, Report, spec }
+// Modules
+
+export * from './components/ErrorGroup'
+export * from './components/MessageGroup'
+export * from './components/Report'
+export * from './components/ReportTask'
+export * from './render'

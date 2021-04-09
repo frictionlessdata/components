@@ -1,8 +1,10 @@
 const jestConfig = {
-  roots: ['src'],
   preset: 'ts-jest',
   displayName: 'jsdom',
+  testMatch: ['**/test/**/*.ts(x)'],
+  testPathIgnorePatterns: ['/node_modules/', 'setup.ts'],
   testEnvironment: 'jsdom',
+  testTimeout: 10000,
   collectCoverage: false,
   coverageReporters: ['text-summary', 'html', 'lcov'],
   coverageThreshold: {

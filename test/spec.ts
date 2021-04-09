@@ -1,5 +1,5 @@
 import fetch from 'node-fetch'
-import spec from '../spec.json'
+import spec from '../src/'
 
 // Tests
 

@@ -1,9 +1,9 @@
 import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
 import { render, screen } from '@testing-library/react'
-import { getTaskErrorGroups } from '../../helpers'
-import { ErrorGroup } from '../ErrorGroup'
-import report from './fixtures/report.json'
+import { getTaskErrorGroups } from '../../src/helpers'
+import { ErrorGroup } from '../../src/components/ErrorGroup'
+import * as report from '../fixtures/report.json'
 
 // Tests
 

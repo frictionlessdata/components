@@ -1,7 +1,7 @@
 import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
 import { render, screen } from '@testing-library/react'
-import { MessageGroup } from '../MessageGroup'
+import { MessageGroup } from '../../src/components/MessageGroup'
 
 // Tests
 
