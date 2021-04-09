@@ -10,7 +10,6 @@ require('./styles/base.css')
 // Modules
 
 export * from './components/ErrorGroup'
-export * from './components/MessageGroup'
 export * from './components/Report'
 export * from './components/ReportTask'
 export * from './render'
