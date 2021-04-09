@@ -4,15 +4,15 @@ import hexToRgba from 'hex-to-rgba'
 import React, { useState } from 'react'
 import startCase from 'lodash/startCase'
 import defaultSpec from '../spec.json'
-import { ISpec, ISpecError, IErrorGroup } from '../common'
+import { ISpec, ISpecError, IReportError } from '../common'
 
-export interface IErrorGroupProps {
-  errorGroup: IErrorGroup
+export interface IReportErrorProps {
+  errorGroup: IReportError
   spec?: ISpec
   skipHeaderIndex?: boolean
 }
 
-export function ErrorGroup(props: IErrorGroupProps) {
+export function ReportError(props: IReportErrorProps) {
   const { errorGroup, spec, skipHeaderIndex } = props
   const [isDetailsVisible, setIsDetailsVisible] = useState(false)
   const [visibleRowsCount, setVisibleRowsCount] = useState(10)
@@ -76,7 +76,7 @@ export function ErrorGroup(props: IErrorGroupProps) {
       {!['source-error'].includes(errorGroup.code) && (
         <div className="table-view">
           <div className="inner">
-            <ErrorGroupTable
+            <ReportErrorTable
               specError={specError}
               errorGroup={errorGroup}
               visibleRowsCount={visibleRowsCount}
@@ -98,9 +98,9 @@ export function ErrorGroup(props: IErrorGroupProps) {
   )
 }
 
-function ErrorGroupTable(props: {
+function ReportErrorTable(props: {
   specError: ISpecError
-  errorGroup: IErrorGroup
+  errorGroup: IReportError
   visibleRowsCount: number
   rowNumbers: number[]
   isHeadersVisible: boolean
@@ -168,7 +168,7 @@ function ErrorGroupTable(props: {
 
 // Helpers
 
-function getSpecError(errorGroup: IErrorGroup, spec: ISpec) {
+function getSpecError(errorGroup: IReportError, spec: ISpec) {
   // Get code handling legacy codes
   let code = errorGroup.code
   if (code === 'non-castable-value') {
@@ -208,7 +208,7 @@ function getDescription(specError: ISpecError) {
   return description
 }
 
-function getRowNumbers(errorGroup: IErrorGroup) {
+function getRowNumbers(errorGroup: IReportError) {
   return Object.keys(errorGroup.rows)
     .map((item) => parseInt(item, 10))
     .sort((a, b) => a - b)

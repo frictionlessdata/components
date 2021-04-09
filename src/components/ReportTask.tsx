@@ -1,8 +1,8 @@
 import React from 'react'
 import classNames from 'classnames'
 import defaultSpec from '../spec.json'
-import { ErrorGroup } from './ErrorGroup'
-import { getTaskErrorGroups, removeBaseUrl, splitFilePath } from '../helpers'
+import { ReportError } from './ReportError'
+import { getTaskReportErrors, removeBaseUrl, splitFilePath } from '../helpers'
 import { ISpec, IReportTask } from '../common'
 
 export interface IReportTaskProps {
@@ -17,7 +17,7 @@ export function ReportTask(props: IReportTaskProps) {
   const { task, taskNumber, tasksCount, spec, skipHeaderIndex } = props
   const taskFile = removeBaseUrl(task.source)
   const splitTableFile = splitFilePath(taskFile)
-  const errorGroups = getTaskErrorGroups(task)
+  const errorGroups = getTaskReportErrors(task)
   return (
     <div className={classNames({ file: true, valid: task.valid, invalid: !task.valid })}>
       {/* Heading */}
@@ -55,7 +55,7 @@ export function ReportTask(props: IReportTaskProps) {
 
       {/* Error groups */}
       {Object.values(errorGroups).map((errorGroup) => (
-        <ErrorGroup
+        <ReportError
           key={errorGroup.code}
           errorGroup={errorGroup}
           spec={spec || defaultSpec}

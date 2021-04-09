@@ -1,9 +1,9 @@
-import { IReportTask, IErrorGroup } from './common'
+import { IReportTask, IReportError } from './common'
 
 // General
 
-export function getTaskErrorGroups(task: IReportTask) {
-  const groups: { [code: string]: IErrorGroup } = {}
+export function getTaskReportErrors(task: IReportTask) {
+  const groups: { [code: string]: IReportError } = {}
   for (const error of task.errors) {
     // Get group
     let group = groups[error.code]

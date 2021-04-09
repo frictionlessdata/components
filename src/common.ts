@@ -50,17 +50,17 @@ export interface IReportTaskError {
   row?: any[] | null
 }
 
-// ErrorGroup
+// ReportError
 
-export interface IErrorGroup {
+export interface IReportError {
   code: string
   count: number
   headers: string[]
   messages: string[]
-  rows: { [rowNumber: number]: IErrorGroupRow }
+  rows: { [rowNumber: number]: IReportErrorRow }
 }
 
-export interface IErrorGroupRow {
+export interface IReportErrorRow {
   values: any[]
   badcols: Set<number>
 }
