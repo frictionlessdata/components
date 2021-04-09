@@ -26,6 +26,7 @@
     "e2e": "cypress run",
     "format": "prettier --write 'src/**/*.ts*' && eslint --fix 'src/**/*.ts*'",
     "lint": "prettier --check 'src/**/*.ts*' && eslint 'src/**/*.ts*'",
+    "prepare": "husky install",
     "pretest": "npm run lint",
     "readme": "doctoc --maxlevel 3 README.md",
     "test": "jest --coverage",
