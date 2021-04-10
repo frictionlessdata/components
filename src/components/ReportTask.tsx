@@ -1,29 +1,27 @@
 import React from 'react'
 import classNames from 'classnames'
-import defaultSpec from '../spec.json'
 import { ReportError } from './ReportError'
-import { getTaskReportErrors, removeBaseUrl, splitFilePath } from '../helpers'
-import { ISpec, IReportTask } from '../common'
+import { IReportTask } from '../report'
+import * as helpers from '../helpers'
 
 export interface IReportTaskProps {
   task: IReportTask
   taskNumber: number
   tasksCount: number
-  spec?: ISpec
   skipHeaderIndex?: boolean
 }
 
 export function ReportTask(props: IReportTaskProps) {
-  const { task, taskNumber, tasksCount, spec, skipHeaderIndex } = props
-  const taskFile = removeBaseUrl(task.source)
-  const splitTableFile = splitFilePath(taskFile)
-  const errorGroups = getTaskReportErrors(task)
+  const { task, taskNumber, tasksCount, skipHeaderIndex } = props
+  const taskFile = helpers.removeBaseUrl(task.resource.path)
+  const splitTableFile = helpers.splitFilePath(taskFile)
+  const reportErrors = getReportErrors(task)
   return (
     <div className={classNames({ file: true, valid: task.valid, invalid: !task.valid })}>
       {/* Heading */}
       <h4 className="file-heading">
         <div className="inner">
-          <a className="file-name" href={task.source}>
+          <a className="file-name" href={task.resource.path}>
             <strong>{splitTableFile.base}</strong>
             <strong>{splitTableFile.sep}</strong>
             <strong>{splitTableFile.name}</strong>
@@ -32,9 +30,9 @@ export function ReportTask(props: IReportTaskProps) {
                 className="badge"
                 data-toggle="tooltip"
                 data-placement="right"
-                title={`${task['error-count']} errors found for this task`}
+                title={`${task.stats.errors} errors found for this task`}
               >
-                {task['error-count']}
+                {task.stats.errors}
               </span>
             )}
           </a>
@@ -54,14 +52,68 @@ export function ReportTask(props: IReportTaskProps) {
       )}
 
       {/* Error groups */}
-      {Object.values(errorGroups).map((errorGroup) => (
+      {Object.values(reportErrors).map((reportError) => (
         <ReportError
-          key={errorGroup.code}
-          errorGroup={errorGroup}
-          spec={spec || defaultSpec}
+          key={reportError.code}
+          reportError={reportError}
           skipHeaderIndex={skipHeaderIndex}
         />
       ))}
     </div>
   )
+}
+
+// Helpers
+
+export function getReportErrors(task: IReportTask) {
+  const groups: { [code: string]: IReportError } = {}
+  for (const error of task.errors) {
+    // Get group
+    let group = groups[error.code]
+
+    // Create group
+    if (!group) {
+      group = {
+        code: error.code,
+        rows: {},
+        count: 0,
+        headers: task.headers,
+        messages: [],
+      }
+    }
+
+    // Get row
+    let row = group.rows[error['row-number'] || 0]
+
+    // Create row
+    if (!row) {
+      let values = error.row || []
+      if (!error['row-number']) {
+        values = task.headers || []
+      }
+      row = {
+        values,
+        badcols: new Set(),
+      }
+    }
+
+    // Ensure missing value
+    if (error.code === 'missing-value') {
+      row.values[error['column-number']! - 1] = ''
+    }
+
+    // Add row badcols
+    if (error['column-number']) {
+      row.badcols.add(error['column-number'])
+    } else if (row.values) {
+      row.badcols = new Set(row.values.map((_value, index) => index + 1))
+    }
+
+    // Save group
+    group.count += 1
+    group.messages.push(error.message)
+    group.rows[error['row-number'] || 0] = row
+    groups[error.code] = group
+  }
+  return groups
 }
