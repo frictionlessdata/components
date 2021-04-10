@@ -7,24 +7,24 @@ import defaultSpec from '../spec.json'
 import { ISpec, ISpecError, IReportError } from '../common'
 
 export interface IReportErrorProps {
-  errorGroup: IReportError
+  reportError: IReportError
   spec?: ISpec
   skipHeaderIndex?: boolean
 }
 
 export function ReportError(props: IReportErrorProps) {
-  const { errorGroup, spec, skipHeaderIndex } = props
+  const { reportError, spec, skipHeaderIndex } = props
   const [isDetailsVisible, setIsDetailsVisible] = useState(false)
   const [visibleRowsCount, setVisibleRowsCount] = useState(10)
-  const specError = getSpecError(errorGroup, spec || defaultSpec)
+  const specError = getSpecError(reportError, spec || defaultSpec)
   const isHeadersVisible = getIsHeadersVisible(specError)
   const description = getDescription(specError)
-  const rowNumbers = getRowNumbers(errorGroup)
+  const rowNumbers = getRowNumbers(reportError)
   return (
     <div className="result">
       {/* Heading */}
       <div className="d-flex align-items-center">
-        <span className="count">{errorGroup.count} x</span>
+        <span className="count">{reportError.count} x</span>
         <a
           role="button"
           className={classNames({
@@ -64,7 +64,7 @@ export function ReportError(props: IReportErrorProps) {
                 backgroundColor: getRgbaColor(specError, 0.05),
               }}
             >
-              {errorGroup.messages.map((message, index) => (
+              {reportError.messages.map((message, index) => (
                 <li key={index}>{message}</li>
               ))}
             </ul>
@@ -73,12 +73,12 @@ export function ReportError(props: IReportErrorProps) {
       </div>
 
       {/* Table view */}
-      {!['source-error'].includes(errorGroup.code) && (
+      {!['source-error'].includes(reportError.code) && (
         <div className="table-view">
           <div className="inner">
             <ReportErrorTable
               specError={specError}
-              errorGroup={errorGroup}
+              reportError={reportError}
               visibleRowsCount={visibleRowsCount}
               rowNumbers={rowNumbers}
               isHeadersVisible={isHeadersVisible}
@@ -100,7 +100,7 @@ export function ReportError(props: IReportErrorProps) {
 
 function ReportErrorTable(props: {
   specError: ISpecError
-  errorGroup: IReportError
+  reportError: IReportError
   visibleRowsCount: number
   rowNumbers: number[]
   isHeadersVisible: boolean
@@ -108,7 +108,7 @@ function ReportErrorTable(props: {
 }) {
   const {
     specError,
-    errorGroup,
+    reportError,
     visibleRowsCount,
     rowNumbers,
     isHeadersVisible,
@@ -125,10 +125,10 @@ function ReportErrorTable(props: {
   return (
     <table className="table table-sm">
       <tbody>
-        {errorGroup.headers && isHeadersVisible && (
+        {reportError.headers && isHeadersVisible && (
           <tr className="before-fail">
             <td className="text-center">{skipHeaderIndex ? '' : '1'}</td>
-            {errorGroup.headers.map((header, index) => (
+            {reportError.headers.map((header, index) => (
               <td key={index}>{header}</td>
             ))}
           </tr>
@@ -136,19 +136,19 @@ function ReportErrorTable(props: {
         {rowNumbers.map(
           (rowNumber, index) =>
             index < visibleRowsCount && (
-              <tr key={index} className={classNames({ fail: errorGroup.code.includes('row') })}>
+              <tr key={index} className={classNames({ fail: reportError.code.includes('row') })}>
                 <td
                   style={{ backgroundColor: getRgbaColor(specError, 0.25) }}
                   className="result-row-index"
                 >
                   {rowNumber || (skipHeaderIndex ? '' : 1)}
                 </td>
-                {errorGroup.rows[rowNumber].values.map((value, innerIndex) => (
+                {reportError.rows[rowNumber].values.map((value, innerIndex) => (
                   <td
                     key={innerIndex}
                     style={{ backgroundColor: getRgbaColor(specError, 0.25) }}
                     className={classNames({
-                      fail: errorGroup.rows[rowNumber].badcols.has(innerIndex + 1),
+                      fail: reportError.rows[rowNumber].badcols.has(innerIndex + 1),
                     })}
                   >
                     {value}
@@ -159,7 +159,7 @@ function ReportErrorTable(props: {
         )}
         <tr className="after-fail">
           <td className="result-row-index">{afterFailRowNumber}</td>
-          {errorGroup.headers && errorGroup.headers.map((_header, index) => <td key={index} />)}
+          {reportError.headers && reportError.headers.map((_header, index) => <td key={index} />)}
         </tr>
       </tbody>
     </table>
@@ -168,9 +168,9 @@ function ReportErrorTable(props: {
 
 // Helpers
 
-function getSpecError(errorGroup: IReportError, spec: ISpec) {
+function getSpecError(reportError: IReportError, spec: ISpec) {
   // Get code handling legacy codes
-  let code = errorGroup.code
+  let code = reportError.code
   if (code === 'non-castable-value') {
     code = 'type-or-format-error'
   }
@@ -208,8 +208,8 @@ function getDescription(specError: ISpecError) {
   return description
 }
 
-function getRowNumbers(errorGroup: IReportError) {
-  return Object.keys(errorGroup.rows)
+function getRowNumbers(reportError: IReportError) {
+  return Object.keys(reportError.rows)
     .map((item) => parseInt(item, 10))
     .sort((a, b) => a - b)
 }

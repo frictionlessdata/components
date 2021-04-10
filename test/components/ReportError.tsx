@@ -8,6 +8,6 @@ import * as report from '../../data/report-test.json'
 // Tests
 
 it('should render', () => {
-  render(<ReportError errorGroup={getTaskReportErrors(report.tables[0])['blank-header']} />)
+  render(<ReportError reportError={getTaskReportErrors(report.tables[0])['blank-header']} />)
   expect(screen.getByRole('button')).toHaveTextContent('Blank Header')
 })
