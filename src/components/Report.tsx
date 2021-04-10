@@ -1,23 +1,19 @@
 import React from 'react'
-import { validate } from 'jsonschema'
-import defaultSpec from '../spec.json'
-import profileSpec from '../profiles/spec.json'
-import profileReport from '../profiles/report.json'
-import { removeBaseUrl } from '../helpers'
-import { IReport, ISpec } from '../common'
+import jsonschema from 'jsonschema'
+import profile from '../profiles/report.json'
 import { ReportTask } from './ReportTask'
+import { IReport } from '../report'
 
 export interface IReportProps {
   report: IReport
-  spec?: ISpec
   skipHeaderIndex?: boolean
 }
 
 export function Report(props: IReportProps) {
-  const { report, spec, skipHeaderIndex = false } = props
+  const { report, skipHeaderIndex } = props
 
-  // Invalid report
-  const reportValidation = validateReport(report)
+  // Broken report
+  const reportValidation = jsonschema.validate(report, profile)
   if (!reportValidation.valid) {
     return (
       <div className="frictionless-ui-report">
@@ -36,45 +32,24 @@ export function Report(props: IReportProps) {
     )
   }
 
-  // Invalid spec
-  const specValidation = validateSpec(spec || defaultSpec)
-  if (!specValidation.valid) {
-    return (
-      <div className="frictionless-ui-report">
-        <h5>
-          <strong>Invalid spec</strong>
-        </h5>
-        <hr />
-        <div style={{ whiteSpace: 'pre', fontFamily: 'courier' }}>
-          {JSON.stringify(specValidation.errors, null, 2)}
-        </div>
-        <hr />
-        <div style={{ whiteSpace: 'pre', fontFamily: 'courier' }}>
-          {JSON.stringify(spec, null, 2)}
-        </div>
-      </div>
-    )
-  }
-
-  // Valid report/spec
-  const processedWarnings = getProcessedWarnings(report)
-  const tasks = getTasks(report)
+  // Normal report
+  const tasks = getSortedTasks(report)
   return (
     <div className="frictionless-ui-report">
-      {/* Warnings */}
-      {!!processedWarnings.length && (
-        <div className="file warning">
+      {/* Errors */}
+      {!!report.errors.length && (
+        <div className="file error">
           <h4 className="file-heading">
             <div className="inner">
               <a className="file-name">
-                <strong>Warnings</strong>
+                <strong>Errors</strong>
               </a>
             </div>
           </h4>
           <ul className="passed-tests result">
-            {processedWarnings.map((warning, index) => (
+            {report.errors.map((error, index) => (
               <li key={index}>
-                <span className="badge badge-warning">{warning}</span>
+                <span className="badge badge-error">{error.message}</span>
               </li>
             ))}
           </ul>
@@ -84,11 +59,10 @@ export function Report(props: IReportProps) {
       {/* Tasks */}
       {tasks.map((task, index) => (
         <ReportTask
-          key={task.source}
+          key={index}
           task={task}
           taskNumber={index + 1}
           tasksCount={tasks.length}
-          spec={spec || defaultSpec}
           skipHeaderIndex={skipHeaderIndex}
         />
       ))}
@@ -98,22 +72,9 @@ export function Report(props: IReportProps) {
 
 // Helpers
 
-function validateReport(report: IReport) {
-  return validate(report, profileReport)
-}
-
-function validateSpec(spec: ISpec) {
-  return validate(spec, profileSpec)
-}
-
-function getProcessedWarnings(report: IReport) {
-  // Before `frictionless@1.0` there was no warnings property
-  return (report.warnings || []).map((warning) => removeBaseUrl(warning))
-}
-
-function getTasks(report: IReport) {
+function getSortedTasks(report: IReport) {
   return [
-    ...report.tables.filter((table) => !table.valid),
-    ...report.tables.filter((table) => table.valid),
+    ...report.tasks.filter((task) => !task.valid),
+    ...report.tasks.filter((task) => task.valid),
   ]
 }

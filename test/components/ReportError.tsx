@@ -3,7 +3,7 @@ import '@testing-library/jest-dom/extend-expect'
 import { render, screen } from '@testing-library/react'
 import { getTaskReportErrors } from '../../src/helpers'
 import { ReportError } from '../../src/components/ReportError'
-import * as report from '../../data/report-test.json'
+import report from '../../data/report-test.json'
 
 // Tests
 

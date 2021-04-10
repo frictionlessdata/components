@@ -1,10 +1,12 @@
+import { IError } from './error'
+
 export interface IReport {
   version: string
   time: number
   valid: boolean
   stats: object
   preset: string
-  errors: object[]
+  errors: IError[]
   tasks: IReportTask[]
 }
 
