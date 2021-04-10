@@ -7,6 +7,21 @@ import defaultSpec from '../spec.json'
 import { ReportTable } from './ReportTable'
 import { ISpec, ISpecError, IReportError } from '../common'
 
+// ReportError
+
+export interface IReportError {
+  code: string
+  count: number
+  headers: string[]
+  messages: string[]
+  rows: { [rowNumber: number]: IReportErrorRow }
+}
+
+export interface IReportErrorRow {
+  values: any[]
+  badcols: Set<number>
+}
+
 export interface IReportErrorProps {
   reportError: IReportError
   spec?: ISpec

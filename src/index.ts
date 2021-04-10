@@ -1,8 +1,3 @@
-// Legacy
-
-import * as spec from './spec.json'
-export { spec }
-
 // Styles
 
 require('./styles/base.css')
