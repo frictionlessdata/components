@@ -1,40 +1,29 @@
 import React from 'react'
 import classNames from 'classnames'
-import hexToRgba from 'hex-to-rgba'
-import { ISpecError, IReportError } from '../common'
+import { IReportError } from '../report'
 
 export type IReportTableProps = {
   reportError: IReportError
   visibleRowsCount: number
   rowNumbers: number[]
-  skipHeaderIndex?: boolean
 }
 
 export function ReportTable(props: IReportTableProps) {
-  const {
-    specError,
-    reportError,
-    visibleRowsCount,
-    rowNumbers,
-    isHeadersVisible,
-    skipHeaderIndex,
-  } = props
+  const { reportError, visibleRowsCount, rowNumbers } = props
   let afterFailRowNumber = 1
   if (rowNumbers[rowNumbers.length - 1]) {
     afterFailRowNumber = rowNumbers[rowNumbers.length - 1] + 1
-  } else if (skipHeaderIndex) {
-    afterFailRowNumber = 1
   } else {
     afterFailRowNumber = 2
   }
   return (
     <table className="table table-sm">
       <tbody>
-        {reportError.headers && isHeadersVisible && (
+        {reportError.header && (
           <tr className="before-fail">
-            <td className="text-center">{skipHeaderIndex ? '' : '1'}</td>
-            {reportError.headers.map((header, index) => (
-              <td key={index}>{header}</td>
+            <td className="text-center">1</td>
+            {reportError.header.map((label, index) => (
+              <td key={index}>{label}</td>
             ))}
           </tr>
         )}
@@ -42,21 +31,15 @@ export function ReportTable(props: IReportTableProps) {
           (rowNumber, index) =>
             index < visibleRowsCount && (
               <tr key={index} className={classNames({ fail: reportError.code.includes('row') })}>
-                <td
-                  style={{ backgroundColor: getRgbaColor(specError, 0.25) }}
-                  className="result-row-index"
-                >
-                  {rowNumber || (skipHeaderIndex ? '' : 1)}
-                </td>
-                {reportError.rows[rowNumber].values.map((value, innerIndex) => (
+                <td className="result-row-index">{rowNumber || 1}</td>
+                {reportError.data[rowNumber].cells.map((cell, innerIndex) => (
                   <td
                     key={innerIndex}
-                    style={{ backgroundColor: getRgbaColor(specError, 0.25) }}
                     className={classNames({
-                      fail: reportError.rows[rowNumber].badcols.has(innerIndex + 1),
+                      fail: reportError.data[rowNumber].errors.has(innerIndex + 1),
                     })}
                   >
-                    {value}
+                    {cell}
                   </td>
                 ))}
               </tr>
@@ -64,15 +47,9 @@ export function ReportTable(props: IReportTableProps) {
         )}
         <tr className="after-fail">
           <td className="result-row-index">{afterFailRowNumber}</td>
-          {reportError.headers && reportError.headers.map((_header, index) => <td key={index} />)}
+          {reportError.header && reportError.header.map((_, index) => <td key={index} />)}
         </tr>
       </tbody>
     </table>
   )
-}
-
-// Helpers
-
-function getRgbaColor(specError: ISpecError, alpha: number = 1) {
-  return specError.hexColor ? hexToRgba(specError.hexColor, alpha) : undefined
 }

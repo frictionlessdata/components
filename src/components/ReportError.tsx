@@ -8,11 +8,10 @@ import { IReportError } from '../report'
 
 export interface IReportErrorProps {
   reportError: IReportError
-  skipHeaderIndex?: boolean
 }
 
 export function ReportError(props: IReportErrorProps) {
-  const { reportError, skipHeaderIndex } = props
+  const { reportError } = props
   const [isDetailsVisible, setIsDetailsVisible] = useState(false)
   const [visibleRowsCount, setVisibleRowsCount] = useState(10)
   const rowNumbers = getRowNumbers(reportError)
@@ -63,7 +62,6 @@ export function ReportError(props: IReportErrorProps) {
               reportError={reportError}
               visibleRowsCount={visibleRowsCount}
               rowNumbers={rowNumbers}
-              skipHeaderIndex={skipHeaderIndex}
             />
           </div>
         </div>

@@ -6,11 +6,10 @@ import { IReport } from '../report'
 
 export interface IReportProps {
   report: IReport
-  skipHeaderIndex?: boolean
 }
 
 export function Report(props: IReportProps) {
-  const { report, skipHeaderIndex } = props
+  const { report } = props
 
   // Broken report
   const reportValidation = jsonschema.validate(report, profile)
@@ -58,13 +57,7 @@ export function Report(props: IReportProps) {
 
       {/* Tasks */}
       {tasks.map((task, index) => (
-        <ReportTask
-          key={index}
-          task={task}
-          taskNumber={index + 1}
-          tasksCount={tasks.length}
-          skipHeaderIndex={skipHeaderIndex}
-        />
+        <ReportTask key={index} task={task} taskNumber={index + 1} tasksCount={tasks.length} />
       ))}
     </div>
   )

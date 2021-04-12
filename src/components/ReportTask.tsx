@@ -8,11 +8,10 @@ export interface IReportTaskProps {
   task: IReportTask
   taskNumber: number
   tasksCount: number
-  skipHeaderIndex?: boolean
 }
 
 export function ReportTask(props: IReportTaskProps) {
-  const { task, taskNumber, tasksCount, skipHeaderIndex } = props
+  const { task, taskNumber, tasksCount } = props
   const taskFile = helpers.removeBaseUrl(task.resource.path)
   const splitTableFile = helpers.splitFilePath(taskFile)
   const reportErrors = getReportErrors(task)
@@ -53,11 +52,7 @@ export function ReportTask(props: IReportTaskProps) {
 
       {/* Error groups */}
       {Object.values(reportErrors).map((reportError) => (
-        <ReportError
-          key={reportError.code}
-          reportError={reportError}
-          skipHeaderIndex={skipHeaderIndex}
-        />
+        <ReportError key={reportError.code} reportError={reportError} />
       ))}
     </div>
   )
