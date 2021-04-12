@@ -13,10 +13,8 @@ const webpackConfig = {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
     filename: 'frictionless-ui.js',
-    library: {
-      name: 'frictionlessUI',
-      type: 'umd',
-    },
+    library: 'frictionlessUI',
+    libraryTarget: 'umd',
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
