@@ -13,8 +13,10 @@ const webpackConfig = {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
     filename: 'frictionless-ui.js',
-    library: 'frictionlessUI',
-    libraryTarget: 'umd',
+    library: {
+      name: 'frictionlessUI',
+      type: 'umd',
+    },
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
@@ -83,7 +85,7 @@ if (NODE_ENV === 'testing') {
 if (NODE_ENV === 'production') {
   webpackConfig.mode = 'production'
   webpackConfig.output.filename = 'frictionless-ui.min.js'
-  webpackConfig.devtool = '#source-map'
+  webpackConfig.devtool = 'source-map'
   webpackConfig.plugins = [
     ...webpackConfig.plugins,
     new ExtractCssPlugin({ filename: 'frictionless-ui.min.css' }),

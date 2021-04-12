@@ -15,10 +15,7 @@
       fetch('data/report.json').then(res => {
         res.json().then(report => {
           const element = document.getElementById('app')
-          const spec = frictionlessUI.spec
-          spec.errors['blank-header'].description = 'New description'
-          spec.errors['duplicate-row'].hexColor = '0700fd'
-          frictionlessUI.render(frictionlessUI.Report, {report, spec}, element)
+          frictionlessUI.render(frictionlessUI.Report, {report}, element)
         })
       })
     </script>

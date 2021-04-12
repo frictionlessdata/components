@@ -19,7 +19,7 @@
   "scripts": {
     "analyze": "NODE_ENV=production webpack --profile --json | webpack-bundle-size-analyzer",
     "build": "npm run compile && npm run bundle",
-    "bundle": "webpack --output-pathinfo --progress --hide-modules && NODE_ENV=production webpack --progress --hide-modules",
+    "bundle": "webpack --output-pathinfo --progress && NODE_ENV=production webpack --progress",
     "compile": "rm -rf lib && tsc && cp -r src/images lib && cp -r src/styles lib",
     "coveralls": "cat ./coverage/lcov.info | coveralls",
     "start": "webpack serve --inline --hot --open",
