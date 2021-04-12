@@ -74,8 +74,10 @@ export function getReportErrors(task: IReportTask) {
     let reportError = reportErrors[error.code]
     if (!reportError) {
       reportError = {
-        code: error.code,
         count: 0,
+        code: error.code,
+        name: error.name,
+        description: error.description,
         header,
         messages: [],
         data: {},

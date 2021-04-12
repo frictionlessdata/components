@@ -22,8 +22,10 @@ export interface IReportTask {
 }
 
 export interface IReportError {
-  code: string
   count: number
+  code: string
+  name: string
+  description: string
   messages: string[]
   header: string[]
   data: {

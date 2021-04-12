@@ -4,11 +4,9 @@ import hexToRgba from 'hex-to-rgba'
 import { ISpecError, IReportError } from '../common'
 
 export type IReportTableProps = {
-  specError: ISpecError
   reportError: IReportError
   visibleRowsCount: number
   rowNumbers: number[]
-  isHeadersVisible: boolean
   skipHeaderIndex?: boolean
 }
 

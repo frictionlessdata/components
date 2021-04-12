@@ -1,9 +1,6 @@
 import marked from 'marked'
 import classNames from 'classnames'
-import hexToRgba from 'hex-to-rgba'
 import React, { useState } from 'react'
-import startCase from 'lodash/startCase'
-import defaultSpec from '../spec.json'
 import { ReportTable } from './ReportTable'
 import { IReportError } from '../report'
 
@@ -15,12 +12,9 @@ export interface IReportErrorProps {
 }
 
 export function ReportError(props: IReportErrorProps) {
-  const { reportError, spec, skipHeaderIndex } = props
+  const { reportError, skipHeaderIndex } = props
   const [isDetailsVisible, setIsDetailsVisible] = useState(false)
   const [visibleRowsCount, setVisibleRowsCount] = useState(10)
-  const specError = getSpecError(reportError, spec || defaultSpec)
-  const isHeadersVisible = getIsHeadersVisible(specError)
-  const description = getDescription(specError)
   const rowNumbers = getRowNumbers(reportError)
   return (
     <div className="result">
@@ -37,35 +31,22 @@ export function ReportError(props: IReportErrorProps) {
           data-toggle="collapse"
           onClick={() => setIsDetailsVisible(!isDetailsVisible)}
           aria-expanded="false"
-          style={{ backgroundColor: getRgbaColor(specError) }}
         >
-          {specError.name}
+          {reportError.name}
         </a>
       </div>
 
       {/* Error details */}
       <div className={classNames(['collapse', { show: isDetailsVisible }])}>
-        <div className="error-details" style={{ borderColor: getRgbaColor(specError) }}>
-          {description && (
+        <div className="error-details">
+          {reportError.description && (
             <div className="error-description">
-              <div dangerouslySetInnerHTML={{ __html: description }} />
+              <div dangerouslySetInnerHTML={{ __html: marked(reportError.description) }} />
             </div>
           )}
-          <div className="error-list" style={{ borderTopColor: getRgbaColor(specError) }}>
-            <p
-              className="error-list-heading"
-              style={{
-                backgroundColor: getRgbaColor(specError, 0.1),
-                borderBottomColor: getRgbaColor(specError, 0.25),
-              }}
-            >
-              The full list of error messages:
-            </p>
-            <ul
-              style={{
-                backgroundColor: getRgbaColor(specError, 0.05),
-              }}
-            >
+          <div className="error-list">
+            <p className="error-list-heading">The full list of error messages:</p>
+            <ul>
               {reportError.messages.map((message, index) => (
                 <li key={index}>{message}</li>
               ))}
@@ -79,11 +60,9 @@ export function ReportError(props: IReportErrorProps) {
         <div className="table-view">
           <div className="inner">
             <ReportTable
-              specError={specError}
               reportError={reportError}
               visibleRowsCount={visibleRowsCount}
               rowNumbers={rowNumbers}
-              isHeadersVisible={isHeadersVisible}
               skipHeaderIndex={skipHeaderIndex}
             />
           </div>
@@ -102,48 +81,8 @@ export function ReportError(props: IReportErrorProps) {
 
 // Helpers
 
-function getSpecError(reportError: IReportError, spec: ISpec) {
-  // Get code handling legacy codes
-  let code = reportError.code
-  if (code === 'non-castable-value') {
-    code = 'type-or-format-error'
-  }
-
-  // Get details handling custom errors
-  let details = spec.errors[code]
-  if (!details) {
-    details = {
-      name: startCase(code),
-      type: 'custom',
-      context: 'body',
-      message: 'custom',
-      description: '',
-      weight: 0,
-    }
-  }
-
-  return details
-}
-
-function getRgbaColor(specError: ISpecError, alpha: number = 1) {
-  return specError.hexColor ? hexToRgba(specError.hexColor, alpha) : undefined
-}
-
-function getIsHeadersVisible(specError: ISpecError) {
-  return specError.context === 'body'
-}
-
-function getDescription(specError: ISpecError) {
-  let description = specError.description
-  if (description) {
-    description = description.replace('{validator}', '`frictionless.yml`')
-    description = marked(description)
-  }
-  return description
-}
-
 function getRowNumbers(reportError: IReportError) {
-  return Object.keys(reportError.rows)
+  return Object.keys(reportError.data)
     .map((item) => parseInt(item, 10))
     .sort((a, b) => a - b)
 }
