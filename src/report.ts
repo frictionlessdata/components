@@ -18,5 +18,18 @@ export interface IReportTask {
   scope: string[]
   partial: boolean
   stats: { errors: number }
-  errors: object[]
+  errors: IError[]
+}
+
+export interface IReportError {
+  code: string
+  count: number
+  messages: string[]
+  header: string[]
+  data: {
+    [rowNumber: number]: {
+      cells: any[]
+      errors: Set<number>
+    }
+  }
 }

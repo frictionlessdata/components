@@ -1,7 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import { ReportError } from './ReportError'
-import { IReportTask } from '../report'
+import { IReportTask, IReportError } from '../report'
 import * as helpers from '../helpers'
 
 export interface IReportTaskProps {
@@ -66,54 +66,48 @@ export function ReportTask(props: IReportTaskProps) {
 // Helpers
 
 export function getReportErrors(task: IReportTask) {
-  const groups: { [code: string]: IReportError } = {}
+  const reportErrors: { [code: string]: IReportError } = {}
   for (const error of task.errors) {
-    // Get group
-    let group = groups[error.code]
+    const header = task.resource.schema.fields.map((field) => field.name)
 
-    // Create group
-    if (!group) {
-      group = {
+    // Prepare reportError
+    let reportError = reportErrors[error.code]
+    if (!reportError) {
+      reportError = {
         code: error.code,
-        rows: {},
         count: 0,
-        headers: task.headers,
+        header,
         messages: [],
+        data: {},
       }
     }
 
-    // Get row
-    let row = group.rows[error['row-number'] || 0]
-
-    // Create row
-    if (!row) {
-      let values = error.row || []
-      if (!error['row-number']) {
-        values = task.headers || []
-      }
-      row = {
-        values,
-        badcols: new Set(),
-      }
+    // Prepare cells
+    let data = reportError.data[error.rowNumber || 0]
+    if (!data) {
+      let cells = error.cells || []
+      if (!error.rowNumber) cells = header || []
+      data = { cells, errors: new Set() }
     }
 
     // Ensure missing value
     if (error.code === 'missing-value') {
-      row.values[error['column-number']! - 1] = ''
+      data.cells[error.columnNumber - 1] = ''
     }
 
-    // Add row badcols
-    if (error['column-number']) {
-      row.badcols.add(error['column-number'])
-    } else if (row.values) {
-      row.badcols = new Set(row.values.map((_value, index) => index + 1))
+    // Add row errors
+    if (error.columnNumber) {
+      data.errors.add(error.columnNumber)
+    } else if (data.cells) {
+      data.errors = new Set(data.cells.map((_, index) => index + 1))
     }
 
-    // Save group
-    group.count += 1
-    group.messages.push(error.message)
-    group.rows[error['row-number'] || 0] = row
-    groups[error.code] = group
+    // Save reportError
+    reportError.count += 1
+    reportError.messages.push(error.message)
+    reportError.data[error.rowNumber || 0] = data
+    reportErrors[error.code] = reportError
   }
-  return groups
+
+  return reportErrors
 }

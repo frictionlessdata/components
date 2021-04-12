@@ -5,26 +5,12 @@ import React, { useState } from 'react'
 import startCase from 'lodash/startCase'
 import defaultSpec from '../spec.json'
 import { ReportTable } from './ReportTable'
-import { ISpec, ISpecError, IReportError } from '../common'
+import { IReportError } from '../report'
 
 // ReportError
 
-export interface IReportError {
-  code: string
-  count: number
-  headers: string[]
-  messages: string[]
-  rows: { [rowNumber: number]: IReportErrorRow }
-}
-
-export interface IReportErrorRow {
-  values: any[]
-  badcols: Set<number>
-}
-
 export interface IReportErrorProps {
   reportError: IReportError
-  spec?: ISpec
   skipHeaderIndex?: boolean
 }
 
