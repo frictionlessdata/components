@@ -74,21 +74,20 @@ export function getReportErrors(task: IReportTask) {
     // Prepare cells
     let data = reportError.data[error.rowPosition || 0]
     if (!data) {
-      let cells = error.cells || []
-      if (!error.rowPosition) cells = header || []
-      data = { cells, errors: new Set() }
+      const values = error.cells || error.labels || []
+      data = { values, errors: new Set() }
     }
 
     // Ensure missing value
     if (error.code === 'missing-value') {
-      data.cells[error.fieldPosition - 1] = ''
+      data.values[error.fieldPosition - 1] = ''
     }
 
     // Add row errors
     if (error.fieldPosition) {
       data.errors.add(error.fieldPosition)
-    } else if (data.cells) {
-      data.errors = new Set(data.cells.map((_, index) => index + 1))
+    } else if (data.values) {
+      data.errors = new Set(data.values.map((_, index) => index + 1))
     }
 
     // Save reportError

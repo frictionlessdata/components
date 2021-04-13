@@ -30,7 +30,7 @@ export interface IReportError {
   header: string[]
   data: {
     [rowPosition: number]: {
-      cells: any[]
+      values: any[]
       errors: Set<number>
     }
   }
