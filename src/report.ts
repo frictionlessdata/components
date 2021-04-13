@@ -6,7 +6,6 @@ export interface IReport {
   time: number
   valid: boolean
   stats: { errors: number; tasks: number }
-  preset: string
   errors: IError[]
   tasks: IReportTask[]
 }

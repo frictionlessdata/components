@@ -41,15 +41,6 @@ export function ReportTask(props: IReportTaskProps) {
         </div>
       </h4>
 
-      {/* Valid message */}
-      {task.valid && (
-        <ul className="passed-tests result">
-          <li>
-            <span className="badge badge-success">Valid Table</span>
-          </li>
-        </ul>
-      )}
-
       {/* Error groups */}
       {Object.values(reportErrors).map((reportError) => (
         <ReportError key={reportError.code} reportError={reportError} />
@@ -90,12 +81,12 @@ export function getReportErrors(task: IReportTask) {
 
     // Ensure missing value
     if (error.code === 'missing-value') {
-      data.cells[error.columnPosition - 1] = ''
+      data.cells[error.fieldPosition - 1] = ''
     }
 
     // Add row errors
-    if (error.columnPosition) {
-      data.errors.add(error.columnPosition)
+    if (error.fieldPosition) {
+      data.errors.add(error.fieldPosition)
     } else if (data.cells) {
       data.errors = new Set(data.cells.map((_, index) => index + 1))
     }

@@ -5,7 +5,7 @@ export interface IError {
   message: string
   description: string
   rowPosition: number
-  columnPosition: number
+  fieldPosition: number
   cells: string[]
 }
 
