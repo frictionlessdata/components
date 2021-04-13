@@ -21,10 +21,10 @@ Visual components for the Frictionless Data project in TypeScript/React.
 
 ```typescript
 // npm install frictionless-components
-import frictionlessComponents from 'frictionless-components'
+import frictionless from 'frictionless-components'
 
 const element = document.getElementById('app')
-frictionlessComponents.render(frictionlessComponents.Report, {report}, element)
+frictionless.render(frictionless.Report, {report}, element)
 ```
 
 ## Documentation
