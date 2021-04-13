@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import jsonschema from 'jsonschema'
 import profile from '../profiles/report.json'
 import { ReportTask } from './ReportTask'
@@ -6,10 +6,12 @@ import { IReport } from '../report'
 
 export interface IReportProps {
   report: IReport
+  debug: boolean
 }
 
 export function Report(props: IReportProps) {
-  const { report } = props
+  const { debug } = props
+  const [report, setReport] = useState(props.report)
 
   // Broken report
   const reportValidation = jsonschema.validate(report, profile)
@@ -35,6 +37,15 @@ export function Report(props: IReportProps) {
   const tasks = getSortedTasks(report)
   return (
     <div className="frictionless-ui-report">
+      {/* Form */}
+      {!!debug && (
+        <textarea
+          className="form-control debug"
+          value={JSON.stringify(report, null, 2)}
+          onChange={(ev) => setReport(JSON.parse(ev.target.value))}
+        ></textarea>
+      )}
+
       {/* Errors */}
       {!!report.errors.length && (
         <div className="file error">

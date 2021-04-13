@@ -11,6 +11,10 @@
     background-color: #fff;
 }
 
+.frictionless-ui-report .debug {
+    height: 20em;
+}
+
 .frictionless-ui-report .file-heading {
     font-size: 14px;
     padding-top: 20px;
