@@ -14,7 +14,7 @@ export function ReportError(props: IReportErrorProps) {
   const { reportError } = props
   const [isDetailsVisible, setIsDetailsVisible] = useState(false)
   const [visibleRowsCount, setVisibleRowsCount] = useState(10)
-  const rowNumbers = getRowNumbers(reportError)
+  const rowPositions = getRowPositions(reportError)
   return (
     <div className="result">
       {/* Heading */}
@@ -61,14 +61,14 @@ export function ReportError(props: IReportErrorProps) {
             <ReportTable
               reportError={reportError}
               visibleRowsCount={visibleRowsCount}
-              rowNumbers={rowNumbers}
+              rowPositions={rowPositions}
             />
           </div>
         </div>
       )}
 
       {/* Show more */}
-      {visibleRowsCount < rowNumbers.length && (
+      {visibleRowsCount < rowPositions.length && (
         <a className="show-more" onClick={() => setVisibleRowsCount(visibleRowsCount + 10)}>
           Show more <span className="icon-keyboard_arrow_down" />
         </a>
@@ -79,7 +79,7 @@ export function ReportError(props: IReportErrorProps) {
 
 // Helpers
 
-function getRowNumbers(reportError: IReportError) {
+function getRowPositions(reportError: IReportError) {
   return Object.keys(reportError.data)
     .map((item) => parseInt(item, 10))
     .sort((a, b) => a - b)

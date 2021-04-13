@@ -4,8 +4,8 @@ export interface IError {
   tags: string[]
   message: string
   description: string
-  rowNumber: number
-  columnNumber: number
+  rowPosition: number
+  columnPosition: number
   cells: string[]
 }
 

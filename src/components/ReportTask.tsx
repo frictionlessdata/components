@@ -81,21 +81,21 @@ export function getReportErrors(task: IReportTask) {
     }
 
     // Prepare cells
-    let data = reportError.data[error.rowNumber || 0]
+    let data = reportError.data[error.rowPosition || 0]
     if (!data) {
       let cells = error.cells || []
-      if (!error.rowNumber) cells = header || []
+      if (!error.rowPosition) cells = header || []
       data = { cells, errors: new Set() }
     }
 
     // Ensure missing value
     if (error.code === 'missing-value') {
-      data.cells[error.columnNumber - 1] = ''
+      data.cells[error.columnPosition - 1] = ''
     }
 
     // Add row errors
-    if (error.columnNumber) {
-      data.errors.add(error.columnNumber)
+    if (error.columnPosition) {
+      data.errors.add(error.columnPosition)
     } else if (data.cells) {
       data.errors = new Set(data.cells.map((_, index) => index + 1))
     }
@@ -103,7 +103,7 @@ export function getReportErrors(task: IReportTask) {
     // Save reportError
     reportError.count += 1
     reportError.messages.push(error.message)
-    reportError.data[error.rowNumber || 0] = data
+    reportError.data[error.rowPosition || 0] = data
     reportErrors[error.code] = reportError
   }
 

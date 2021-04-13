@@ -5,17 +5,17 @@ import { IReportError } from '../report'
 export type IReportTableProps = {
   reportError: IReportError
   visibleRowsCount: number
-  rowNumbers: number[]
+  rowPositions: number[]
 }
 
 export function ReportTable(props: IReportTableProps) {
-  const { reportError, visibleRowsCount, rowNumbers } = props
+  const { reportError, visibleRowsCount, rowPositions } = props
   const isHeaderVisible = reportError.tags.includes('#row')
-  let afterFailRowNumber = 1
-  if (rowNumbers[rowNumbers.length - 1]) {
-    afterFailRowNumber = rowNumbers[rowNumbers.length - 1] + 1
+  let afterFailRowPosition = 1
+  if (rowPositions[rowPositions.length - 1]) {
+    afterFailRowPosition = rowPositions[rowPositions.length - 1] + 1
   } else {
-    afterFailRowNumber = 2
+    afterFailRowPosition = 2
   }
   return (
     <table className="table table-sm">
@@ -28,16 +28,16 @@ export function ReportTable(props: IReportTableProps) {
             ))}
           </tr>
         )}
-        {rowNumbers.map(
-          (rowNumber, index) =>
+        {rowPositions.map(
+          (rowPosition, index) =>
             index < visibleRowsCount && (
               <tr key={index} className={classNames({ fail: reportError.code.includes('row') })}>
-                <td className="result-row-index">{rowNumber || 1}</td>
-                {reportError.data[rowNumber].cells.map((cell, innerIndex) => (
+                <td className="result-row-index">{rowPosition || 1}</td>
+                {reportError.data[rowPosition].cells.map((cell, innerIndex) => (
                   <td
                     key={innerIndex}
                     className={classNames({
-                      fail: reportError.data[rowNumber].errors.has(innerIndex + 1),
+                      fail: reportError.data[rowPosition].errors.has(innerIndex + 1),
                     })}
                   >
                     {cell}
@@ -47,7 +47,7 @@ export function ReportTable(props: IReportTableProps) {
             )
         )}
         <tr className="after-fail">
-          <td className="result-row-index">{afterFailRowNumber}</td>
+          <td className="result-row-index">{afterFailRowPosition}</td>
           {reportError.header && reportError.header.map((_, index) => <td key={index} />)}
         </tr>
       </tbody>
