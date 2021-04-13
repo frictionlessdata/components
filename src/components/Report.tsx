@@ -6,7 +6,7 @@ import { IReport } from '../report'
 
 export interface IReportProps {
   report: IReport
-  debug: boolean
+  debug?: boolean
 }
 
 export function Report(props: IReportProps) {
