@@ -46,10 +46,10 @@
 .frictionless-ui-report .file-heading .inner:before {
     content: '';
     position: absolute;
-    top: -10px;
-    bottom: 1px;
-    left: -22.5px;
-    right: -22.5px;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
     background-color: #fff;
     z-index: -1;
     border-bottom: solid 1px #B3B3B3;
@@ -338,8 +338,8 @@
 .frictionless-ui-report .result:not(:last-child):after {
     content: '';
     position: absolute;
-    left: -22.5px;
-    right: -22.5px;
+    left: 0px;
+    right: 0px;
     bottom: 0;
     height: 10px;
     background-image: url(../images/zigzag.svg);
