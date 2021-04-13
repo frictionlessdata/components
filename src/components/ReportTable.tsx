@@ -31,7 +31,7 @@ export function ReportTable(props: IReportTableProps) {
         {rowPositions.map(
           (rowPosition, index) =>
             index < visibleRowsCount && (
-              <tr key={index} className={classNames({ fail: reportError.code.includes('row') })}>
+              <tr key={index}>
                 <td className="result-row-index">{rowPosition || 1}</td>
                 {reportError.data[rowPosition].values.map((value, innerIndex) => (
                   <td

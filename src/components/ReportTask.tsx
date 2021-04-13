@@ -78,8 +78,13 @@ export function getReportErrors(task: IReportTask) {
       data = { values, errors: new Set() }
     }
 
-    // Ensure missing value
-    if (error.code === 'missing-value') {
+    // Ensure blank row
+    if (error.code === 'blank-row') {
+      data.values = header.map(() => '')
+    }
+
+    // Ensure missing cell
+    if (error.code === 'missing-cell') {
       data.values[error.fieldPosition - 1] = ''
     }
 
