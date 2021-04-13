@@ -1,7 +1,10 @@
 # Frictionless Components
 
-[![Travis](https://img.shields.io/travis/frictionlessdata/components/master.svg)](https://travis-ci.org/frictionlessdata/components)
-[![Coveralls](https://coveralls.io/repos/github/frictionlessdata/components/badge.svg?branch=master)](https://coveralls.io/github/frictionlessdata/components?branch=master)
+[![Build](https://img.shields.io/github/workflow/status/frictionlessdata/components/general/main)](https://github.com/frictionlessdata/components/actions)
+[![Coverage](https://img.shields.io/codecov/c/github/frictionlessdata/components/main)](https://codecov.io/gh/frictionlessdata/components)
+[![Registry](https://img.shields.io/npm/v/frictionless-components.svg)](https://www.npmjs.com/package/frictionless-components)
+[![Codebase](https://img.shields.io/badge/github-main-brightgreen)](https://github.com/frictionlessdata/components)
+[![Support](https://img.shields.io/badge/chat-discord-brightgreen)](https://discord.com/channels/695635777199145130/695635777199145133)
 
 Visual components for the Frictionless Data project in TypeScript/React.
 
