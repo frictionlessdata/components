@@ -12,8 +12,8 @@ const webpackConfig = {
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
-    filename: 'frictionless-ui.js',
-    library: 'frictionlessUI',
+    filename: 'frictionless-components.js',
+    library: 'frictionlessComponents',
     libraryTarget: 'umd',
   },
   resolve: {
@@ -63,7 +63,7 @@ if (NODE_ENV === 'development') {
   webpackConfig.devServer = { hot: true }
   webpackConfig.plugins = [
     new webpack.HotModuleReplacementPlugin(),
-    new ExtractCssPlugin({ filename: 'frictionless-ui.css' }),
+    new ExtractCssPlugin({ filename: 'frictionless-components.css' }),
     ...webpackConfig.plugins,
   ]
 }
@@ -73,7 +73,7 @@ if (NODE_ENV === 'development') {
 if (NODE_ENV === 'testing') {
   webpackConfig.mode = 'development'
   webpackConfig.plugins = [
-    new ExtractCssPlugin({ filename: 'frictionless-ui.css' }),
+    new ExtractCssPlugin({ filename: 'frictionless-components.css' }),
     ...webpackConfig.plugins,
   ]
 }
@@ -82,11 +82,11 @@ if (NODE_ENV === 'testing') {
 
 if (NODE_ENV === 'production') {
   webpackConfig.mode = 'production'
-  webpackConfig.output.filename = 'frictionless-ui.min.js'
+  webpackConfig.output.filename = 'frictionless-components.min.js'
   webpackConfig.devtool = 'source-map'
   webpackConfig.plugins = [
     ...webpackConfig.plugins,
-    new ExtractCssPlugin({ filename: 'frictionless-ui.min.css' }),
+    new ExtractCssPlugin({ filename: 'frictionless-components.min.css' }),
     new CompressionPlugin({
       filename: '[path].gz[query]',
       algorithm: 'gzip',

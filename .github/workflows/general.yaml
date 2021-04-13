@@ -13,7 +13,6 @@ on:
 jobs:
 
   # Test
-  # TODO: implement
 
   test:
     runs-on: ubuntu-latest
@@ -24,6 +23,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14
+      - name: Install and test
+        run: |
+          npm install
+          npm test
 
   # Deploy
 
@@ -50,7 +53,6 @@ jobs:
           CLEAN: true
 
   # Release
-  # TODO: implement
 
   release:
     if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
@@ -63,6 +65,14 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 14
+      - name: Install dependencies
+      - run: |
+          npm install
+      - name: Release to NPM
+      - run: |
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Release to GitHub
         uses: softprops/action-gh-release@v1
         env:
