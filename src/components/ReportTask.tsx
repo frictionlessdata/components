@@ -85,7 +85,8 @@ export function getReportErrors(task: IReportTask) {
 
     // Ensure missing cell
     if (error.code === 'missing-cell') {
-      data.values[error.fieldPosition - 1] = ''
+      // TODO: use type system instead of "!"
+      data.values[error.fieldPosition! - 1] = ''
     }
 
     // Add row errors
