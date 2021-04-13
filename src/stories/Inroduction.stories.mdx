@@ -1,10 +1,34 @@
 <Meta title="Frictionless Components" />
 
-# Welcome to Frictionless Components
+# Frictionless Components
 
-Storybook helps you build UI components in isolation from your app's business logic, data, and context.
-That makes it easy to develop hard-to-reach states. Save these UI states as **stories** to revisit during development, testing, or QA.
+[![Build](https://img.shields.io/github/workflow/status/frictionlessdata/components/general/main)](https://github.com/frictionlessdata/components/actions)
+[![Coverage](https://img.shields.io/codecov/c/github/frictionlessdata/components/main)](https://codecov.io/gh/frictionlessdata/components)
+[![Registry](https://img.shields.io/npm/v/frictionless-components.svg)](https://www.npmjs.com/package/frictionless-components)
+[![Codebase](https://img.shields.io/badge/github-main-brightgreen)](https://github.com/frictionlessdata/components)
+[![Support](https://img.shields.io/badge/chat-discord-brightgreen)](https://discord.com/channels/695635777199145130/695635777199145133)
 
-Browse example stories now by navigating to them in the sidebar.
-View their code in the `src/stories` directory to learn how they work.
-We recommend building UIs with a [**component-driven**](https://componentdriven.org) process starting with atomic components and ending with pages.
+Visual components for the Frictionless Data project in TypeScript/React.
+
+## Purpose
+
+- **Visualize Frictionless**: With Frictionless Framework and other Frictionless libraries you can create and edit various metadata structures. Frictionless Components allows to visualize them and provide a user friendly UI to work with them.
+
+## Features
+
+- Open Source (MIT)
+- Reusable React Components
+
+## Example
+
+```typescript
+import frictionlessUI from 'frictionless-ui'
+
+const element = document.getElementById('app')
+frictionlessUI.render(frictionlessUI.Report, {report}, element)
+```
+
+## Documentation
+
+Please visit our documentation portal:
+- https://components.frictionlessdata.io
