@@ -49,5 +49,6 @@ jspm_packages
 # Extra
 lib/
 dist/
+build/
 e2e/videos/
 package-lock.json

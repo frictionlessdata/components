@@ -1,0 +1,69 @@
+name: general
+
+on:
+  push:
+    branches:
+      - main
+    tags:
+      - v*.*.*
+  pull_request:
+    branches:
+      - main
+
+jobs:
+
+  # Test
+  # TODO: implement
+
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+
+  # Deploy
+
+  deploy:
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: Install and build
+        run: |
+          npm install
+          npm run storybook-build
+      - name: Publush to Github Pages
+        uses: JamesIves/github-pages-deploy-action@3.7.1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BRANCH: storybook
+          FOLDER: build
+          CLEAN: true
+
+  # Release
+  # TODO: implement
+
+  release:
+    if: github.event_name == 'push' && contains(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    needs: [test]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Install Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - name: Release to GitHub
+        uses: softprops/action-gh-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
