@@ -66,10 +66,10 @@ jobs:
         with:
           node-version: 14
       - name: Install dependencies
-      - run: |
+        run: |
           npm install
       - name: Release to NPM
-      - run: |
+        run: |
           npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
