@@ -15,7 +15,7 @@
       fetch('data/report.json').then(res => {
         res.json().then(report => {
           const element = document.getElementById('app')
-          frictionlessUI.render(frictionlessUI.Report, {report}, element)
+          frictionlessUI.render(frictionlessUI.ReportDemo, {report}, element)
         })
       })
     </script>

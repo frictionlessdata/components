@@ -36,7 +36,7 @@ export function ReportTask(props: IReportTaskProps) {
             )}
           </a>
           <span className="file-count">
-            Table {taskNumber} of {tasksCount}
+            Task {taskNumber} of {tasksCount}
           </span>
         </div>
       </h4>
