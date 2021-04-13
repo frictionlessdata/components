@@ -25,6 +25,7 @@ export interface IReportError {
   count: number
   code: string
   name: string
+  tags: string[]
   description: string
   messages: string[]
   header: string[]

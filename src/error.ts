@@ -1,6 +1,7 @@
 export interface IError {
   code: string
   name: string
+  tags: string[]
   message: string
   description: string
   rowNumber: number
@@ -8,4 +9,6 @@ export interface IError {
   cells: string[]
 }
 
-export interface ICellError extends IError {}
+export interface IHeaderError extends IError {}
+
+export interface IRowError extends IError {}

@@ -10,6 +10,7 @@ export type IReportTableProps = {
 
 export function ReportTable(props: IReportTableProps) {
   const { reportError, visibleRowsCount, rowNumbers } = props
+  const isHeaderVisible = reportError.tags.includes('#row')
   let afterFailRowNumber = 1
   if (rowNumbers[rowNumbers.length - 1]) {
     afterFailRowNumber = rowNumbers[rowNumbers.length - 1] + 1
@@ -19,7 +20,7 @@ export function ReportTable(props: IReportTableProps) {
   return (
     <table className="table table-sm">
       <tbody>
-        {reportError.header && (
+        {reportError.header && isHeaderVisible && (
           <tr className="before-fail">
             <td className="text-center">1</td>
             {reportError.header.map((label, index) => (

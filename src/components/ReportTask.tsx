@@ -72,6 +72,7 @@ export function getReportErrors(task: IReportTask) {
         count: 0,
         code: error.code,
         name: error.name,
+        tags: error.tags,
         description: error.description,
         header,
         messages: [],
