@@ -1,4 +1,8 @@
-// TODO:  somehow for webpack it only works using require
-const { Report } = require('./components/Report')
-const { render } = require('./render')
-export { Report, render }
+export * from './components/Report'
+export * from './components/ReportError'
+export * from './components/ReportTable'
+export * from './components/ReportTask'
+export * from './error'
+export * from './render'
+export * from './report'
+export * from './resource'
