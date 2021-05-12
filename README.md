@@ -24,9 +24,11 @@ Visual components for the Frictionless Data project in TypeScript/React.
 ```javascript
 // [ NPM ]
 // $ npm install frictionless-components
+// import 'frictionless-components/lib/styles'
 // import frictionlessComponents from 'frictionless-components'
 // [ CDN ]
-// <script src="//unpkg.com/frictionless-components@0.1.6/dist/frictionless-components.js"></script>
+// <link rel="stylesheet" href="//unpkg.com/frictionless-components/dist/frictionless-components.css">
+// <script src="//unpkg.com/frictionless-components/dist/frictionless-components.js"></script>
 
 const element = document.getElementById('app')
 frictionlessComponents.render(frictionlessComponents.Report, {report}, element)

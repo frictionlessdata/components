@@ -1,3 +1,4 @@
+import '../src/styles'
 import React from 'react'
 import { Story, Meta } from '@storybook/react'
 import { Report, IReportProps } from '../src'

@@ -26,7 +26,7 @@ export function Report(props: IReportProps) {
   const reportValidation = jsonschema.validate(report, profile)
   if (!reportValidation.valid) {
     return (
-      <div className="frictionless-ui-report">
+      <div className="frictionless-components-report">
         <h5>
           <strong>Invalid report</strong>
         </h5>
@@ -45,7 +45,7 @@ export function Report(props: IReportProps) {
   // Normal report
   const tasks = getSortedTasks(report)
   return (
-    <div className="frictionless-ui-report">
+    <div className="frictionless-components-report">
       {/* Form */}
       {!!debug && (
         <textarea

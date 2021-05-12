@@ -1,21 +1,12 @@
-/* ReportDemo */
-
-.frictionless-ui-report-demo textarea {
-    margin: 1em 0;
-    height: 20em;
-}
-
-/* Report */
-
-.frictionless-ui-report {
+.frictionless-components-report {
     background-color: #fff;
 }
 
-.frictionless-ui-report .debug {
+.frictionless-components-report .debug {
     height: 20em;
 }
 
-.frictionless-ui-report .file-heading {
+.frictionless-components-report .file-heading {
     font-size: 14px;
     padding-top: 20px;
     padding-bottom: 10px;
@@ -24,11 +15,11 @@
     font-weight: 400;
 }
 
-.frictionless-ui-report .file-heading strong {
+.frictionless-components-report .file-heading strong {
     font-weight: 600;
 }
 
-.frictionless-ui-report .file-heading .inner {
+.frictionless-components-report .file-heading .inner {
     display: table;
     width: 100%;
     position: relative;
@@ -36,18 +27,18 @@
     text-align: right;
 }
 
-.frictionless-ui-report .file-heading .inner.stick {
+.frictionless-components-report .file-heading .inner.stick {
     position: fixed;
     top: 0;
     background-color: #fff;
     z-index: 99;
 }
 
-.frictionless-ui-report .file-heading .inner :first-child {
+.frictionless-components-report .file-heading .inner :first-child {
     text-align: left;
 }
 
-.frictionless-ui-report .file-heading .inner:before {
+.frictionless-components-report .file-heading .inner:before {
     content: '';
     position: absolute;
     top: 0px;
@@ -60,34 +51,34 @@
     border-top: solid 1px #B3B3B3;
 }
 
-.frictionless-ui-report .file-heading .file-count,
-.frictionless-ui-report .file-heading .file-name {
+.frictionless-components-report .file-heading .file-count,
+.frictionless-components-report .file-heading .file-name {
     height: 64px;
     vertical-align: middle;
 }
 
-.frictionless-ui-report .file-heading .file-name {
+.frictionless-components-report .file-heading .file-name {
     display: table-cell;
     color: #333333;
     text-decoration: none;
 }
 
-.frictionless-ui-report .file-heading .file-name:hover {
+.frictionless-components-report .file-heading .file-name:hover {
     color: inherit;
 }
 
-.frictionless-ui-report .file-heading .file-count {
+.frictionless-components-report .file-heading .file-count {
     display: none;
 }
 
 @media screen and (min-width: 768px) {
-    .frictionless-ui-report .file-heading .file-count {
+    .frictionless-components-report .file-heading .file-count {
         display: table-cell;
         color: #aaa;
     }
 }
 
-.frictionless-ui-report .file .badge {
+.frictionless-components-report .file .badge {
     font-size: 10px;
     vertical-align: super;
     margin-left: 0.4em;
@@ -95,59 +86,59 @@
     padding: 0.25em;
 }
 
-.frictionless-ui-report .file.warning .file-heading .inner:before {
+.frictionless-components-report .file.warning .file-heading .inner:before {
     border-bottom-color: #f0ad4e;
 }
 
-.frictionless-ui-report .file.valid .file-heading .inner:before {
+.frictionless-components-report .file.valid .file-heading .inner:before {
     border-top-color: #01CD81;
     border-bottom-color: #01CD81;
 }
 
-.frictionless-ui-report .file.valid .file-heading strong {
+.frictionless-components-report .file.valid .file-heading strong {
     color: #01CD81;
 }
 
-.frictionless-ui-report .file.invalid .file-heading .inner:before {
+.frictionless-components-report .file.invalid .file-heading .inner:before {
     border-top-color: #F13C3F;
     border-bottom-color: #F13C3F;
 }
 
-.frictionless-ui-report .file.invalid .file-heading strong {
+.frictionless-components-report .file.invalid .file-heading strong {
     color: #F13C3F;
 }
 
-.frictionless-ui-report .file.invalid .file-heading .badge {
+.frictionless-components-report .file.invalid .file-heading .badge {
     background-color: #F13C3F;
     border-radius: 8px;
     color: white;
 }
 
-.frictionless-ui-report .result {
+.frictionless-components-report .result {
     margin: 30px 0;
     font-size: 12px;
     position: relative;
 }
 
-.frictionless-ui-report .result .count {
+.frictionless-components-report .result .count {
     font-size: 14px;
     font-weight: 600;
     margin-right: 5px;
 }
 
-.frictionless-ui-report .result .badge {
+.frictionless-components-report .result .badge {
     font-size: 14px;
     margin-right: 10px;
     padding: 4px 8px;
 }
 
-.frictionless-ui-report .result .badge.badge-warning {
+.frictionless-components-report .result .badge.badge-warning {
     text-align: left;
     white-space: normal;
     color: white;
 }
 
-.frictionless-ui-report .result .badge.badge-error {
+.frictionless-components-report .result .badge.badge-error {
     position: relative;
     background-color: #F13C3F;
     cursor: pointer;
@@ -155,37 +146,37 @@
     z-index: 2;
 }
 
-.frictionless-ui-report .result .error-details {
+.frictionless-components-report .result .error-details {
     font-size: 14px;
     border: solid 2px #F13C3F;
     border-radius: 3px;
     margin-top: -2px;
 }
 
-.frictionless-ui-report .result .error-details .error-description {
+.frictionless-components-report .result .error-details .error-description {
     padding: 15px;
 }
 
-.frictionless-ui-report .result .error-details .error-description :last-child {
+.frictionless-components-report .result .error-details .error-description :last-child {
     margin-bottom: 0;
 }
 
-.frictionless-ui-report .result .error-details .error-description + .error-list {
+.frictionless-components-report .result .error-details .error-description + .error-list {
     border-top: solid 1px #F13C3F;
 }
 
-.frictionless-ui-report .result .error-details .error-description + .error-list .error-list-heading {
+.frictionless-components-report .result .error-details .error-description + .error-list .error-list-heading {
     background-color: rgba(253, 231, 232, 0.5);
 }
 
-.frictionless-ui-report .result .error-details .error-list .error-list-heading {
+.frictionless-components-report .result .error-details .error-list .error-list-heading {
     padding: 7.5px 15px;
     margin: 0;
     border-bottom: solid 1px rgba(241, 60, 63, 0.3);
     font-weight: 500;
 }
 
-.frictionless-ui-report .result .error-details .error-list ul {
+.frictionless-components-report .result .error-details .error-list ul {
     max-height: 66vh;
     overflow: auto;
     font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
@@ -195,58 +186,58 @@
     background-color: rgba(253, 231, 232, 0.3);
 }
 
-.frictionless-ui-report .result .error-details .error-list ul li {
+.frictionless-components-report .result .error-details .error-list ul li {
     padding: 5px 15px;
     border-bottom: solid 1px rgba(241, 60, 63, 0.1);
 }
 
-.frictionless-ui-report .result .error-details .error-list ul li:last-child {
+.frictionless-components-report .result .error-details .error-list ul li:last-child {
     border: none;
 }
 
-.frictionless-ui-report .result .table-view {
+.frictionless-components-report .result .table-view {
     position: relative;
 }
 
-.frictionless-ui-report .result .table-view .inner {
+.frictionless-components-report .result .table-view .inner {
     overflow-x: auto;
     padding-top: 15px;
 }
 
-.frictionless-ui-report .result .table-view table {
+.frictionless-components-report .result .table-view table {
     margin: 0;
     color: #595959;
 }
 
-.frictionless-ui-report .result .table-view table tr {
+.frictionless-components-report .result .table-view table tr {
     position: relative;
 }
 
-.frictionless-ui-report .result .table-view table tr :last-child {
+.frictionless-components-report .result .table-view table tr :last-child {
     border-right-width: 1px;
 }
 
-.frictionless-ui-report .result .table-view table tr.fail td {
+.frictionless-components-report .result .table-view table tr.fail td {
     background-color: #fde7e8;
 }
 
-.frictionless-ui-report .result .table-view table tr:first-child {
+.frictionless-components-report .result .table-view table tr:first-child {
     font-weight: 600;
 }
 
-.frictionless-ui-report .result .table-view table tr:first-child :first-child {
+.frictionless-components-report .result .table-view table tr:first-child :first-child {
     border-top-left-radius: 3px;
 }
 
-.frictionless-ui-report .result .table-view table tr:first-child :last-child {
+.frictionless-components-report .result .table-view table tr:first-child :last-child {
     border-top-right-radius: 3px;
 }
 
-.frictionless-ui-report .result .table-view table tr.row-pass:not(:first-child) {
+.frictionless-components-report .result .table-view table tr.row-pass:not(:first-child) {
     display: none;
 }
 
-.frictionless-ui-report .result .table-view table tr.row-pass:not(:first-child) + .row-before-fail:after {
+.frictionless-components-report .result .table-view table tr.row-pass:not(:first-child) + .row-before-fail:after {
     content: '';
     display: block;
     position: absolute;
@@ -259,22 +250,22 @@
     outline: solid 4px #fff;
 }
 
-.frictionless-ui-report .result .table-view table td {
+.frictionless-components-report .result .table-view table td {
     border-style: solid;
     border-color: #B3B3B3;
     border-width: 1px 0 0 1px;
     position: relative;
 }
 
-.frictionless-ui-report .result .table-view table td.fail {
+.frictionless-components-report .result .table-view table td.fail {
     background-color: #fde7e8;
 }
 
-.frictionless-ui-report .result .table-view table td.col-pass {
+.frictionless-components-report .result .table-view table td.col-pass {
     display: none;
 }
 
-.frictionless-ui-report .result .table-view table td.col-pass + .col-before-fail:before, .frictionless-ui-report .result .table-view table td.col-pass + .col-before-fail:after {
+.frictionless-components-report .result .table-view table td.col-pass + .col-before-fail:before, .frictionless-components-report .result .table-view table td.col-pass + .col-before-fail:after {
     content: '';
     display: block;
     position: absolute;
@@ -283,19 +274,19 @@
     background-color: #fff;
 }
 
-.frictionless-ui-report .result .table-view table td.col-pass + .col-before-fail:before {
+.frictionless-components-report .result .table-view table td.col-pass + .col-before-fail:before {
     width: 14px;
     left: 6px;
 }
 
-.frictionless-ui-report .result .table-view table td.col-pass + .col-before-fail:after {
+.frictionless-components-report .result .table-view table td.col-pass + .col-before-fail:after {
     width: 10px;
     left: 8px;
     border-left: solid 1px #B3B3B3;
     border-right: solid 1px #B3B3B3;
 }
 
-.frictionless-ui-report .result .table-view table td.col-after-fail:not(:last-child):before, .frictionless-ui-report .result .table-view table td.col-after-fail:not(:last-child):after {
+.frictionless-components-report .result .table-view table td.col-after-fail:not(:last-child):before, .frictionless-components-report .result .table-view table td.col-after-fail:not(:last-child):after {
     content: '';
     display: block;
     position: absolute;
@@ -304,25 +295,25 @@
     background-color: #fff;
 }
 
-.frictionless-ui-report .result .table-view table td.col-after-fail:not(:last-child):before {
+.frictionless-components-report .result .table-view table td.col-after-fail:not(:last-child):before {
     width: 14px;
     right: 6px;
 }
 
-.frictionless-ui-report .result .table-view table td.col-after-fail:not(:last-child):after {
+.frictionless-components-report .result .table-view table td.col-after-fail:not(:last-child):after {
     width: 10px;
     right: 8px;
     border-left: solid 1px #B3B3B3;
     border-right: solid 1px #B3B3B3;
 }
 
-.frictionless-ui-report .result .table-view .result-row-index {
+.frictionless-components-report .result .table-view .result-row-index {
     font-weight: normal;
     width: 2em;
     text-align: center;
 }
 
-.frictionless-ui-report .result .table-view:after {
+.frictionless-components-report .result .table-view:after {
     content: '';
     position: absolute;
     left: -1px;
@@ -336,11 +327,11 @@
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00FFFFFF', endColorstr='#FFFFFFFF', GradientType=0);
 }
 
-.frictionless-ui-report .result:not(:last-child) {
+.frictionless-components-report .result:not(:last-child) {
     padding-bottom: 20px;
 }
 
-.frictionless-ui-report .result:not(:last-child):after {
+.frictionless-components-report .result:not(:last-child):after {
     content: '';
     position: absolute;
     left: 0px;
@@ -353,7 +344,7 @@
     background-size: 29px 10px;
 }
 
-.frictionless-ui-report .result .show-more {
+.frictionless-components-report .result .show-more {
     color: #595959;
     font-weight: 600;
     display: inline-block;
@@ -363,18 +354,18 @@
     top: -0.5em;
 }
 
-.frictionless-ui-report .result .show-more [class^="icon-"] {
+.frictionless-components-report .result .show-more [class^="icon-"] {
     font-size: 1.5em;
     top: 0.2em;
     left: -0.1em;
 }
 
-.frictionless-ui-report .passed-tests {
+.frictionless-components-report .passed-tests {
     padding: 0 22.5px;
     margin: 15px -22.5px;
 }
 
-.frictionless-ui-report .passed-tests:not(:last-child):after {
+.frictionless-components-report .passed-tests:not(:last-child):after {
     left: 0;
     right: 0;
     bottom: -1px;
@@ -385,11 +376,11 @@
     mask-repeat: repeat-x;
 }
 
-.frictionless-ui-report .passed-tests li {
+.frictionless-components-report .passed-tests li {
     display: inline-block;
 }
 
-.frictionless-ui-report .passed-tests li .badge {
+.frictionless-components-report .passed-tests li .badge {
     display: inline-block;
     margin-bottom: 10px;
 }

@@ -1,9 +1,3 @@
-// Styles
-
-require('./styles/base.css')
-
-// Modules
-
 export * from './components/Report'
 export * from './components/ReportError'
 export * from './components/ReportTable'
