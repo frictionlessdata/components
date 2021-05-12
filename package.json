@@ -19,7 +19,7 @@
   "scripts": {
     "analyze": "NODE_ENV=production webpack --profile --json | webpack-bundle-size-analyzer",
     "build": "npm run compile && npm run bundle",
-    "bundle": "webpack --progress && NODE_ENV=production webpack --progress",
+    "bundle": "rm -rf dist && webpack --progress && NODE_ENV=production webpack --progress",
     "compile": "rm -rf lib && tsc && cp -r src/images lib && cp -r src/styles lib",
     "start": "npm run storybook",
     "e2e": "cypress run",

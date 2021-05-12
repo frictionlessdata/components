@@ -88,7 +88,6 @@ if (NODE_ENV === 'production') {
     ...webpackConfig.plugins,
     new ExtractCssPlugin({ filename: 'frictionless-components.min.css' }),
     new CompressionPlugin({
-      filename: '[path].gz[query]',
       algorithm: 'gzip',
       test: /\.(js|html)$/,
       threshold: 10240,
