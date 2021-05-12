@@ -62,7 +62,7 @@
     "@typescript-eslint/eslint-plugin": "^4.21.0",
     "@typescript-eslint/parser": "^4.21.0",
     "babel-loader": "^8.2.2",
-    "compression-webpack-plugin": "^7.1.2",
+    "compression-webpack-plugin": "^6.0.5",
     "css-loader": "^5.2.0",
     "cypress": "^7.0.1",
     "doctoc": "^2.0.0",
