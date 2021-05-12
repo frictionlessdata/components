@@ -8,7 +8,7 @@ const DEBUG = process.env.DEBUG || false
 // Base
 
 const webpackConfig = {
-  entry: ['./src/index.ts', './src/styles/base.css'],
+  entry: ['./src/index.ts', './src/styles/index.ts'],
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
