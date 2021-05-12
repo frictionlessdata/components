@@ -6,7 +6,7 @@ import reportInvalid from '../data/report-invalid.json'
 import reportValid from '../data/report-valid.json'
 
 export default {
-  title: 'Example/Report',
+  title: 'Components/Report',
   component: Report,
 } as Meta
 

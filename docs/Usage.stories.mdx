@@ -1,0 +1,13 @@
+# Usage
+
+<Meta title="Documentation/Usage" />
+
+The package provides a set of components with their styles in `lib/styles` directory and a render function to render it to the DOM:
+
+```javascript
+import 'frictionless-components/lib/styles'
+import frictionlessComponents from 'frictionless-components'
+
+const element = document.getElementById('app')
+frictionlessComponents.render(frictionlessComponents.Report, {report}, element)
+```
