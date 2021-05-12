@@ -19,26 +19,15 @@ Visual components for the Frictionless Data project in TypeScript/React.
 - Open Source (MIT)
 - Reusable React Components
 
-## Usage
-
-You can install and import the library using NPM:
-
-```bash
-$ npm install frictionless-components
-```
-```javascript
-import frictionlessComponents from 'frictionless-components'
-```
-
-Or link it (see [options](https://unpkg.com/frictionless-components)) directly via CDN in the browser:
-
-```html
-<script src="//unpkg.com/frictionless-components@0.1.6/dist/frictionless-components.js"></script>
-```
-
-Once it's imported or linked:
+## Example
 
 ```javascript
+// [ NPM ]
+// $ npm install frictionless-components
+// import frictionlessComponents from 'frictionless-components'
+// [ CDN ]
+// <script src="//unpkg.com/frictionless-components@0.1.6/dist/frictionless-components.js"></script>
+
 const element = document.getElementById('app')
 frictionlessComponents.render(frictionlessComponents.Report, {report}, element)
 ```
