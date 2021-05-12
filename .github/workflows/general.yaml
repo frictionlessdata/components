@@ -45,7 +45,7 @@ jobs:
       - name: Install and build
         run: |
           npm install
-          npm run build-storybook
+          npm run docs
       - name: Publush to Github Pages
         uses: JamesIves/github-pages-deploy-action@3.7.1
         with:

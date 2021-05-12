@@ -21,7 +21,8 @@
     "build": "npm run compile && npm run bundle",
     "bundle": "rm -rf dist && webpack --progress && NODE_ENV=production webpack --progress",
     "compile": "rm -rf lib && tsc && cp -r src/images lib && cp -r src/styles lib",
-    "start": "npm run storybook",
+    "docs": "build-storybook -o build",
+    "start": "start-storybook -p 6006",
     "e2e": "cypress run",
     "format": "prettier --write 'src/**/*.ts*' && eslint --fix 'src/**/*.ts*'",
     "lint": "prettier --check 'src/**/*.ts*' && eslint 'src/**/*.ts*'",
@@ -29,9 +30,7 @@
     "pretest": "npm run lint",
     "readme": "doctoc --maxlevel 3 README.md",
     "test": "jest --coverage",
-    "update": "ncu -u",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook -o build"
+    "update": "ncu -u"
   },
   "dependencies": {
     "@types/lodash": "^4.14.168",
@@ -84,7 +83,6 @@
     "react-dom": "^17.0.2",
     "react-hot-loader": "^4.13.0",
     "react-test-renderer": "^17.0.2",
-    "referencer": "^0.2.5",
     "style-loader": "^2.0.0",
     "ts-jest": "^26.5.4",
     "ts-loader": "^8.1.0",
