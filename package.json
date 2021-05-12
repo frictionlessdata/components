@@ -7,7 +7,7 @@
   "homepage": "https://github.com/frictionlessdata/frictionless-ui",
   "bugs": "https://github.com/frictionlessdata/frictionless-ui/issues",
   "repository": "github:frictionlessdata/frictionless-ui",
-  "main": "dist/frictionless-components.js",
+  "main": "lib/index.js",
   "engines": {
     "node": ">=4"
   },

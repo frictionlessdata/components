@@ -1,8 +1,8 @@
 import React from 'react'
 import { Story, Meta } from '@storybook/react'
-import { Report, IReportProps } from '../../src'
-import reportInvalid from '../../data/report-invalid.json'
-import reportValid from '../../data/report-valid.json'
+import { Report, IReportProps } from '../src'
+import reportInvalid from '../data/report-invalid.json'
+import reportValid from '../data/report-valid.json'
 
 export default {
   title: 'Example/Report',
