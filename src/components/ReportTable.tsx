@@ -18,7 +18,7 @@ export function ReportTable(props: IReportTableProps) {
     afterFailRowPosition = 2
   }
   return (
-    <table className="table table-sm">
+    <table className="table table-sm" style={{ display: 'table' }}>
       <tbody>
         {reportError.header && isHeaderVisible && (
           <tr className="before-fail">
