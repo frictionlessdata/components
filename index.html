@@ -37,7 +37,36 @@
         /* eslint-enable object-shorthand */
       })
     );
-  };</script><link rel="shortcut icon" type="image/png" href="https://framework.frictionlessdata.io/img/logo.png"><style>#root[hidden],
+  };</script><link rel="shortcut icon" type="image/png" href="https://framework.frictionlessdata.io/img/logo.png"><script>window.addEventListener("load", function(){
+  console.log('loaded!')
+  const button = document.querySelector('[title="Copy canvas link"]')
+  const section = button.parentElement
+  const website = document.createElement('span')
+  website.style = 'dispaly: flex; align-items: center; padding-top: 12px;'
+  website.innerHTML = `
+    <a
+        title="Github"
+        target="_blank"
+        style="opacity: 0.5;color: black;text-decoration: none;"
+        href="https://frictionlessdata.io/"
+    >
+      Back to the main site
+    </a>
+  `
+  const github = document.createElement('span')
+  github.style = 'dispaly: flex; align-items: center; padding-top: 4px;'
+  github.innerHTML = `
+    <a
+        title="Github"
+        target="_blank"
+        href="https://github.com/frictionlessdata/components"
+    >
+      <img src="https://i.imgur.com/oxIvEAY.png" />
+    </a>
+  `
+  section.prepend(github)
+  section.prepend(website)
+});</script><style>#root[hidden],
       #docs-root[hidden] {
         display: none !important;
       }</style></head><body><div id="root"></div><div id="docs-root"></div><script>window['CONFIG_TYPE'] = "PRODUCTION";
