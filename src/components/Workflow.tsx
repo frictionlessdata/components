@@ -36,12 +36,13 @@ export function Workflow(props: IWorkflowProps) {
   const [repo, setRepo] = useState(props.repo || '')
   const [workflow, setWorkflow] = useState(props.workflow || '')
   const [report, setReport] = useState<IReport | null>(null)
+  const [progress, setProgress] = useState(100)
 
   // Submit
   const handleSubmit = async (ev: React.SyntheticEvent) => {
     ev.preventDefault()
     if (!user || !repo || !workflow) return
-    const report = await loadReport({ token, user, repo, workflow, run })
+    const report = await loadReport({ token, user, repo, workflow, run, setProgress })
     setReport(report)
   }
 
@@ -55,6 +56,7 @@ export function Workflow(props: IWorkflowProps) {
             paddingBottom: '30px',
             borderBottom: 'solid 1px #ddd',
             marginBottom: '15px',
+            opacity: progress / 100,
           }}
         >
           <div className="form-row">
@@ -109,8 +111,9 @@ async function loadReport(props: {
   repo: string
   workflow: string
   run?: string
+  setProgress: (progress: number) => void
 }) {
-  const { user, repo, workflow, token, run } = props
+  const { user, repo, workflow, token, run, setProgress } = props
 
   // Request
   async function makeRequest(path: string) {
@@ -158,10 +161,15 @@ async function loadReport(props: {
 
   // Main
   try {
+    setProgress(20)
     const runId = run || (await getRunId())
+    setProgress(40)
     const artifactId = await getArtifactId(runId)
+    setProgress(60)
     const fileBuffer = await getFileBuffer(artifactId)
+    setProgress(80)
     const report = await getReport(fileBuffer)
+    setProgress(100)
     return report
   } catch (error) {
     console.log(`Error in loading report: ${error}`)
