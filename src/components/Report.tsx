@@ -10,7 +10,7 @@ export interface IReportProps {
    */
   report: IReport
   /**
-   * Whether to show to debug form
+   * Whether to show the debug form
    */
   debug?: boolean
 }
