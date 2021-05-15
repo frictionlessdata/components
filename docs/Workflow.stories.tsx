@@ -12,5 +12,5 @@ const Template: Story<IWorkflowProps> = (args) => <Workflow {...args} />
 
 export const Component = Template.bind({})
 Component.args = {
-  token: 'torkn',
+  token: 'token',
 }
