@@ -10,7 +10,7 @@ export default {
 
 const Template: Story<IWorkflowProps> = (args) => <Workflow {...args} />
 
-export const Component = Template.bind({})
-Component.args = {
+export const Default = Template.bind({})
+Default.args = {
   token: 'token',
 }
