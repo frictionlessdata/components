@@ -45,10 +45,11 @@ export interface IWorkflowProps {
  * Visual component for Frictionless Repository flow
  */
 export function Workflow(props: IWorkflowProps) {
-  const { token, run, callback } = props
+  const { token, callback } = props
   const [user, setUser] = useState(props.user || '')
   const [repo, setRepo] = useState(props.repo || '')
   const [flow, setFlow] = useState(props.flow || '')
+  const [run, setRun] = useState(props.flow || '')
   const [report, setReport] = useState<IReport | null>(null)
   const [progress, setProgress] = useState(100)
   const [error, setError] = useState('')
@@ -56,7 +57,7 @@ export function Workflow(props: IWorkflowProps) {
   // Mount
   useAsyncEffect(async (isMounted) => {
     if (!user || !repo || !flow) return
-    const report = await loadReport({ token, user, repo, flow, run, setProgress })
+    const report = await loadReport({ token, user, repo, flow, run, setRun, setProgress })
     if (!report) return setError('Cannot load a report')
     if (!isMounted()) return
     if (callback) callback(undefined, { user, repo, flow, run })
@@ -67,7 +68,7 @@ export function Workflow(props: IWorkflowProps) {
   const handleSubmit = async (ev: React.SyntheticEvent) => {
     ev.preventDefault()
     if (!user || !repo || !flow) return
-    const report = await loadReport({ token, user, repo, flow, run, setProgress })
+    const report = await loadReport({ token, user, repo, flow, run, setRun, setProgress })
     if (!report) return setError('Cannot load a report')
     if (callback) callback(undefined, { user, repo, flow, run })
     setReport(report)
@@ -171,9 +172,10 @@ async function loadReport(props: {
   repo: string
   flow: string
   run?: string
+  setRun: (run: string) => void
   setProgress: (progress: number) => void
 }) {
-  const { token, user, repo, flow, run, setProgress } = props
+  const { token, user, repo, flow, run, setRun, setProgress } = props
 
   // Request
   async function makeRequest(path: string) {
@@ -223,6 +225,7 @@ async function loadReport(props: {
   try {
     setProgress(20)
     const runId = run || (await getRunId())
+    setRun(runId.toString())
     setProgress(40)
     const artifactId = await getArtifactId(runId)
     setProgress(60)
