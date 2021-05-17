@@ -68,7 +68,8 @@ export function Workflow(props: IWorkflowProps) {
   const handleSubmit = async (ev: React.SyntheticEvent) => {
     ev.preventDefault()
     if (!user || !repo || !flow) return
-    const report = await loadReport({ token, user, repo, flow, run, setRun, setProgress })
+    setReport(null)
+    const report = await loadReport({ token, user, repo, flow, setRun, setProgress })
     if (!report) return setError('Cannot load a report')
     if (callback) callback(undefined, { user, repo, flow, run })
     setReport(report)
