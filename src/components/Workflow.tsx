@@ -1,5 +1,6 @@
 import jszip from 'jszip'
 import React, { useState } from 'react'
+import { useAsyncEffect } from 'use-async-effect'
 import { Report } from './Report'
 import { IReport } from '../report'
 import { IDict } from '../common'
@@ -37,6 +38,14 @@ export function Workflow(props: IWorkflowProps) {
   const [workflow, setWorkflow] = useState(props.workflow || '')
   const [report, setReport] = useState<IReport | null>(null)
   const [progress, setProgress] = useState(100)
+
+  // Mount
+  useAsyncEffect(async (isMounted) => {
+    if (!user || !repo || !workflow) return
+    const report = await loadReport({ token, user, repo, workflow, run, setProgress })
+    if (!isMounted()) return
+    setReport(report)
+  }, [])
 
   // Submit
   const handleSubmit = async (ev: React.SyntheticEvent) => {
