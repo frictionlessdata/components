@@ -40,7 +40,9 @@ export function ReportError(props: IReportErrorProps) {
         <div className="error-details">
           {reportError.description && (
             <div className="error-description">
-              <div dangerouslySetInnerHTML={{ __html: marked(reportError.description) }} />
+              <div
+                dangerouslySetInnerHTML={{ __html: marked(reportError.description) }}
+              />
             </div>
           )}
           <div className="error-list">
@@ -69,7 +71,10 @@ export function ReportError(props: IReportErrorProps) {
 
       {/* Show more */}
       {visibleRowsCount < rowPositions.length && (
-        <a className="show-more" onClick={() => setVisibleRowsCount(visibleRowsCount + 10)}>
+        <a
+          className="show-more"
+          onClick={() => setVisibleRowsCount(visibleRowsCount + 10)}
+        >
           Show more <span className="icon-keyboard_arrow_down" />
         </a>
       )}

@@ -77,7 +77,12 @@ export function Report(props: IReportProps) {
 
       {/* Tasks */}
       {tasks.map((task, index) => (
-        <ReportTask key={index} task={task} taskNumber={index + 1} tasksCount={tasks.length} />
+        <ReportTask
+          key={index}
+          task={task}
+          taskNumber={index + 1}
+          tasksCount={tasks.length}
+        />
       ))}
     </div>
   )

@@ -26,13 +26,25 @@ export interface IWorkflowProps {
    * A GitHub run id
    */
   run?: string
+  /**
+   * A callback on submit
+   */
+  callback?: (
+    error: Error | undefined,
+    props: {
+      user: string
+      repo: string
+      workflow: string
+      run?: string
+    }
+  ) => void
 }
 
 /**
  * Visual component for Frictionless Repository workflow
  */
 export function Workflow(props: IWorkflowProps) {
-  const { token, run } = props
+  const { token, run, callback } = props
   const [user, setUser] = useState(props.user || '')
   const [repo, setRepo] = useState(props.repo || '')
   const [workflow, setWorkflow] = useState(props.workflow || '')
@@ -44,6 +56,7 @@ export function Workflow(props: IWorkflowProps) {
     if (!user || !repo || !workflow) return
     const report = await loadReport({ token, user, repo, workflow, run, setProgress })
     if (!isMounted()) return
+    if (callback) callback(undefined, { user, repo, workflow, run })
     setReport(report)
   }, [])
 
@@ -52,6 +65,7 @@ export function Workflow(props: IWorkflowProps) {
     ev.preventDefault()
     if (!user || !repo || !workflow) return
     const report = await loadReport({ token, user, repo, workflow, run, setProgress })
+    if (callback) callback(undefined, { user, repo, workflow, run })
     setReport(report)
   }
 
@@ -122,7 +136,7 @@ async function loadReport(props: {
   run?: string
   setProgress: (progress: number) => void
 }) {
-  const { user, repo, workflow, token, run, setProgress } = props
+  const { token, user, repo, workflow, run, setProgress } = props
 
   // Request
   async function makeRequest(path: string) {
