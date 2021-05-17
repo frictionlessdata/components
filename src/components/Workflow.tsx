@@ -49,7 +49,7 @@ export function Workflow(props: IWorkflowProps) {
   const [user, setUser] = useState(props.user || '')
   const [repo, setRepo] = useState(props.repo || '')
   const [flow, setFlow] = useState(props.flow || '')
-  const [run, setRun] = useState(props.flow || '')
+  const [run, setRun] = useState(props.run || '')
   const [report, setReport] = useState<IReport | null>(null)
   const [progress, setProgress] = useState(100)
   const [error, setError] = useState('')
