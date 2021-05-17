@@ -1,4 +1,5 @@
 import jszip from 'jszip'
+import classNames from 'classnames'
 import React, { useState } from 'react'
 import { useAsyncEffect } from 'use-async-effect'
 import { Report } from './Report'
@@ -19,9 +20,9 @@ export interface IWorkflowProps {
    */
   repo?: string
   /**
-   * A GitHub workflow name
+   * A GitHub flow name
    */
-  workflow?: string
+  flow?: string
   /**
    * A GitHub run id
    */
@@ -34,38 +35,41 @@ export interface IWorkflowProps {
     props: {
       user: string
       repo: string
-      workflow: string
+      flow: string
       run?: string
     }
   ) => void
 }
 
 /**
- * Visual component for Frictionless Repository workflow
+ * Visual component for Frictionless Repository flow
  */
 export function Workflow(props: IWorkflowProps) {
   const { token, run, callback } = props
   const [user, setUser] = useState(props.user || '')
   const [repo, setRepo] = useState(props.repo || '')
-  const [workflow, setWorkflow] = useState(props.workflow || '')
+  const [flow, setFlow] = useState(props.flow || '')
   const [report, setReport] = useState<IReport | null>(null)
   const [progress, setProgress] = useState(100)
+  const [error, setError] = useState('')
 
   // Mount
   useAsyncEffect(async (isMounted) => {
-    if (!user || !repo || !workflow) return
-    const report = await loadReport({ token, user, repo, workflow, run, setProgress })
+    if (!user || !repo || !flow) return
+    const report = await loadReport({ token, user, repo, flow, run, setProgress })
+    if (!report) return setError('Cannot load a report')
     if (!isMounted()) return
-    if (callback) callback(undefined, { user, repo, workflow, run })
+    if (callback) callback(undefined, { user, repo, flow, run })
     setReport(report)
   }, [])
 
   // Submit
   const handleSubmit = async (ev: React.SyntheticEvent) => {
     ev.preventDefault()
-    if (!user || !repo || !workflow) return
-    const report = await loadReport({ token, user, repo, workflow, run, setProgress })
-    if (callback) callback(undefined, { user, repo, workflow, run })
+    if (!user || !repo || !flow) return
+    const report = await loadReport({ token, user, repo, flow, run, setProgress })
+    if (!report) return setError('Cannot load a report')
+    if (callback) callback(undefined, { user, repo, flow, run })
     setReport(report)
   }
 
@@ -105,21 +109,54 @@ export function Workflow(props: IWorkflowProps) {
             </div>
             <div className="col">
               <input
-                name="workflow"
-                id="workflow"
-                placeholder="workflow"
+                name="flow"
+                id="flow"
+                placeholder="flow"
                 className="form-control"
-                value={workflow}
-                onChange={(ev) => setWorkflow(ev.target.value)}
+                value={flow}
+                onChange={(ev) => setFlow(ev.target.value)}
               />
             </div>
             <div className="col">
-              <button className="btn btn-primary" style={{ width: '100%' }}>
-                Show
-              </button>
+              <div className="row no-gutters">
+                <div className="col-8">
+                  <button
+                    className="btn btn-primary"
+                    style={{ width: '100%' }}
+                    disabled={!user || !repo || !flow}
+                  >
+                    Show
+                  </button>
+                </div>
+                <div className="col-4">
+                  <a
+                    href={`https://github.com/${user}/${repo}/actions/runs/${run}`}
+                    className={classNames([
+                      'btn',
+                      'btn-success',
+                      'ml-2',
+                      {
+                        disabled: !user || !repo || !flow || !run,
+                      },
+                    ])}
+                    style={{ width: '100%' }}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    Link
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </form>
+        <div>
+          {error && (
+            <div className="alert alert-danger mt-4" role="alert">
+              {error}
+            </div>
+          )}
+        </div>
         <div>{report && <Report report={report} />}</div>
       </div>
     </div>
@@ -132,11 +169,11 @@ async function loadReport(props: {
   token: string
   user: string
   repo: string
-  workflow: string
+  flow: string
   run?: string
   setProgress: (progress: number) => void
 }) {
-  const { token, user, repo, workflow, run, setProgress } = props
+  const { token, user, repo, flow, run, setProgress } = props
 
   // Request
   async function makeRequest(path: string) {
@@ -150,7 +187,7 @@ async function loadReport(props: {
 
   // Run
   async function getRunId() {
-    const path = `/repos/${user}/${repo}/actions/workflows/${workflow}.yaml/runs`
+    const path = `/repos/${user}/${repo}/actions/workflows/${flow}.yaml/runs`
     const res = await makeRequest(path)
     const data = await res.json()
     const run = data.workflow_runs.filter((item: IDict) => item.status === 'completed')[0]
@@ -195,6 +232,7 @@ async function loadReport(props: {
     setProgress(100)
     return report
   } catch (error) {
+    setProgress(100)
     console.log(`Error in loading report: ${error}`)
   }
 }
