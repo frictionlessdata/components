@@ -136,7 +136,6 @@ export function Workflow(props: IWorkflowProps) {
                     className={classNames([
                       'btn',
                       'btn-success',
-                      'ml-2',
                       {
                         disabled: !user || !repo || !flow || !run,
                       },
