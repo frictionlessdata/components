@@ -120,7 +120,7 @@ export function Workflow(props: IWorkflowProps) {
               />
             </div>
             <div className="col">
-              <div className="row no-gutters">
+              <div className="form-row no-gutters">
                 <div className="col-8">
                   <button
                     className="btn btn-primary"
