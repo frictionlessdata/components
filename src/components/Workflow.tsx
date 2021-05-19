@@ -202,8 +202,7 @@ export function Workflow(props: IWorkflowProps) {
               </div>
               <div className="col-sm-3">
                 <img
-                  className="w-100"
-                  style={{ maxHeight: '38px' }}
+                  style={{ height: '30px', float: 'right' }}
                   src={`https://github.com/${user}/${repo}/actions/workflows/${flow}.yaml/badge.svg`}
                 />
               </div>
