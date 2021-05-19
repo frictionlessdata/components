@@ -145,6 +145,7 @@ export function Workflow(props: IWorkflowProps) {
               <div className="form-row">
                 <div className="col-sm-4 mb-2 mb-sm-0">
                   <button
+                    title={isFormDisabled ? '' : 'Open the report'}
                     className={classNames('w-100', 'btn', 'btn-primary', {
                       disabled: isFormDisabled,
                     })}
@@ -156,6 +157,7 @@ export function Workflow(props: IWorkflowProps) {
                 </div>
                 <div className="col-sm-4 mb-2 mb-sm-0">
                   <a
+                    title="Open the badge"
                     className={classNames('w-100', 'btn', 'btn-info', {
                       disabled: !badge && isLinkDisabled,
                     })}
@@ -167,6 +169,7 @@ export function Workflow(props: IWorkflowProps) {
                 </div>
                 <div className="col-sm-4">
                   <a
+                    title="Open the workflow"
                     href={`https://github.com/${user}/${repo}/actions/runs/${run}`}
                     className={classNames('w-100', 'btn', 'btn-success', {
                       disabled: isLinkDisabled,
