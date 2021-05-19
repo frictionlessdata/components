@@ -53,6 +53,8 @@ export function Workflow(props: IWorkflowProps) {
   const [report, setReport] = useState<IReport | null>(null)
   const [progress, setProgress] = useState(100)
   const [error, setError] = useState('')
+  const isButtonsDisabled = !user || !repo || !flow
+  const isLinkDisabled = !user || !repo || !flow || !run
 
   // Mount
   useAsyncEffect(async (isMounted) => {
@@ -89,7 +91,7 @@ export function Workflow(props: IWorkflowProps) {
           }}
         >
           <div className="form-row">
-            <div className="col">
+            <div className="col-lg-3 mb-3 mb-lg-0">
               <input
                 name="user"
                 id="user"
@@ -99,7 +101,7 @@ export function Workflow(props: IWorkflowProps) {
                 onChange={(ev) => setUser(ev.target.value)}
               />
             </div>
-            <div className="col">
+            <div className="col-lg-3 mb-3 mb-lg-0">
               <input
                 name="repo"
                 id="repo"
@@ -109,7 +111,7 @@ export function Workflow(props: IWorkflowProps) {
                 onChange={(ev) => setRepo(ev.target.value)}
               />
             </div>
-            <div className="col">
+            <div className="col-lg-3 mb-3 mb-lg-0">
               <input
                 name="flow"
                 id="flow"
@@ -119,28 +121,36 @@ export function Workflow(props: IWorkflowProps) {
                 onChange={(ev) => setFlow(ev.target.value)}
               />
             </div>
-            <div className="col">
-              <div className="form-row no-gutters">
-                <div className="col-8">
+            <div className="col-lg-3">
+              <div className="form-row">
+                <div className="col-sm-4 mb-2 mb-sm-0">
                   <button
-                    className="btn btn-primary"
-                    style={{ width: '100%' }}
-                    disabled={!user || !repo || !flow}
+                    className={classNames('w-100', 'btn', 'btn-primary', {
+                      disabled: isButtonsDisabled,
+                    })}
+                    style={{ cursor: isButtonsDisabled ? 'default' : 'pointer' }}
+                    disabled={isButtonsDisabled}
                   >
                     Show
                   </button>
                 </div>
-                <div className="col-4">
+                <div className="col-sm-4 mb-2 mb-sm-0">
+                  <button
+                    className={classNames('w-100', 'btn', 'btn-info', {
+                      disabled: isButtonsDisabled,
+                    })}
+                    disabled={isButtonsDisabled}
+                    style={{ cursor: isButtonsDisabled ? 'default' : 'pointer' }}
+                  >
+                    Badge
+                  </button>
+                </div>
+                <div className="col-sm-4">
                   <a
                     href={`https://github.com/${user}/${repo}/actions/runs/${run}`}
-                    className={classNames([
-                      'btn',
-                      'btn-success',
-                      {
-                        disabled: !user || !repo || !flow || !run,
-                      },
-                    ])}
-                    style={{ width: '100%' }}
+                    className={classNames('w-100', 'btn', 'btn-success', {
+                      disabled: isLinkDisabled,
+                    })}
                     rel="noreferrer"
                     target="_blank"
                   >
