@@ -194,9 +194,11 @@ export function Workflow(props: IWorkflowProps) {
           >
             <div className="form-row">
               <div className="col-sm-9">
-                <h4 className="mt-1">
-                  Insert this code snippet into your README.md file
-                </h4>
+                <div className="mt-2">
+                  <big>
+                    <strong>Insert this code snippet into your README.md file</strong>
+                  </big>
+                </div>
               </div>
               <div className="col-sm-3">
                 <img
