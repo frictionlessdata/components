@@ -53,7 +53,8 @@ export function Workflow(props: IWorkflowProps) {
   const [report, setReport] = useState<IReport | null>(null)
   const [progress, setProgress] = useState(100)
   const [error, setError] = useState('')
-  const isButtonsDisabled = !user || !repo || !flow
+  const [badge, setBadge] = useState(false)
+  const isFormDisabled = !user || !repo || !flow
   const isLinkDisabled = !user || !repo || !flow || !run
 
   // Mount
@@ -71,6 +72,7 @@ export function Workflow(props: IWorkflowProps) {
     ev.preventDefault()
     if (!user || !repo || !flow) return
     setReport(null)
+    setError('')
     const report = await loadReport({ token, user, repo, flow, setRun, setProgress })
     if (!report) return setError('Cannot load a report')
     if (callback) callback(undefined, { user, repo, flow, run })
@@ -86,7 +88,7 @@ export function Workflow(props: IWorkflowProps) {
           style={{
             paddingBottom: '30px',
             borderBottom: 'solid 1px #ddd',
-            marginBottom: '15px',
+            marginBottom: '30px',
             opacity: progress / 100,
           }}
         >
@@ -98,7 +100,13 @@ export function Workflow(props: IWorkflowProps) {
                 placeholder="user"
                 className="form-control"
                 value={user}
-                onChange={(ev) => setUser(ev.target.value)}
+                onChange={(ev) => {
+                  setUser(ev.target.value)
+                  setRun('')
+                  setReport(null)
+                  setError('')
+                  setBadge(false)
+                }}
               />
             </div>
             <div className="col-lg-3 mb-3 mb-lg-0">
@@ -108,7 +116,13 @@ export function Workflow(props: IWorkflowProps) {
                 placeholder="repo"
                 className="form-control"
                 value={repo}
-                onChange={(ev) => setRepo(ev.target.value)}
+                onChange={(ev) => {
+                  setRepo(ev.target.value)
+                  setRun('')
+                  setReport(null)
+                  setError('')
+                  setBadge(false)
+                }}
               />
             </div>
             <div className="col-lg-3 mb-3 mb-lg-0">
@@ -118,7 +132,13 @@ export function Workflow(props: IWorkflowProps) {
                 placeholder="flow"
                 className="form-control"
                 value={flow}
-                onChange={(ev) => setFlow(ev.target.value)}
+                onChange={(ev) => {
+                  setFlow(ev.target.value)
+                  setRun('')
+                  setReport(null)
+                  setError('')
+                  setBadge(false)
+                }}
               />
             </div>
             <div className="col-lg-3">
@@ -126,24 +146,24 @@ export function Workflow(props: IWorkflowProps) {
                 <div className="col-sm-4 mb-2 mb-sm-0">
                   <button
                     className={classNames('w-100', 'btn', 'btn-primary', {
-                      disabled: isButtonsDisabled,
+                      disabled: isFormDisabled,
                     })}
-                    style={{ cursor: isButtonsDisabled ? 'default' : 'pointer' }}
-                    disabled={isButtonsDisabled}
+                    style={{ cursor: isFormDisabled ? 'default' : 'pointer' }}
+                    disabled={isFormDisabled}
                   >
                     Show
                   </button>
                 </div>
                 <div className="col-sm-4 mb-2 mb-sm-0">
-                  <button
+                  <a
                     className={classNames('w-100', 'btn', 'btn-info', {
-                      disabled: isButtonsDisabled,
+                      disabled: !badge && isLinkDisabled,
                     })}
-                    disabled={isButtonsDisabled}
-                    style={{ cursor: isButtonsDisabled ? 'default' : 'pointer' }}
+                    onClick={() => setBadge(!badge)}
+                    style={{ color: 'white' }}
                   >
                     Badge
-                  </button>
+                  </a>
                 </div>
                 <div className="col-sm-4">
                   <a
@@ -161,14 +181,45 @@ export function Workflow(props: IWorkflowProps) {
             </div>
           </div>
         </form>
-        <div>
-          {error && (
-            <div className="alert alert-danger mt-4" role="alert">
-              {error}
+        {badge && (
+          <div
+            style={{
+              paddingBottom: '30px',
+              borderBottom: 'solid 1px #ddd',
+              marginBottom: '30px',
+            }}
+          >
+            <div className="form-row">
+              <div className="col-sm-9">
+                <h4 className="mt-1">
+                  Insert this code snippet into your README.md file
+                </h4>
+              </div>
+              <div className="col-sm-3">
+                <img
+                  className="w-100"
+                  src={`https://github.com/${user}/${repo}/actions/workflows/${flow}.yaml/badge.svg`}
+                />
+              </div>
             </div>
-          )}
-        </div>
-        <div>{report && <Report report={report} />}</div>
+            <div className="form-group mt-2">
+              <textarea
+                spellCheck="false"
+                style={{ color: '#777' }}
+                className="form-control"
+                defaultValue={`[![${
+                  flow.charAt(0).toUpperCase() + flow.slice(1)
+                }](https://github.com/${user}/${repo}/actions/workflows/${flow}.yaml/badge.svg)](https://repository.frictionlessdata.io/report?user=${user}&repo=${repo}&flow=${flow})`}
+              ></textarea>
+            </div>
+          </div>
+        )}
+        {error && (
+          <div className="alert alert-danger mt-4" role="alert">
+            {error}
+          </div>
+        )}
+        {report && <Report report={report} />}
       </div>
     </div>
   )
