@@ -79,7 +79,10 @@
 }
 
 .frictionless-components-report .file .badge {
+    display: inline-block;
+    text-align: center;
     font-size: 10px;
+    font-weight: 700;
     vertical-align: super;
     margin-left: 0.4em;
     min-width: 1.6em;
@@ -120,6 +123,22 @@
     position: relative;
 }
 
+.frictionless-components-report .result .d-flex {
+    display: -webkit-box !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+}
+
+.frictionless-components-report .result .text-center {
+    text-align: center !important;
+}
+
+.frictionless-components-report .result .align-items-center {
+    -webkit-box-align: center !important;
+    -ms-flex-align: center !important;
+    align-items: center !important;
+}
+
 .frictionless-components-report .result .count {
     font-size: 14px;
     font-weight: 600;
@@ -130,6 +149,11 @@
     font-size: 14px;
     margin-right: 10px;
     padding: 4px 8px;
+    border-radius: 0.25rem;
+}
+
+.frictionless-components-report .result .badge:empty {
+    display: none;
 }
 
 .frictionless-components-report .result .badge.badge-warning {
@@ -307,6 +331,42 @@
     border-right: solid 1px #B3B3B3;
 }
 
+.frictionless-components-report .result .table-view table.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+}
+
+.frictionless-components-report .result .table-view table.table th {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+
+.frictionless-components-report .result .table-view table.table td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+
+.frictionless-components-report .result .table-view table tbody + tbody {
+    border-top: 2px solid #dee2e6;
+}
+
+.frictionless-components-report .result .table-view table.table-sm th {
+    padding: 0.3rem;
+}
+
+.frictionless-components-report .result .table-view table.table-sm td {
+    padding: 0.3rem;
+}
+
+.frictionless-components-report .result .table-view table.table thead th {
+    vertical-align: bottom;
+    border-bottom: 2px solid #dee2e6;
+}
+
 .frictionless-components-report .result .table-view .result-row-index {
     font-weight: normal;
     width: 2em;
@@ -360,6 +420,23 @@
     left: -0.1em;
 }
 
+.frictionless-components-report .result .collapse {
+    display: none;
+}
+
+.frictionless-components-report .result .collapse.show {
+    display: block;
+}
+
+.frictionless-components-report .result tr.collapse.show {
+    display: table-row;
+}
+
+.frictionless-components-report .result tbody.collapse.show {
+    display: table-row-group;
+}
+
+
 .frictionless-components-report .passed-tests {
     padding: 0 22.5px;
     margin: 15px -22.5px;
@@ -383,103 +460,4 @@
 .frictionless-components-report .passed-tests li .badge {
     display: inline-block;
     margin-bottom: 10px;
-}
-
-/* New below */
-
-.table {
-    width: 100%;
-    max-width: 100%;
-    margin-bottom: 1rem;
-    background-color: transparent;
-}
-
-.table th,
-.table td {
-    padding: 0.75rem;
-    vertical-align: top;
-    border-top: 1px solid #dee2e6;
-}
-
-.table thead th {
-    vertical-align: bottom;
-    border-bottom: 2px solid #dee2e6;
-}
-
-.table tbody + tbody {
-    border-top: 2px solid #dee2e6;
-}
-
-.table .table {
-    background-color: #fff;
-}
-
-.table-sm th,
-.table-sm td {
-    padding: 0.3rem;
-}
-
-.text-center {
-    text-align: center !important;
-}
-
-.align-items-center {
-    -webkit-box-align: center !important;
-    -ms-flex-align: center !important;
-    align-items: center !important;
-}
-
-.d-flex {
-    display: -webkit-box !important;
-    display: -ms-flexbox !important;
-    display: flex !important;
-}
-
-.badge {
-    display: inline-block;
-    padding: 0.25em 0.4em;
-    font-size: 75%;
-    font-weight: 700;
-    line-height: 1;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: baseline;
-    border-radius: 0.25rem;
-}
-
-.badge:empty {
-    display: none;
-}
-
-.badge {
-    display: inline-block;
-    padding: 0.25em 0.4em;
-    font-size: 75%;
-    font-weight: 700;
-    line-height: 1;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: baseline;
-    border-radius: 0.25rem;
-}
-
-.btn .badge {
-    position: relative;
-    top: -1px;
-}
-
-.collapse {
-    display: none;
-}
-
-.collapse.show {
-    display: block;
-}
-
-tr.collapse.show {
-    display: table-row;
-}
-
-tbody.collapse.show {
-    display: table-row-group;
 }
