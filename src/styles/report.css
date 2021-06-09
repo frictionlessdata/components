@@ -231,6 +231,7 @@
 .frictionless-components-report .result .table-view table {
     margin: 0;
     color: #595959;
+    border-collapse: collapse;
 }
 
 .frictionless-components-report .result .table-view table tr {
