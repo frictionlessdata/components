@@ -11,3 +11,321 @@
     background-color: #f8d7da;
     border-color: #f5c6cb;
 }
+
+.frictionless-components-workflow *,
+.frictionless-components-workflow ::after,
+.frictionless-components-workflow ::before {
+	box-sizing: border-box;
+}
+
+.frictionless-components-workflow a {
+	color: #007bff;
+	text-decoration: none;
+	background-color: transparent;
+}
+
+.frictionless-components-workflow a:hover {
+	color: #0056b3;
+	text-decoration: underline;
+}
+
+.frictionless-components-workflow a:not([href]) {
+	color: inherit;
+	text-decoration: none;
+}
+
+.frictionless-components-workflow a:not([href]):hover {
+	color: inherit;
+	text-decoration: none;
+}
+
+.frictionless-components-workflow button {
+	border-radius: 0;
+}
+
+.frictionless-components-workflow button:focus {
+	outline: 1px dotted;
+	outline: 5px auto -webkit-focus-ring-color;
+}
+
+.frictionless-components-workflow button,
+.frictionless-components-workflow input {
+	margin: 0;
+	font-family: inherit;
+	font-size: inherit;
+	line-height: inherit;
+}
+
+.frictionless-components-workflow button,
+.frictionless-components-workflow input {
+	overflow: visible;
+}
+
+.frictionless-components-workflow button {
+	text-transform: none;
+}
+
+.frictionless-components-workflow button {
+	-webkit-appearance: button;
+}
+
+.frictionless-components-workflow button::-moz-focus-inner {
+	padding: 0;
+	border-style: none;
+}
+
+.frictionless-components-workflow .col-lg-3,
+.frictionless-components-workflow .col-sm-4 {
+	position: relative;
+	width: 100%;
+	padding-right: 15px;
+	padding-left: 15px;
+}
+
+@media (min-width:576px) {
+	.frictionless-components-workflow .col-sm-4 {
+		-ms-flex: 0 0 33.333333%;
+		flex: 0 0 33.333333%;
+		max-width: 33.333333%;
+	}
+}
+
+@media (min-width:992px) {
+	.frictionless-components-workflow .col-lg-3 {
+		-ms-flex: 0 0 25%;
+		flex: 0 0 25%;
+		max-width: 25%;
+	}
+}
+
+.frictionless-components-workflow .form-control {
+	display: block;
+	width: 100%;
+	height: calc(1.5em + .75rem + 2px);
+	padding: .375rem .75rem;
+	font-size: 1rem;
+	font-weight: 400;
+	line-height: 1.5;
+	color: #495057;
+	background-color: #fff;
+	background-clip: padding-box;
+	border: 1px solid #ced4da;
+	border-radius: .25rem;
+	transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+@media (prefers-reduced-motion:reduce) {
+	.frictionless-components-workflow .form-control {
+		transition: none;
+	}
+}
+
+.frictionless-components-workflow .form-control::-ms-expand {
+	background-color: transparent;
+	border: 0;
+}
+
+.frictionless-components-workflow .form-control:-moz-focusring {
+	color: transparent;
+	text-shadow: 0 0 0 #495057;
+}
+
+.frictionless-components-workflow .form-control:focus {
+	color: #495057;
+	background-color: #fff;
+	border-color: #80bdff;
+	outline: 0;
+	box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .25);
+}
+
+.frictionless-components-workflow .form-control::-webkit-input-placeholder {
+	color: #6c757d;
+	opacity: 1;
+}
+
+.frictionless-components-workflow .form-control::-moz-placeholder {
+	color: #6c757d;
+	opacity: 1;
+}
+
+.frictionless-components-workflow .form-control:-ms-input-placeholder {
+	color: #6c757d;
+	opacity: 1;
+}
+
+.frictionless-components-workflow .form-control::-ms-input-placeholder {
+	color: #6c757d;
+	opacity: 1;
+}
+
+.frictionless-components-workflow .form-control::placeholder {
+	color: #6c757d;
+	opacity: 1;
+}
+
+.frictionless-components-workflow .form-control:disabled {
+	background-color: #e9ecef;
+	opacity: 1;
+}
+
+.frictionless-components-workflow .form-row {
+	display: -ms-flexbox;
+	display: flex;
+	-ms-flex-wrap: wrap;
+	flex-wrap: wrap;
+	margin-right: -5px;
+	margin-left: -5px;
+}
+
+.frictionless-components-workflow .form-row>[class*=col-] {
+	padding-right: 5px;
+	padding-left: 5px;
+}
+
+.frictionless-components-workflow .btn {
+	display: inline-block;
+	font-weight: 400;
+	color: #212529;
+	text-align: center;
+	vertical-align: middle;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-color: transparent;
+	border: 1px solid transparent;
+	padding: .375rem .75rem;
+	font-size: 1rem;
+	line-height: 1.5;
+	border-radius: .25rem;
+	transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+@media (prefers-reduced-motion:reduce) {
+	.frictionless-components-workflow .btn {
+		transition: none;
+	}
+}
+
+.frictionless-components-workflow .btn:hover {
+	color: #212529;
+	text-decoration: none;
+}
+
+.frictionless-components-workflow .btn:focus {
+	outline: 0;
+	box-shadow: 0 0 0 .2rem rgba(0, 123, 255, .25);
+}
+
+.frictionless-components-workflow .btn:disabled {
+	opacity: .65;
+}
+
+.frictionless-components-workflow .btn-primary {
+	color: #fff;
+	background-color: #007bff;
+	border-color: #007bff;
+}
+
+.frictionless-components-workflow .btn-primary:hover {
+	color: #fff;
+	background-color: #0069d9;
+	border-color: #0062cc;
+}
+
+.frictionless-components-workflow .btn-primary:focus {
+	color: #fff;
+	background-color: #0069d9;
+	border-color: #0062cc;
+	box-shadow: 0 0 0 .2rem rgba(38, 143, 255, .5);
+}
+
+.frictionless-components-workflow .btn-primary:disabled {
+	color: #fff;
+	background-color: #007bff;
+	border-color: #007bff;
+}
+
+.frictionless-components-workflow .btn-success {
+	color: #fff;
+	background-color: #28a745;
+	border-color: #28a745;
+}
+
+.frictionless-components-workflow .btn-success:hover {
+	color: #fff;
+	background-color: #218838;
+	border-color: #1e7e34;
+}
+
+.frictionless-components-workflow .btn-success:focus {
+	color: #fff;
+	background-color: #218838;
+	border-color: #1e7e34;
+	box-shadow: 0 0 0 .2rem rgba(72, 180, 97, .5);
+}
+
+.frictionless-components-workflow .btn-success:disabled {
+	color: #fff;
+	background-color: #28a745;
+	border-color: #28a745;
+}
+
+.frictionless-components-workflow .btn-info {
+	color: #fff;
+	background-color: #17a2b8;
+	border-color: #17a2b8;
+}
+
+.frictionless-components-workflow .btn-info:hover {
+	color: #fff;
+	background-color: #138496;
+	border-color: #117a8b;
+}
+
+.frictionless-components-workflow .btn-info:focus {
+	color: #fff;
+	background-color: #138496;
+	border-color: #117a8b;
+	box-shadow: 0 0 0 .2rem rgba(58, 176, 195, .5);
+}
+
+.frictionless-components-workflow .btn-info:disabled {
+	color: #fff;
+	background-color: #17a2b8;
+	border-color: #17a2b8;
+}
+
+.frictionless-components-workflow .w-100 {
+	width: 100%!important;
+}
+
+.frictionless-components-workflow .mb-2 {
+	margin-bottom: .5rem!important;
+}
+
+.frictionless-components-workflow .mb-3 {
+	margin-bottom: 1rem!important;
+}
+
+@media (min-width:576px) {
+	.frictionless-components-workflow .mb-sm-0 {
+		margin-bottom: 0!important;
+	}
+}
+
+@media (min-width:992px) {
+	.frictionless-components-workflow .mb-lg-0 {
+		margin-bottom: 0!important;
+	}
+}
+
+@media print {
+	.frictionless-components-workflow *,
+	.frictionless-components-workflow ::after,
+	.frictionless-components-workflow ::before {
+		text-shadow: none!important;
+		box-shadow: none!important;
+	}
+}

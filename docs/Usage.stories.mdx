@@ -11,3 +11,14 @@ import frictionlessComponents from 'frictionless-components'
 const element = document.getElementById('app')
 frictionlessComponents.render(frictionlessComponents.Report, {report}, element)
 ```
+
+You can import only a component you need, for example, a Report:
+
+```javascript
+import 'frictionless-components/lib/styles/report.css'
+import { Report } from 'frictionless-components/lib/components/Report'
+import { render } from 'fictionless-components/render'
+
+const element = document.getElementById('app')
+render(Report, {report}, element)
+```
