@@ -1,4 +1,5 @@
 import { IDict } from './common'
+import * as config from './config'
 
 // General
 
@@ -19,4 +20,12 @@ export function splitFilePath(path: string) {
 
 export function exportSchema(columns: IDict[], metadata: IDict) {
   return { fields: columns.map((column) => column.field), ...metadata }
+}
+
+export function getFieldTypes() {
+  return Object.keys(config.FIELD_TYPES_AND_FORMATS)
+}
+
+export function getFieldFormats(type: string) {
+  return config.FIELD_TYPES_AND_FORMATS[type] || []
 }
