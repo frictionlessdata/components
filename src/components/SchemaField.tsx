@@ -18,6 +18,7 @@ export function SchemaField(props: ISchemaFieldProps) {
     console.log(value)
   }
 
+  // Remove Field
   const onRemoveFieldClick = (id: string): void => {
     console.log(id)
   }
@@ -72,7 +73,7 @@ export function SchemaField(props: ISchemaFieldProps) {
             <div className="input-group-addon">
               <div>Format</div>
             </div>
-            <SchemaFieldFormat
+            <Format
               formats={formats}
               format={props.column.field.format}
               onChange={(ev: any) => {
@@ -181,8 +182,9 @@ export function SchemaField(props: ISchemaFieldProps) {
   )
 }
 
-function SchemaFieldFormat(props: { formats: string[]; format: string; onChange: any }) {
-  // Basic
+// Internal
+
+function Format(props: { formats: string[]; format: string; onChange: any }) {
   if (!props.formats.includes('custom')) {
     return (
       <select className="form-control" value={props.format} onChange={props.onChange}>
@@ -191,8 +193,6 @@ function SchemaFieldFormat(props: { formats: string[]; format: string; onChange:
         ))}
       </select>
     )
-
-    // Custom
   } else {
     return (
       <input
