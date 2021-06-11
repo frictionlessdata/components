@@ -1,30 +1,55 @@
 import React, { useState } from 'react'
+import { useAsyncEffect } from 'use-async-effect'
 import { SortableContainer, SortableElement } from 'react-sortable-hoc'
 import { SchemaFeedback, ISchemaFeedbackProps } from './SchemaFeedback'
 import { SchemaPreview } from './SchemaPreview'
 import { SchemaField } from './SchemaField'
+import * as helpers from '../helpers'
 import { IDict } from '../common'
 
 export interface ISchemaProps {
-  error: boolean
-  loading: boolean
+  source?: string | File
+  schema: IDict | File
+  onSave: any
   disablePreview: boolean
-  onSaveClick: any
 }
 
 export function Schema(props: ISchemaProps) {
-  const [columns] = useState([] as IDict[])
-  const [metadata] = useState({} as IDict)
+  const [error, setError] = useState(Error)
+  const [loading, setLoading] = useState(false)
+  const [columns, setColumns] = useState([] as IDict[])
+  const [metadata, setMetadata] = useState({} as IDict)
   const [feedback] = useState({} as ISchemaFeedbackProps['feedback'])
+
+  // Mount
+  useAsyncEffect(async () => {
+    try {
+      const { columns, metadata } = await helpers.importSchema(props.source, props.schema)
+      setLoading(false)
+      setColumns(columns)
+      setMetadata(metadata)
+    } catch (error) {
+      setError(error)
+      setLoading(false)
+    }
+  }, [])
+
+  // Save
+  const onSaveClick = () => {
+    if (props.onSave) {
+      const schema = helpers.exportSchema(columns, metadata)
+      props.onSave(schema, error)
+    }
+  }
 
   // Feedback Reset
   const onFeedbackReset = () => {}
 
-  // Move Field End
-  const onMoveFieldEnd = () => {}
-
   // Add Field
   const onAddFieldClick = () => {}
+
+  // Move Field End
+  const onMoveFieldEnd = () => {}
 
   return (
     <div className="frictionless-components-schema">
@@ -46,7 +71,7 @@ export function Schema(props: ISchemaProps) {
               aria-controls="schema-editor-fields"
               aria-selected="true"
             >
-              {!props.error ? (
+              {!error ? (
                 <span>{!props.disablePreview && <small>1. </small>}Edit</span>
               ) : (
                 <span>Error</span>
@@ -55,7 +80,7 @@ export function Schema(props: ISchemaProps) {
           </li>
 
           {/* Preview */}
-          {!props.loading && !props.error && !props.disablePreview && (
+          {!loading && !error && !props.disablePreview && (
             <li className="nav-item">
               <a
                 className="nav-link button-preview"
@@ -71,7 +96,7 @@ export function Schema(props: ISchemaProps) {
           )}
 
           {/* Save/Close */}
-          {!props.loading && (
+          {!loading && (
             <li className="nav-item">
               <a
                 className="nav-link button-save"
@@ -80,10 +105,10 @@ export function Schema(props: ISchemaProps) {
                 aria-selected="false"
                 onClick={(ev) => {
                   ev.preventDefault()
-                  props.onSaveClick()
+                  onSaveClick()
                 }}
               >
-                {!props.error ? (
+                {!error ? (
                   <span>{!props.disablePreview && <small>3. </small>}Save</span>
                 ) : (
                   <span>Close</span>
@@ -99,7 +124,7 @@ export function Schema(props: ISchemaProps) {
         <SchemaFeedback feedback={feedback} onReset={onFeedbackReset} />
 
         {/* Tab contents */}
-        {!props.loading && !props.error && (
+        {!loading && !error && (
           <div className="tab-content content">
             {/* Edit */}
             <div
