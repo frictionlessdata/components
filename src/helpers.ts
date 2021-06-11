@@ -1,3 +1,5 @@
+import { IDict } from './common'
+
 // General
 
 export function removeBaseUrl(text: string) {
@@ -11,4 +13,10 @@ export function splitFilePath(path: string) {
     base: parts.join('/'),
     sep: parts.length ? '/' : '',
   }
+}
+
+// Schema
+
+export function exportSchema(columns: IDict[], metadata: IDict) {
+  return { fields: columns.map((column) => column.field), ...metadata }
 }
