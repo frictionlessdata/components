@@ -1,6 +1,7 @@
 import { find } from 'lodash'
 import classNames from 'classnames'
 import React, { useState } from 'react'
+import { arrayMove } from 'react-sortable-hoc'
 import { useAsyncEffect } from 'use-async-effect'
 import { SortableContainer, SortableElement } from 'react-sortable-hoc'
 import { SchemaFeedback, ISchemaFeedbackProps } from './SchemaFeedback'
@@ -70,7 +71,11 @@ export function Schema(props: ISchemaProps) {
   }
 
   // Move Field
-  const moveField = () => {}
+  const moveField = (props: { oldIndex: number; newIndex: number }) => {
+    console.log(props.oldIndex)
+    console.log(props.newIndex)
+    setColumns([...arrayMove(columns, props.oldIndex, props.newIndex)])
+  }
 
   return (
     <div className="frictionless-components-schema">
