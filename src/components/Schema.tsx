@@ -15,7 +15,7 @@ export interface ISchemaProps {
 }
 
 export function Schema(props: ISchemaProps) {
-  const [error, setError] = useState(Error)
+  const [error, setError] = useState(null as null | Error)
   const [loading, setLoading] = useState(false)
   const [columns, setColumns] = useState([] as IDict[])
   const [metadata, setMetadata] = useState({} as IDict)
@@ -24,6 +24,7 @@ export function Schema(props: ISchemaProps) {
   // Mount
   useAsyncEffect(async () => {
     try {
+      setLoading(false)
       const { columns, metadata } = await helpers.importSchema(props.source, props.schema)
       setLoading(false)
       setColumns(columns)
