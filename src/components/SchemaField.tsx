@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { IDict } from '../common'
 import * as helpers from '../helpers'
 
@@ -12,6 +12,7 @@ export interface ISchemaFieldProps {
 export function SchemaField(props: ISchemaFieldProps) {
   const types = helpers.getFieldTypes()
   const formats = helpers.getFieldFormats(props.column.field.type)
+  const [isDetails, setIsDetails] = useState(false)
   return (
     <div className="tableschema-ui-editor-field">
       {/* General */}
@@ -75,10 +76,8 @@ export function SchemaField(props: ISchemaFieldProps) {
           <button
             type="button"
             className="btn btn-light btn-lg button-details"
-            data-toggle="collapse"
-            data-target={`#field-details-${props.column.id}`}
             aria-expanded="false"
-            aria-controls={`field-details-${props.column.id}`}
+            onClick={() => setIsDetails(!isDetails)}
           >
             Details
           </button>
@@ -98,7 +97,7 @@ export function SchemaField(props: ISchemaFieldProps) {
       </div>
 
       {/* Details */}
-      <div className="collapse details" id={`field-details-${props.column.id}`}>
+      {isDetails && (
         <div className="panel panel-default">
           <div className="panel-body">
             <div className="row">
@@ -163,7 +162,7 @@ export function SchemaField(props: ISchemaFieldProps) {
             </div>
           </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }
