@@ -162,7 +162,7 @@ export function Schema(props: ISchemaProps) {
                     metadata={metadata}
                     removeField={removeField}
                     updateField={updateField}
-                    helperClass="tableschema-ui-editor-sortable-body"
+                    helperClass="frictionless-components-schema"
                     onSortEnd={moveField}
                     lockAxis="y"
                   />

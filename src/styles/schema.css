@@ -667,13 +667,11 @@
 	font-size: 100%;
 }
 
-.frictionless-components-schema .tableschema-ui-editor-sortable-body {
-	z-index: 10000;
-}
-
 .frictionless-components-schema .tableschema-ui-editor-sortable-list {
+	z-index: 10000;
 	margin: 0;
 	padding: 0;
+    margin-bottom: 1em;
 }
 
 .frictionless-components-schema .tableschema-ui-editor-sortable-item {
