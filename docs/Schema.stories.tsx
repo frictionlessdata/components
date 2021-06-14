@@ -9,8 +9,16 @@ export default {
 } as Meta
 
 const Template: Story<ISchemaProps> = (args) => <Schema {...args} />
+const onSave = () => alert('Clicked on the "Save button"')
 
-export const Default = Template.bind({})
-Default.args = {
-  onSave: () => alert('Clicked on the "Save button"'),
+export const Empty = Template.bind({})
+Empty.args = {
+  onSave,
+}
+
+export const Source = Template.bind({})
+Source.args = {
+  source:
+    'https://raw.githubusercontent.com/frictionlessdata/frictionless-py/main/data/table.csv',
+  onSave,
 }
