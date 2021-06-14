@@ -87,7 +87,6 @@
     "npm-check-updates": "^11.4.1",
     "prettier": "^2.2.1",
     "react": "^17.0.2",
-    "react-addons-test-utils": "^15.6.2",
     "react-dom": "^17.0.2",
     "react-hot-loader": "^4.13.0",
     "react-test-renderer": "^17.0.2",
