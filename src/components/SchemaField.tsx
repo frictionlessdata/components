@@ -5,25 +5,13 @@ import * as helpers from '../helpers'
 export interface ISchemaFieldProps {
   column: IDict
   metadata: IDict
+  removeField: any
+  updateField: any
 }
 
 export function SchemaField(props: ISchemaFieldProps) {
   const types = helpers.getFieldTypes()
   const formats = helpers.getFieldFormats(props.column.field.type)
-
-  // Field Change
-  const onFieldPropertyChange = (id: string, name: string, value: any): void => {
-    console.log(id)
-    console.log(name)
-    console.log(value)
-  }
-
-  // Remove Field
-  const onRemoveFieldClick = (id: string): void => {
-    console.log(id)
-  }
-
-  // Render
   return (
     <div className="tableschema-ui-editor-field">
       {/* General */}
@@ -39,9 +27,7 @@ export function SchemaField(props: ISchemaFieldProps) {
               type="text"
               className="form-control"
               defaultValue={props.column.field.name}
-              onBlur={(ev) =>
-                onFieldPropertyChange(props.column.id, 'name', ev.target.value)
-              }
+              onBlur={(ev) => props.updateField(props.column.id, 'name', ev.target.value)}
             />
           </div>
         </div>
@@ -56,8 +42,8 @@ export function SchemaField(props: ISchemaFieldProps) {
               className="form-control"
               value={props.column.field.type}
               onChange={(ev) => {
-                onFieldPropertyChange(props.column.id, 'format', 'default')
-                onFieldPropertyChange(props.column.id, 'type', ev.target.value)
+                props.updateField(props.column.id, 'format', 'default')
+                props.updateField(props.column.id, 'type', ev.target.value)
               }}
             >
               {types.map((type) => (
@@ -77,7 +63,7 @@ export function SchemaField(props: ISchemaFieldProps) {
               formats={formats}
               format={props.column.field.format}
               onChange={(ev: any) => {
-                onFieldPropertyChange(props.column.id, 'format', ev.target.value)
+                props.updateField(props.column.id, 'format', ev.target.value)
               }}
             />
           </div>
@@ -103,7 +89,7 @@ export function SchemaField(props: ISchemaFieldProps) {
             className="btn btn-light btn-lg button-remove"
             onClick={(ev) => {
               ev.preventDefault()
-              onRemoveFieldClick(props.column.id)
+              props.removeField(props.column.id)
             }}
           >
             Remove
@@ -127,7 +113,7 @@ export function SchemaField(props: ISchemaFieldProps) {
                     id={`field-title-${props.column.id}`}
                     defaultValue={props.column.field.title}
                     onBlur={(ev) =>
-                      onFieldPropertyChange(props.column.id, 'title', ev.target.value)
+                      props.updateField(props.column.id, 'title', ev.target.value)
                     }
                   />
                 </div>
@@ -144,7 +130,7 @@ export function SchemaField(props: ISchemaFieldProps) {
                     defaultValue={props.column.field.description}
                     onBlur={(ev) => {
                       const value = ev.target.value
-                      onFieldPropertyChange(props.column.id, 'description', value)
+                      props.updateField(props.column.id, 'description', value)
                     }}
                   />
                 </div>

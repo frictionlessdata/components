@@ -1,3 +1,4 @@
+import { find } from 'lodash'
 import React, { useState } from 'react'
 import { useAsyncEffect } from 'use-async-effect'
 import { SortableContainer, SortableElement } from 'react-sortable-hoc'
@@ -36,7 +37,7 @@ export function Schema(props: ISchemaProps) {
   }, [])
 
   // Save
-  const onSaveClick = () => {
+  const saveSchema = () => {
     if (props.onSave) {
       const schema = helpers.exportSchema(columns, metadata)
       props.onSave(schema, error)
@@ -44,13 +45,30 @@ export function Schema(props: ISchemaProps) {
   }
 
   // Feedback Reset
-  const onFeedbackReset = () => {}
+  const resetFeedback = () => {}
 
   // Add Field
-  const onAddFieldClick = () => {}
+  const addField = () => {
+    setColumns([...columns, helpers.createColumn(columns.length)])
+  }
 
-  // Move Field End
-  const onMoveFieldEnd = () => {}
+  // Remove Field
+  const removeField = (id: number): void => {
+    const newColumns = columns.filter((column) => column.id !== id)
+    setColumns([...newColumns])
+  }
+
+  // Update Field
+  const updateField = (id: number, name: string, value: any): void => {
+    const column = find(columns, (column) => column.id === id)
+    if (column) {
+      column.field[name] = value
+      setColumns([...columns])
+    }
+  }
+
+  // Move Field
+  const moveField = () => {}
 
   return (
     <div className="frictionless-components-schema">
@@ -106,7 +124,7 @@ export function Schema(props: ISchemaProps) {
                 aria-selected="false"
                 onClick={(ev) => {
                   ev.preventDefault()
-                  onSaveClick()
+                  saveSchema()
                 }}
               >
                 {!error ? (
@@ -122,7 +140,7 @@ export function Schema(props: ISchemaProps) {
         <hr />
 
         {/* Feedback */}
-        <SchemaFeedback feedback={feedback} onReset={onFeedbackReset} />
+        <SchemaFeedback feedback={feedback} onReset={resetFeedback} />
 
         {/* Tab contents */}
         {!loading && !error && (
@@ -139,8 +157,10 @@ export function Schema(props: ISchemaProps) {
                 <SortableFields
                   columns={columns}
                   metadata={metadata}
+                  removeField={removeField}
+                  updateField={updateField}
                   helperClass="tableschema-ui-editor-sortable-body"
-                  onSortEnd={onMoveFieldEnd}
+                  onSortEnd={moveField}
                   lockAxis="y"
                 />
 
@@ -151,7 +171,7 @@ export function Schema(props: ISchemaProps) {
                     className="btn btn-light btn-lg btn-block button-add"
                     onClick={(ev) => {
                       ev.preventDefault()
-                      onAddFieldClick()
+                      addField()
                     }}
                   >
                     Add Field
@@ -179,7 +199,7 @@ export function Schema(props: ISchemaProps) {
 // Internal
 
 const SortableFields = SortableContainer(
-  (props: { columns: IDict[]; metadata: IDict }) => (
+  (props: { columns: IDict[]; metadata: IDict; removeField: any; updateField: any }) => (
     <ul className="tableschema-ui-editor-sortable-list">
       {props.columns.map((column: IDict, index: number) => (
         <SortableField
@@ -187,14 +207,24 @@ const SortableFields = SortableContainer(
           index={index}
           column={column}
           metadata={props.metadata}
+          removeField={props.removeField}
+          updateField={props.updateField}
         />
       ))}
     </ul>
   )
 )
 
-const SortableField = SortableElement((props: { column: IDict; metadata: IDict }) => (
-  <li className="tableschema-ui-editor-sortable-item">
-    <SchemaField key={props.column.id} column={props.column} metadata={props.metadata} />
-  </li>
-))
+const SortableField = SortableElement(
+  (props: { column: IDict; metadata: IDict; removeField: any; updateField: any }) => (
+    <li className="tableschema-ui-editor-sortable-item">
+      <SchemaField
+        key={props.column.id}
+        column={props.column}
+        metadata={props.metadata}
+        removeField={props.removeField}
+        updateField={props.updateField}
+      />
+    </li>
+  )
+)

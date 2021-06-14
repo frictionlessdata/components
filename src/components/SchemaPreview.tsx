@@ -10,8 +10,6 @@ export interface ISchemaPreviewProps {
 export function SchemaPreview(props: ISchemaPreviewProps) {
   const schema = helpers.exportSchema(props.columns, props.metadata)
   const schemaAsText = JSON.stringify(schema, null, 2)
-
-  // Render
   return (
     <div className="tableschema-ui-editor-preview">
       <pre>

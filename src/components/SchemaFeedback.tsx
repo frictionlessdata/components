@@ -11,7 +11,6 @@ export interface ISchemaFeedbackProps {
 }
 
 export function SchemaFeedback(props: ISchemaFeedbackProps) {
-  // Render
   return (
     <div className="tableschema-ui-editor-feedback">
       <div className={classNames('alert', `alert-${props.feedback.type}`)}>

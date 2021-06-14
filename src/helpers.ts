@@ -62,7 +62,7 @@ export function getFieldFormats(type: string) {
   return config.FIELD_TYPES_AND_FORMATS[type] || []
 }
 
-export function createColumn(index: number, field: IDict, values: any[]) {
+export function createColumn(index: number, field: IDict = {}, values: any[] = []) {
   const formats = getFieldFormats(field.type)
   const name = field.name || `field${index + 1}`
   const type = formats.length ? field.type : 'string'
