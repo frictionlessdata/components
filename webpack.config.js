@@ -19,6 +19,9 @@ const webpackConfig = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js'],
   },
+  node: {
+    fs: 'empty',
+  },
   module: {
     rules: [
       {

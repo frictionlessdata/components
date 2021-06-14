@@ -35,12 +35,16 @@
   "dependencies": {
     "@types/lodash": "^4.14.168",
     "@types/marked": "^2.0.1",
+    "@types/uuid": "^8.3.0",
     "classnames": "^2.3.1",
     "jsonschema": "^1.4.0",
     "jszip": "^3.6.0",
     "lodash": "^4.17.21",
     "marked": "^2.0.1",
-    "use-async-effect": "^2.2.3"
+    "react-sortable-hoc": "^2.0.0",
+    "tableschema": "^1.12.4",
+    "use-async-effect": "^2.2.3",
+    "uuid": "^8.3.2"
   },
   "peerDependencies": {
     "react": "^17.0.2",
