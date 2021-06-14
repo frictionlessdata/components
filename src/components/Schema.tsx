@@ -72,8 +72,6 @@ export function Schema(props: ISchemaProps) {
 
   // Move Field
   const moveField = (props: { oldIndex: number; newIndex: number }) => {
-    console.log(props.oldIndex)
-    console.log(props.newIndex)
     setColumns([...arrayMove(columns, props.oldIndex, props.newIndex)])
   }
 
