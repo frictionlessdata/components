@@ -232,33 +232,33 @@
 	margin-left: -15px;
 }
 
-.frictionless-components-schema .col-lg-2,
-.frictionless-components-schema .col-lg-3,
-.frictionless-components-schema .col-lg-4,
-.frictionless-components-schema .col-lg-8 {
+.frictionless-components-schema .col-md-2,
+.frictionless-components-schema .col-md-3,
+.frictionless-components-schema .col-md-4,
+.frictionless-components-schema .col-md-8 {
 	position: relative;
 	min-height: 1px;
 	padding-right: 15px;
 	padding-left: 15px;
 }
 
-@media (min-width:1200px) {
-	.frictionless-components-schema .col-lg-2,
-	.frictionless-components-schema .col-lg-3,
-	.frictionless-components-schema .col-lg-4,
-	.frictionless-components-schema .col-lg-8 {
+@media (min-width:970px) {
+	.frictionless-components-schema .col-md-2,
+	.frictionless-components-schema .col-md-3,
+	.frictionless-components-schema .col-md-4,
+	.frictionless-components-schema .col-md-8 {
 		float: left;
 	}
-	.frictionless-components-schema .col-lg-8 {
+	.frictionless-components-schema .col-md-8 {
 		width: 66.66666667%;
 	}
-	.frictionless-components-schema .col-lg-4 {
+	.frictionless-components-schema .col-md-4 {
 		width: 33.33333333%;
 	}
-	.frictionless-components-schema .col-lg-3 {
+	.frictionless-components-schema .col-md-3 {
 		width: 25%;
 	}
-	.frictionless-components-schema .col-lg-2 {
+	.frictionless-components-schema .col-md-2 {
 		width: 16.66666667%;
 	}
 }
@@ -601,7 +601,7 @@
 	display: none;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 970px) {
 	.frictionless-components-schema .tableschema-ui-editor-field .name .handle {
 		cursor: row-resize;
 		display: block;
@@ -624,9 +624,10 @@
 	width: 50%;
 	padding-left: 0;
 	padding-right: 0;
+    line-height: 1.2;
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 970px) {
 	.frictionless-components-schema .tableschema-ui-editor-field .button-details,
 	.frictionless-components-schema .tableschema-ui-editor-field .button-remove {
 		width: 4.5vw;
@@ -636,7 +637,7 @@
 	}
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 970px) {
 	.frictionless-components-schema .tableschema-ui-editor-field .details {
 		margin-left: 2.5em;
 	}
