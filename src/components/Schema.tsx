@@ -1,4 +1,5 @@
 import { find } from 'lodash'
+import classNames from 'classnames'
 import React, { useState } from 'react'
 import { useAsyncEffect } from 'use-async-effect'
 import { SortableContainer, SortableElement } from 'react-sortable-hoc'
@@ -16,6 +17,7 @@ export interface ISchemaProps {
 }
 
 export function Schema(props: ISchemaProps) {
+  const [tab, setTab] = useState('edit' as 'edit' | 'preview')
   const [error, setError] = useState(null as null | Error)
   const [loading, setLoading] = useState(false)
   const [columns, setColumns] = useState([] as IDict[])
@@ -81,14 +83,14 @@ export function Schema(props: ISchemaProps) {
           </li>
 
           {/* Edit/Error */}
-          <li className="nav-item active">
+          <li className={classNames('nav-item', { active: tab === 'edit' })}>
             <a
               className="nav-link button-edit"
               data-toggle="tab"
-              href="#schema-editor-fields"
               role="tab"
-              aria-controls="schema-editor-fields"
-              aria-selected="true"
+              onClick={() => {
+                setTab('edit')
+              }}
             >
               {!error ? (
                 <span>{!props.disablePreview && <small>1. </small>}Edit</span>
@@ -100,14 +102,14 @@ export function Schema(props: ISchemaProps) {
 
           {/* Preview */}
           {!loading && !error && !props.disablePreview && (
-            <li className="nav-item">
+            <li className={classNames('nav-item', { active: tab === 'preview' })}>
               <a
                 className="nav-link button-preview"
                 data-toggle="tab"
-                href="#schema-editor-preview"
                 role="tab"
-                aria-controls="schema-editor-preview"
-                aria-selected="false"
+                onClick={() => {
+                  setTab('preview')
+                }}
               >
                 <small>2. </small>Preview
               </a>
@@ -119,7 +121,6 @@ export function Schema(props: ISchemaProps) {
             <li className="nav-item">
               <a
                 className="nav-link button-save"
-                href="#"
                 role="tab"
                 aria-selected="false"
                 onClick={(ev) => {
@@ -146,49 +147,49 @@ export function Schema(props: ISchemaProps) {
         {!loading && !error && (
           <div className="tab-content content">
             {/* Edit */}
-            <div
-              className="tab-pane active"
-              id="schema-editor-fields"
-              role="tabpanel"
-              aria-labelledby="home-tab"
-            >
-              <div className="form-group fields">
-                {/* List fields */}
-                <SortableFields
-                  columns={columns}
-                  metadata={metadata}
-                  removeField={removeField}
-                  updateField={updateField}
-                  helperClass="tableschema-ui-editor-sortable-body"
-                  onSortEnd={moveField}
-                  lockAxis="y"
-                />
+            {tab === 'edit' && (
+              <div
+                role="tabpanel"
+                className={classNames('tab-pane', { active: tab === 'edit' })}
+              >
+                <div className="form-group fields">
+                  {/* List fields */}
+                  <SortableFields
+                    columns={columns}
+                    metadata={metadata}
+                    removeField={removeField}
+                    updateField={updateField}
+                    helperClass="tableschema-ui-editor-sortable-body"
+                    onSortEnd={moveField}
+                    lockAxis="y"
+                  />
 
-                {/* Add field */}
-                <div>
-                  <button
-                    type="button"
-                    className="btn btn-light btn-lg btn-block button-add"
-                    onClick={(ev) => {
-                      ev.preventDefault()
-                      addField()
-                    }}
-                  >
-                    Add Field
-                  </button>
+                  {/* Add field */}
+                  <div>
+                    <button
+                      type="button"
+                      className="btn btn-light btn-lg btn-block button-add"
+                      onClick={(ev) => {
+                        ev.preventDefault()
+                        addField()
+                      }}
+                    >
+                      Add Field
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
             {/* Preview */}
-            <div
-              className="tab-pane"
-              id="schema-editor-preview"
-              role="tabpanel"
-              aria-labelledby="profile-tab"
-            >
-              <SchemaPreview columns={columns} metadata={metadata} />
-            </div>
+            {tab === 'preview' && (
+              <div
+                role="tabpanel"
+                className={classNames('tab-pane', { active: tab === 'preview' })}
+              >
+                <SchemaPreview columns={columns} metadata={metadata} />
+              </div>
+            )}
           </div>
         )}
       </div>

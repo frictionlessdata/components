@@ -678,3 +678,7 @@
 .frictionless-components-schema .tableschema-ui-editor-sortable-item {
 	list-style-type: none;
 }
+
+.frictionless-components-schema .nav-link {
+	cursor: pointer;
+}

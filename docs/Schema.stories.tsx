@@ -12,5 +12,5 @@ const Template: Story<ISchemaProps> = (args) => <Schema {...args} />
 
 export const Default = Template.bind({})
 Default.args = {
-  // token: 'token',
+  onSave: () => alert('Clicked on the "Save button"'),
 }
