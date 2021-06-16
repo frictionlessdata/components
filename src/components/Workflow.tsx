@@ -210,7 +210,7 @@ export function Workflow(props: IWorkflowProps) {
             <div className="form-group mt-2">
               <textarea
                 spellCheck="false"
-                style={{ color: '#777' }}
+                style={{ color: '#777', minHeight: '6em', marginTop: '1em' }}
                 className="form-control"
                 defaultValue={`[![${
                   flow.charAt(0).toUpperCase() + flow.slice(1)
