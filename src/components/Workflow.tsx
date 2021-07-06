@@ -267,7 +267,7 @@ async function loadReport(props: {
     const path = `/repos/${user}/${repo}/actions/runs/${runId}/artifacts`
     const res = await makeRequest(path)
     const data = await res.json()
-    const artifact = data.artifacts[0]
+    const artifact = data.artifacts.filter((item: IDict) => item.name === 'report')[0]
     return artifact.id
   }
 
