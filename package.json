@@ -33,6 +33,7 @@
     "update": "ncu -u"
   },
   "dependencies": {
+    "@storybook/addon-google-analytics": "^6.2.9",
     "@types/lodash": "^4.14.168",
     "@types/marked": "^2.0.1",
     "@types/uuid": "^8.3.0",
