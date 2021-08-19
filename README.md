@@ -6,7 +6,7 @@
 [![Coverage](https://img.shields.io/codecov/c/github/frictionlessdata/components/main)](https://codecov.io/gh/frictionlessdata/components)
 [![Registry](https://img.shields.io/npm/v/frictionless-components.svg)](https://www.npmjs.com/package/frictionless-components)
 [![Codebase](https://img.shields.io/badge/github-main-brightgreen)](https://github.com/frictionlessdata/components)
-[![Support](https://img.shields.io/badge/chat-discord-brightgreen)](https://discord.com/channels/695635777199145130/695635777199145133)
+[![Support](https://img.shields.io/badge/support-discord-brightgreen)](https://discordapp.com/invite/Sewv6av)
 
 Visual components for the Frictionless Data project in TypeScript/React.
 
