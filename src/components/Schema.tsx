@@ -34,6 +34,7 @@ export function Schema(props: ISchemaProps) {
       setColumns(columns)
       setMetadata(metadata)
     } catch (error) {
+      // @ts-ignore
       setError(error)
       setLoading(false)
     }
