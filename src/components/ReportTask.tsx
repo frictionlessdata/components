@@ -21,9 +21,15 @@ export function ReportTask(props: IReportTaskProps) {
       <h4 className="file-heading">
         <div className="inner">
           <a className="file-name" href={task.resource.path}>
-            <strong>{splitTableFile.base}</strong>
-            <strong>{splitTableFile.sep}</strong>
-            <strong>{splitTableFile.name}</strong>
+            {task.resource.path ? (
+              <span>
+                <strong>{splitTableFile.base}</strong>
+                <strong>{splitTableFile.sep}</strong>
+                <strong>{splitTableFile.name}</strong>
+              </span>
+            ) : (
+              <strong>task.resource.name</strong>
+            )}
             {!task.valid && (
               <span
                 className="badge"
