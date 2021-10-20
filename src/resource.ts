@@ -1,5 +1,6 @@
 export interface IResource {
   path: string
+  name: string
   schema: ISchema
 }
 

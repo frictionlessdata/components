@@ -28,7 +28,7 @@ export function ReportTask(props: IReportTaskProps) {
                 <strong>{splitTableFile.name}</strong>
               </span>
             ) : (
-              <strong>task.resource.name</strong>
+              <strong>{task.resource.name}</strong>
             )}
             {!task.valid && (
               <span
