@@ -12,7 +12,7 @@ export interface IReportTaskProps {
 
 export function ReportTask(props: IReportTaskProps) {
   const { task, taskNumber, tasksCount } = props
-  const taskFile = helpers.removeBaseUrl(task.resource.path)
+  const taskFile = helpers.removeBaseUrl(task.resource.path || '')
   const splitTableFile = helpers.splitFilePath(taskFile)
   const reportErrors = getReportErrors(task)
   return (
