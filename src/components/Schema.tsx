@@ -16,7 +16,7 @@ export interface ISchemaProps {
   onSave: any
   onSchemaChanged?: (schema: any, error: any) => void
   disablePreview: boolean
-  disableSave: boolean
+  disableSave?: boolean
 }
 
 export function Schema(props: ISchemaProps) {
