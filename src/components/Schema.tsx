@@ -14,7 +14,7 @@ export interface ISchemaProps {
   source?: string | File
   schema: IDict | File
   onSave: any
-  onSchemaChanged?: (schema: any, error: any) => void
+  onSchemaChange?: (schema: any, error: any) => void
   disablePreview: boolean
   disableSave?: boolean
 }
@@ -48,9 +48,9 @@ export function Schema(props: ISchemaProps) {
   )
 
   useEffect(() => {
-    if (props.onSchemaChanged) {
+    if (props.onSchemaChange) {
       const schema = memoizedExportSchema()
-      props.onSchemaChanged(schema, error)
+      props.onSchemaChange(schema, error)
     }
   }, [columns, metadata, error])
 
