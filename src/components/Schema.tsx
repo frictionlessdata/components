@@ -1,6 +1,6 @@
 import { find } from 'lodash'
 import classNames from 'classnames'
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { arrayMove } from 'react-sortable-hoc'
 import { useAsyncEffect } from 'use-async-effect'
 import { SortableContainer, SortableElement } from 'react-sortable-hoc'
@@ -14,7 +14,9 @@ export interface ISchemaProps {
   source?: string | File
   schema: IDict | File
   onSave: any
+  onSchemaChange?: (schema: any, error: any) => void
   disablePreview: boolean
+  disableSave?: boolean
 }
 
 export function Schema(props: ISchemaProps) {
@@ -40,10 +42,22 @@ export function Schema(props: ISchemaProps) {
     }
   }, [])
 
+  const memoizedExportSchema = useCallback(
+    () => helpers.exportSchema(columns, metadata),
+    [columns, metadata]
+  )
+
+  useEffect(() => {
+    if (props.onSchemaChange) {
+      const schema = memoizedExportSchema()
+      props.onSchemaChange(schema, error)
+    }
+  }, [columns, metadata, error])
+
   // Save
   const saveSchema = () => {
     if (props.onSave) {
-      const schema = helpers.exportSchema(columns, metadata)
+      const schema = memoizedExportSchema()
       props.onSave(schema, error)
     }
   }
@@ -76,6 +90,8 @@ export function Schema(props: ISchemaProps) {
     setColumns([...arrayMove(columns, props.oldIndex, props.newIndex)])
   }
 
+  const showTabNumber = !props.disablePreview && !props.disableSave
+
   return (
     <div className="frictionless-components-schema">
       <div className="tableschema-ui-editor-schema">
@@ -97,7 +113,7 @@ export function Schema(props: ISchemaProps) {
               }}
             >
               {!error ? (
-                <span>{!props.disablePreview && <small>1. </small>}Edit</span>
+                <span>{showTabNumber && <small>1. </small>}Edit</span>
               ) : (
                 <span>Error</span>
               )}
@@ -115,13 +131,13 @@ export function Schema(props: ISchemaProps) {
                   setTab('preview')
                 }}
               >
-                <small>2. </small>Preview
+                {showTabNumber && <small>2. </small>}Preview
               </a>
             </li>
           )}
 
           {/* Save/Close */}
-          {!loading && (
+          {!loading && !props.disableSave && (
             <li className="nav-item">
               <a
                 className="nav-link button-save"
@@ -133,7 +149,7 @@ export function Schema(props: ISchemaProps) {
                 }}
               >
                 {!error ? (
-                  <span>{!props.disablePreview && <small>3. </small>}Save</span>
+                  <span>{showTabNumber && <small>3. </small>}Save</span>
                 ) : (
                   <span>Close</span>
                 )}
