@@ -5,21 +5,6 @@ import { Table } from 'tableschema'
 import { IDict } from './common'
 import * as config from './config'
 
-// General
-
-export function removeBaseUrl(text: string) {
-  return text.replace(/https:\/\/raw\.githubusercontent\.com\/\S*?\/\S*?\/\S*?\//g, '')
-}
-
-export function splitFilePath(path: string) {
-  const parts = path.split('/')
-  return {
-    name: parts.pop(),
-    base: parts.join('/'),
-    sep: parts.length ? '/' : '',
-  }
-}
-
 // Schema
 
 export async function importSchema(source?: string | File, schema?: IDict | File) {

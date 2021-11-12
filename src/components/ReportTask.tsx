@@ -2,7 +2,6 @@ import React from 'react'
 import classNames from 'classnames'
 import { ReportError } from './ReportError'
 import { IReportTask, IReportError } from '../report'
-import * as helpers from '../helpers'
 
 export interface IReportTaskProps {
   task: IReportTask
@@ -12,8 +11,8 @@ export interface IReportTaskProps {
 
 export function ReportTask(props: IReportTaskProps) {
   const { task, taskNumber, tasksCount } = props
-  const taskFile = helpers.removeBaseUrl(task.resource.path || '')
-  const splitTableFile = helpers.splitFilePath(taskFile)
+  const taskFile = removeBaseUrl(task.resource.path || '')
+  const splitTableFile = splitFilePath(taskFile)
   const reportErrors = getReportErrors(task)
   return (
     <div className={classNames({ file: true, valid: task.valid, invalid: !task.valid })}>
@@ -56,6 +55,19 @@ export function ReportTask(props: IReportTaskProps) {
 }
 
 // Helpers
+
+export function removeBaseUrl(text: string) {
+  return text.replace(/https:\/\/raw\.githubusercontent\.com\/\S*?\/\S*?\/\S*?\//g, '')
+}
+
+export function splitFilePath(path: string) {
+  const parts = path.split('/')
+  return {
+    name: parts.pop(),
+    base: parts.join('/'),
+    sep: parts.length ? '/' : '',
+  }
+}
 
 export function getReportErrors(task: IReportTask) {
   const reportErrors: { [code: string]: IReportError } = {}
