@@ -3,7 +3,7 @@
   "version": "1.1.2",
   "license": "MIT",
   "author": "roll <eskarev@gmail.com>",
-  "description": "Data integration components for TypeScript/React that implements Frictionless Data concepts in visual UI.",
+  "description": "Data integration components for TypeScript/React that implement Frictionless Data concepts in visual UI.",
   "homepage": "https://github.com/frictionlessdata/frictionless-ui",
   "bugs": "https://github.com/frictionlessdata/frictionless-ui/issues",
   "repository": "github:frictionlessdata/frictionless-ui",
