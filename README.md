@@ -8,7 +8,7 @@
 [![Codebase](https://img.shields.io/badge/github-main-brightgreen)](https://github.com/frictionlessdata/components)
 [![Support](https://img.shields.io/badge/support-discord-brightgreen)](https://discordapp.com/invite/Sewv6av)
 
-Visual components for the Frictionless Data project in TypeScript/React.
+Data integration components for TypeScript/React that implements Frictionless Data concepts in visual UI.
 
 ## Purpose
 
