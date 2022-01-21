@@ -80,6 +80,21 @@ export function getFieldFormats(type: string) {
   return config.FIELD_TYPES_AND_FORMATS[type] || []
 }
 
+export function createColumns(_fields: IDict[] = [], primaryKeys: string[] = [], values: any[] = []) {
+  const columns: IDict<any>[] = []
+  _fields.forEach(field => {
+    const formats = getFieldFormats(field.type)
+    const name: string = field.name || `field ${index + 1}`
+    const title = field.title || `Title`
+    const description = field.description || `Description`
+    const type = formats.length ? field.type : 'string'
+    const format = formats.includes(field.format) ? field.format : 'default'
+    const primaryKey = primaryKeys.includes(name)
+    columns.push({ id: uuid4(), field: { ...field, name, title, description, type, format, primaryKey }, values })
+  })
+  return columns
+}
+
 export function createColumn(index: number, field: IDict = {}, primaryKey: boolean = false, values: any[] = []) {
   const formats = getFieldFormats(field.type)
   const name = field.name || `field ${index + 1}`

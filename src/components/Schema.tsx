@@ -62,6 +62,11 @@ export function Schema(props: ISchemaProps) {
     }
   }
 
+  const setSchemaColumns = (columns: IDict<any>[], primaryKeys: string[] = []) => {
+    const data = helpers.createColumns(columns, primaryKeys)
+    setColumns([...data])
+  }
+
   // Feedback Reset
   const resetFeedback = () => {}
 
@@ -81,7 +86,7 @@ export function Schema(props: ISchemaProps) {
     const column = find(columns, (column) => column.id === id)
     if (column) {
       column.field[name] = value
-      setColumns([...columns])     
+      setColumns([...columns])
     }
   }
 
@@ -207,7 +212,7 @@ export function Schema(props: ISchemaProps) {
                 role="tabpanel"
                 className={classNames('tab-pane', { active: tab === 'preview' })}
               >
-                <SchemaPreview columns={columns} metadata={metadata} />
+                <SchemaPreview setSchemaColumns={setSchemaColumns} columns={columns} metadata={metadata} />
               </div>
             )}
           </div>
