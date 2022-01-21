@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { IDict } from '../common'
 import * as helpers from '../helpers'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
 export interface ISchemaFieldProps {
   column: IDict
   metadata: IDict
@@ -12,13 +13,13 @@ export interface ISchemaFieldProps {
 export function SchemaField(props: ISchemaFieldProps) {
   const types = helpers.getFieldTypes()
   const formats = helpers.getFieldFormats(props.column.field.type)
-  const [isDetails, setIsDetails] = useState(false)
+  
   return (
     <div className="tableschema-ui-editor-field">
       {/* General */}
       <div className="row">
         {/* Name */}
-        <div className="col-md-4 name">
+        <div className="col-md-2 name">
           <div className="handle">&equiv;</div>
           <div className="input-group">
             <div className="input-group-addon">
@@ -33,8 +34,38 @@ export function SchemaField(props: ISchemaFieldProps) {
           </div>
         </div>
 
+        {/* Title */}
+        <div className="col-md-2 title">
+          <div className="input-group">
+            <div className="input-group-addon">
+              <div>Title</div>
+            </div>
+            <input
+              type="text"
+              className="form-control"
+              defaultValue={props.column.field.title}
+              onBlur={(ev) => props.updateField(props.column.id, 'title', ev.target.value)}
+            />
+          </div>
+        </div>
+
+         {/* Description */}
+         <div className="col-md-2">
+          <div className="input-group">
+            <div className="input-group-addon">
+              <div>Description</div>
+            </div>
+            <input
+              type="text"
+              className="form-control"
+              defaultValue={props.column.field.description}
+              onBlur={(ev) => props.updateField(props.column.id, 'description', ev.target.value)}
+            />
+          </div>
+        </div>
+
         {/* Type */}
-        <div className="col-md-3 type">
+        <div className="col-md-2 type">
           <div className="input-group">
             <div className="input-group-addon">
               <div>Type</div>
@@ -55,7 +86,7 @@ export function SchemaField(props: ISchemaFieldProps) {
         </div>
 
         {/* Format */}
-        <div className="col-md-3 format">
+        <div className="col-md-2">
           <div className="input-group">
             <div className="input-group-addon">
               <div>Format</div>
@@ -70,18 +101,22 @@ export function SchemaField(props: ISchemaFieldProps) {
           </div>
         </div>
 
-        {/* Controls */}
-        <div className="col-md-2 controls">
-          {/* Details */}
-          <button
-            type="button"
-            className="btn btn-light btn-lg button-details"
-            aria-expanded="false"
-            onClick={() => setIsDetails(!isDetails)}
-          >
-            Details
-          </button>
+         {/* PrimaryKey */}
+         <div className="col-md-1">
+          <div className="input-group">
+            <div className="input-group-addon">
+              <div>Primary Key</div>
+            </div>
+            <Checkbox
+              format={props.column.field.primaryKey}
+              onChange={(ev: any) => {
+                props.updateField(props.column.id, 'primaryKey', ev.currentTarget.checked)
+              }}
+            />
+          </div>       
+        </div>
 
+        <div className="col-md-1">        
           {/* Remove */}
           <button
             type="button"
@@ -91,80 +126,18 @@ export function SchemaField(props: ISchemaFieldProps) {
               props.removeField(props.column.id)
             }}
           >
-            Remove
-          </button>
+          <FontAwesomeIcon
+              onClick={(ev) => {
+                ev.preventDefault()
+                props.removeField(props.column.id)
+              }}
+              icon={faTimesCircle}
+              className="fa-icon"
+          />
+          {/* <i className="danger far fa-times-circle"></i> */}
+           </button>
         </div>
       </div>
-
-      {/* Details */}
-      {isDetails && (
-        <div className="details">
-          <div className="panel panel-default">
-            <div className="panel-body">
-              <div className="row">
-                {/* Extra fields */}
-                <div className="col-md-4 extra">
-                  {/* Title */}
-                  <div className="form-group">
-                    <label htmlFor={`field-title-${props.column.id}`}>Title</label>
-                    <input
-                      type="text"
-                      className="form-control"
-                      id={`field-title-${props.column.id}`}
-                      defaultValue={props.column.field.title}
-                      onBlur={(ev) =>
-                        props.updateField(props.column.id, 'title', ev.target.value)
-                      }
-                    />
-                  </div>
-
-                  {/* Description */}
-                  <div className="form-group">
-                    <label htmlFor={`field-description-${props.column.id}`}>
-                      Description
-                    </label>
-                    <textarea
-                      rows={5}
-                      className="form-control"
-                      id={`field-description-${props.column.id}`}
-                      defaultValue={props.column.field.description}
-                      onBlur={(ev) => {
-                        const value = ev.target.value
-                        props.updateField(props.column.id, 'description', value)
-                      }}
-                    />
-                  </div>
-                </div>
-
-                {/* Sample data */}
-                <div className="col-md-8 data">
-                  {!!(props.column.values || []).length && (
-                    <div className="form-group">
-                      <label>
-                        Data <small>(first 5 values)</small>
-                      </label>
-                      <table className="table table-condensed">
-                        <thead>
-                          <tr>
-                            <th>{props.column.field.name}</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {props.column.values.map((value: any, index: any) => (
-                            <tr key={index}>
-                              <td>{value}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   )
 }
@@ -190,4 +163,17 @@ function Format(props: { formats: string[]; format: string; onChange: any }) {
       />
     )
   }
+}
+
+function Checkbox(props: { format: boolean; onChange: any }) {
+    return (
+      <div className="form-control">
+        <input
+          type="checkbox"
+          checked={props.format}
+          onChange={props.onChange}
+        />
+      </div>
+    )
+  
 }

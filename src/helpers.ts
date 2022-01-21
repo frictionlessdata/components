@@ -22,7 +22,8 @@ export async function importSchema(source?: string | File, schema?: IDict | File
       const values = rows
         .map((row: any) => row[index])
         .filter((value: any) => value !== undefined)
-      columns.push(createColumn(index, field, values))
+        const primaryKey = field.name.indexOf(table.schema.descriptor.primaryKey) === -1 ? true : false;
+      columns.push(createColumn(index, field, primaryKey, values))
     }
   }
 
@@ -30,13 +31,45 @@ export async function importSchema(source?: string | File, schema?: IDict | File
   let metadata = {}
   if (table.schema) {
     metadata = omit(table.schema.descriptor, 'fields')
+    metadata = omit(table.schema.descriptor, 'primaryKey')
   }
 
   return { columns, metadata }
 }
 
 export function exportSchema(columns: IDict[], metadata: IDict) {
-  return { fields: columns.map((column) => column.field), ...metadata }
+  let obj = {};
+  let primaryKey = [];
+  metadata = omit(metadata, 'fields')
+  if (columns.some((column) => column.field.primaryKey)) {
+    primaryKey = columns.map((column) => 
+    {
+      if (column.field.primaryKey)
+      { 
+        return column.field.name
+      }
+    }).filter(key => key);
+    obj = {fields: columns.map((column) => {
+      let fieldObj = {
+      description: column.field.description,
+      format: column.field.format,
+      name: column.field.name,
+      title: column.field.title,
+      type: column.field.type,
+      } 
+      return fieldObj}), primaryKey: primaryKey, ...metadata}
+
+  } else {
+    obj = {fields: columns.map((column) => {let fieldObj = {
+      description: column.field.description,
+      format: column.field.format,
+      name: column.field.name,
+      title: column.field.title,
+      type: column.field.type,
+      } 
+      return fieldObj}), ...metadata}
+  }  
+  return obj;
 }
 
 export function getFieldTypes() {
@@ -47,12 +80,14 @@ export function getFieldFormats(type: string) {
   return config.FIELD_TYPES_AND_FORMATS[type] || []
 }
 
-export function createColumn(index: number, field: IDict = {}, values: any[] = []) {
+export function createColumn(index: number, field: IDict = {}, primaryKey: boolean = false, values: any[] = []) {
   const formats = getFieldFormats(field.type)
-  const name = field.name || `field${index + 1}`
+  const name = field.name || `field ${index + 1}`
+  const title = field.title || `Title`
+  const description = field.description || `Description`
   const type = formats.length ? field.type : 'string'
   const format = formats.includes(field.format) ? field.format : 'default'
-  return { id: uuid4(), field: { ...field, name, type, format }, values }
+  return { id: uuid4(), field: { ...field, name, title, description, type, format, primaryKey }, values }
 }
 
 export async function prepareTableSource(source?: string | File) {

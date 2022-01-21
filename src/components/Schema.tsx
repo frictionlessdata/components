@@ -81,7 +81,7 @@ export function Schema(props: ISchemaProps) {
     const column = find(columns, (column) => column.id === id)
     if (column) {
       column.field[name] = value
-      setColumns([...columns])
+      setColumns([...columns])     
     }
   }
 

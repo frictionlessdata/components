@@ -583,7 +583,7 @@
 }
 
 .frictionless-components-schema .tableschema-ui-editor-field .input-group-addon div {
-	width: 3em;
+	width: 4em;
 }
 
 .frictionless-components-schema .tableschema-ui-editor-field .btn-light {
@@ -612,6 +612,11 @@
 	}
 	.frictionless-components-schema .tableschema-ui-editor-field .name .input-group {
 		margin-left: 2.5em;
+		padding-right: 1em;
+	}
+
+	.frictionless-components-schema .tableschema-ui-editor-field .title {
+		padding-left: 3em;
 	}
 }
 
