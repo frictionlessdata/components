@@ -72,6 +72,7 @@ export function splitFilePath(path: string) {
 export function getReportErrors(task: IReportTask) {
   const reportErrors: { [code: string]: IReportError } = {}
   for (const error of task.errors) {
+    if (!task.resource.schema) continue
     const header = task.resource.schema.fields.map((field) => field.name)
 
     // Prepare reportError
