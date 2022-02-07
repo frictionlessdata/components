@@ -4,13 +4,8 @@
     "sourceType": "module",
     "ecmaFeatures": { "jsx": true }
   },
-  "plugins": [
-    "@typescript-eslint/eslint-plugin"
-  ],
-  "extends": [
-    "standard",
-    "plugin:react/recommended"
-  ],
+  "plugins": ["@typescript-eslint/eslint-plugin"],
+  "extends": ["standard", "prettier", "plugin:react/recommended"],
   "settings": {
     "react": { "version": "detect" }
   },
@@ -27,13 +22,38 @@
     "no-useless-constructor": "off",
     "space-before-function-paren": "off",
     "no-dupe-class-members": "off",
-    "comma-dangle": ["error", {
-      "arrays": "always-multiline",
-      "objects": "always-multiline"
-    }],
-    "@typescript-eslint/no-unused-vars": ["error", {
-      "argsIgnorePattern": "^_",
-      "varsIgnorePattern": "^_"
-    }]
-  }
+    "comma-dangle": [
+      "error",
+      {
+        "arrays": "always-multiline",
+        "objects": "always-multiline"
+      }
+    ],
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_"
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["**/*.ts", "**/*.tsx"],
+      "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "prettier"
+      ],
+      "parser": "@typescript-eslint/parser",
+      "plugins": ["@typescript-eslint", "prettier"],
+      "rules": {
+        "quotes": "off",
+        "@typescript-eslint/no-explicit-any": 0,
+        "@typescript-eslint/no-var-requires": 0,
+        "react/prop-types": 0
+      }
+    }
+  ]
 }

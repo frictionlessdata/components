@@ -1,4 +1,4 @@
-import { find } from 'lodash'
+import { find, omit, entries, forOwn } from 'lodash'
 import classNames from 'classnames'
 import React, { useCallback, useEffect, useState } from 'react'
 import { arrayMove } from 'react-sortable-hoc'
@@ -9,7 +9,7 @@ import { SchemaPreview } from './SchemaPreview'
 import { SchemaField } from './SchemaField'
 import * as helpers from '../helpers'
 import { IDict } from '../common'
-
+import { UNIQUE, REQUIRED } from '../constants'
 export interface ISchemaProps {
   source?: string | File
   schema: IDict | File
@@ -26,7 +26,6 @@ export function Schema(props: ISchemaProps) {
   const [columns, setColumns] = useState([] as IDict[])
   const [metadata, setMetadata] = useState({} as IDict)
   const [feedback] = useState({} as ISchemaFeedbackProps['feedback'])
-
   // Mount
   useAsyncEffect(async () => {
     try {
@@ -36,8 +35,7 @@ export function Schema(props: ISchemaProps) {
       setColumns(columns)
       setMetadata(metadata)
     } catch (error) {
-      // @ts-ignore
-      setError(error)
+      setError(null)
       setLoading(false)
     }
   }, [])
@@ -62,8 +60,15 @@ export function Schema(props: ISchemaProps) {
     }
   }
 
+  const setSchemaColumns = (columns: IDict<any>[], primaryKeys: string[] = []) => {
+    const data = helpers.createColumns(columns, primaryKeys)
+    setColumns([...data])
+  }
+
   // Feedback Reset
-  const resetFeedback = () => {}
+  const resetFeedback = () => {
+    console.log('Feedback')
+  }
 
   // Add Field
   const addField = () => {
@@ -85,12 +90,89 @@ export function Schema(props: ISchemaProps) {
     }
   }
 
+  // Update Constraint
+  const updateConstraint = (id: number, setConstraint: string, value: any): void => {
+    const column = find(columns, (column) => column.id === id)
+    if (column) {
+      const constrain: any = {}
+      if (setConstraint === REQUIRED) {
+        if (!value) {
+          column.field.constraints = omit(column.field.constraints, REQUIRED)
+        } else {
+          constrain[REQUIRED] = value
+        }
+      }
+      if (setConstraint === UNIQUE) {
+        if (!value) {
+          column.field.constraints = omit(column.field.constraints, UNIQUE)
+        } else {
+          constrain[UNIQUE] = value
+        }
+      }
+      column.field.constraints = { ...column.field.constraints, ...constrain }
+      if (entries(column.field.constraints).length < 1) {
+        column.field = omit(column.field, 'constraints')
+      }
+
+      setColumns([...columns])
+    }
+  }
+
   // Move Field
   const moveField = (props: { oldIndex: number; newIndex: number }) => {
     setColumns([...arrayMove(columns, props.oldIndex, props.newIndex)])
   }
 
   const showTabNumber = !props.disablePreview && !props.disableSave
+
+  const saveConstraint = (type: string, column: any) => {
+    const constrain: any = []
+    constrain.push(type)
+    column.field.constraintList = column.field.constraintList
+      ? [...column.field.constraintList, ...constrain]
+      : constrain
+
+    forOwn(column.field.constraintsAvailable, function (value) {
+      if (value === type) {
+        column.field.constraintsAvailable = column.field.constraintsAvailable.filter(
+          (constr: any) => {
+            if (constr !== type) {
+              return constr
+            }
+            return null
+          }
+        )
+      }
+    })
+
+    setColumns([...columns])
+    updateConstraint(column.id, type, true)
+  }
+
+  const removeItem = (type: string, column: any) => {
+    const constrain: any = []
+    constrain.push(type)
+    column.field.constraintsAvailable = [
+      ...column.field.constraintsAvailable,
+      ...constrain,
+    ]
+
+    forOwn(column.field.constraintList, function (value) {
+      if (value === type) {
+        column.field.constraintList = column.field.constraintList.filter(
+          (constr: any) => {
+            if (constr !== type) {
+              return constr
+            }
+            return null
+          }
+        )
+      }
+    })
+
+    setColumns([...columns])
+    updateConstraint(column.id, type, false)
+  }
 
   return (
     <div className="frictionless-components-schema">
@@ -179,6 +261,11 @@ export function Schema(props: ISchemaProps) {
                     metadata={metadata}
                     removeField={removeField}
                     updateField={updateField}
+                    updateConstraint={updateConstraint}
+                    saveConstraint={(val: any, column: any) =>
+                      saveConstraint(val, column)
+                    }
+                    removeConstraint={(val: any, column: any) => removeItem(val, column)}
                     helperClass="frictionless-components-schema"
                     onSortEnd={moveField}
                     lockAxis="y"
@@ -207,7 +294,11 @@ export function Schema(props: ISchemaProps) {
                 role="tabpanel"
                 className={classNames('tab-pane', { active: tab === 'preview' })}
               >
-                <SchemaPreview columns={columns} metadata={metadata} />
+                <SchemaPreview
+                  setSchemaColumns={setSchemaColumns}
+                  columns={columns}
+                  metadata={metadata}
+                />
               </div>
             )}
           </div>
@@ -220,7 +311,15 @@ export function Schema(props: ISchemaProps) {
 // Internal
 
 const SortableFields = SortableContainer(
-  (props: { columns: IDict[]; metadata: IDict; removeField: any; updateField: any }) => (
+  (props: {
+    columns: IDict[]
+    metadata: IDict
+    removeField: any
+    updateField: any
+    updateConstraint: any
+    saveConstraint: any
+    removeConstraint: any
+  }) => (
     <ul className="tableschema-ui-editor-sortable-list">
       {props.columns.map((column: IDict, index: number) => (
         <SortableField
@@ -230,6 +329,11 @@ const SortableFields = SortableContainer(
           metadata={props.metadata}
           removeField={props.removeField}
           updateField={props.updateField}
+          updateConstraint={props.updateConstraint}
+          saveConstraint={(val: any, column: any) => props.saveConstraint(val, column)}
+          removeConstraint={(val: any, column: any) =>
+            props.removeConstraint(val, column)
+          }
         />
       ))}
     </ul>
@@ -237,7 +341,15 @@ const SortableFields = SortableContainer(
 )
 
 const SortableField = SortableElement(
-  (props: { column: IDict; metadata: IDict; removeField: any; updateField: any }) => (
+  (props: {
+    column: IDict
+    metadata: IDict
+    removeField: any
+    updateField: any
+    updateConstraint: any
+    saveConstraint: any
+    removeConstraint: any
+  }) => (
     <li className="tableschema-ui-editor-sortable-item">
       <SchemaField
         key={props.column.id}
@@ -245,6 +357,9 @@ const SortableField = SortableElement(
         metadata={props.metadata}
         removeField={props.removeField}
         updateField={props.updateField}
+        updateConstraint={props.updateConstraint}
+        saveConstraint={(val: any, column: any) => props.saveConstraint(val, column)}
+        removeConstraint={(val: any, column: any) => props.removeConstraint(val, column)}
       />
     </li>
   )

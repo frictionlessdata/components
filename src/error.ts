@@ -12,6 +12,6 @@ export interface IError {
   cells?: string[]
 }
 
-export interface IHeaderError extends IError {}
+export type IHeaderError = IError
 
-export interface IRowError extends IError {}
+export type IRowError = IError
