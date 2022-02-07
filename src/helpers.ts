@@ -1,10 +1,9 @@
-import { omit } from 'lodash'
+import { omit, forOwn } from 'lodash'
 import { Readable } from 'stream'
 import { v4 as uuid4 } from 'uuid'
 import { Table } from 'tableschema'
 import { IDict } from './common'
 import * as config from './config'
-
 // Schema
 
 export async function importSchema(source?: string | File, schema?: IDict | File) {
@@ -22,7 +21,9 @@ export async function importSchema(source?: string | File, schema?: IDict | File
       const values = rows
         .map((row: any) => row[index])
         .filter((value: any) => value !== undefined)
-        const primaryKey = field.name.indexOf(table.schema.descriptor.primaryKey) === -1 ? true : false;
+      const primaryKey = table.schema.descriptor.primaryKey
+        ? field.name.indexOf(table.schema.descriptor.primaryKey) === -1
+        : false
       columns.push(createColumn(index, field, primaryKey, values))
     }
   }
@@ -38,38 +39,48 @@ export async function importSchema(source?: string | File, schema?: IDict | File
 }
 
 export function exportSchema(columns: IDict[], metadata: IDict) {
-  let obj = {};
-  let primaryKey = [];
+  let obj = {}
+  const primaryKey: string[] = []
   metadata = omit(metadata, 'fields')
   if (columns.some((column) => column.field.primaryKey)) {
-    primaryKey = columns.map((column) => 
-    {
-      if (column.field.primaryKey)
-      { 
-        return column.field.name
+    columns.forEach((column) => {
+      if (column.field.primaryKey) {
+        primaryKey.push(column.field.name)
       }
-    }).filter(key => key);
-    obj = {fields: columns.map((column) => {
-      let fieldObj = {
-      description: column.field.description,
-      format: column.field.format,
-      name: column.field.name,
-      title: column.field.title,
-      type: column.field.type,
-      } 
-      return fieldObj}), primaryKey: primaryKey, ...metadata}
-
+    })
+    obj = {
+      fields: columns.map((column) => {
+        const fieldObj = {
+          description: column.field.description,
+          format: column.field.format,
+          name: column.field.name,
+          title: column.field.title,
+          type: column.field.type,
+          constraints: column.field.constraints,
+        }
+        return fieldObj
+      }),
+      primaryKey: primaryKey,
+      ...metadata,
+    }
   } else {
-    obj = {fields: columns.map((column) => {let fieldObj = {
-      description: column.field.description,
-      format: column.field.format,
-      name: column.field.name,
-      title: column.field.title,
-      type: column.field.type,
-      } 
-      return fieldObj}), ...metadata}
-  }  
-  return obj;
+    obj = {
+      fields: columns.map((column) => {
+        const fieldObj = {
+          description: column.field.description,
+          format: column.field.format,
+          name: column.field.name,
+          title: column.field.title,
+          type: column.field.type,
+          constraints: column.field.constraints,
+        }
+        return fieldObj
+      }),
+      ...metadata,
+    }
+  }
+
+  return obj
 }
 
 export function getFieldTypes() {
@@ -80,14 +91,62 @@ export function getFieldFormats(type: string) {
   return config.FIELD_TYPES_AND_FORMATS[type] || []
 }
 
-export function createColumn(index: number, field: IDict = {}, primaryKey: boolean = false, values: any[] = []) {
+export function createColumns(
+  _fields: IDict[] = [],
+  primaryKeys: string[] = [],
+  values: any[] = []
+) {
+  const columns: IDict<any>[] = []
+  _fields.forEach((field, index) => {
+    const name = field.name || `field ${index + 1}`
+    const primaryKey = primaryKeys.includes(name)
+    columns.push(createColumn(index, field, primaryKey, values))
+  })
+  return columns
+}
+
+export function createColumn(
+  index: number,
+  field: IDict = {},
+  primaryKey = false,
+  values: any[] = []
+) {
   const formats = getFieldFormats(field.type)
   const name = field.name || `field ${index + 1}`
-  const title = field.title || `Title`
-  const description = field.description || `Description`
+  const title = field.title || 'Title'
+  const description = field.description || 'Description'
   const type = formats.length ? field.type : 'string'
   const format = formats.includes(field.format) ? field.format : 'default'
-  return { id: uuid4(), field: { ...field, name, title, description, type, format, primaryKey }, values }
+  let constraintsAvailable = ['Select', 'required', 'unique']
+  const constraintList: string[] = []
+  if (field.constraints && Object.keys(field.constraints).length) {
+    forOwn(field.constraints, function (key, value) {
+      console.log(key)
+      constraintsAvailable = constraintsAvailable.filter((constr: any) => {
+        if (constr !== value) {
+          return constr
+        } else {
+          constraintList.push(value)
+          return null
+        }
+      })
+    })
+  }
+  return {
+    id: uuid4(),
+    field: {
+      ...field,
+      name,
+      title,
+      description,
+      type,
+      format,
+      constraintsAvailable,
+      constraintList,
+      primaryKey,
+    },
+    values,
+  }
 }
 
 export async function prepareTableSource(source?: string | File) {

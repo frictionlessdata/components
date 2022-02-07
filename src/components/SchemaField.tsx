@@ -1,19 +1,34 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { IDict } from '../common'
 import * as helpers from '../helpers'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTimesCircle, faEllipsisV } from '@fortawesome/free-solid-svg-icons'
+import {
+  Modal,
+  ModalBody,
+  ModalHeader,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem
+} from 'reactstrap'
+import { Constraints } from './Constraints'
 export interface ISchemaFieldProps {
   column: IDict
   metadata: IDict
   removeField: any
   updateField: any
+  updateConstraint: any
+  saveConstraint: any
+  removeConstraint: any
 }
 
 export function SchemaField(props: ISchemaFieldProps) {
   const types = helpers.getFieldTypes()
   const formats = helpers.getFieldFormats(props.column.field.type)
-  
+  const [isDetails, setIsDetails] = useState(false)
+  const [modalOpen, setModalOpen] = useState<boolean>(false)
+
   return (
     <div className="tableschema-ui-editor-field">
       {/* General */}
@@ -44,13 +59,15 @@ export function SchemaField(props: ISchemaFieldProps) {
               type="text"
               className="form-control"
               defaultValue={props.column.field.title}
-              onBlur={(ev) => props.updateField(props.column.id, 'title', ev.target.value)}
+              onBlur={(ev) =>
+                props.updateField(props.column.id, 'title', ev.target.value)
+              }
             />
           </div>
         </div>
 
-         {/* Description */}
-         <div className="col-md-2">
+        {/* Description */}
+        <div className="col-md-2">
           <div className="input-group">
             <div className="input-group-addon">
               <div>Description</div>
@@ -59,7 +76,9 @@ export function SchemaField(props: ISchemaFieldProps) {
               type="text"
               className="form-control"
               defaultValue={props.column.field.description}
-              onBlur={(ev) => props.updateField(props.column.id, 'description', ev.target.value)}
+              onBlur={(ev) =>
+                props.updateField(props.column.id, 'description', ev.target.value)
+              }
             />
           </div>
         </div>
@@ -101,8 +120,8 @@ export function SchemaField(props: ISchemaFieldProps) {
           </div>
         </div>
 
-         {/* PrimaryKey */}
-         <div className="col-md-1">
+        {/* PrimaryKey */}
+        <div className="col-md-1">
           <div className="input-group">
             <div className="input-group-addon">
               <div>Primary Key</div>
@@ -113,29 +132,71 @@ export function SchemaField(props: ISchemaFieldProps) {
                 props.updateField(props.column.id, 'primaryKey', ev.currentTarget.checked)
               }}
             />
-          </div>       
+          </div>
         </div>
 
-        <div className="col-md-1">        
-          {/* Remove */}
-          <button
-            type="button"
-            className="btn btn-light btn-lg button-remove"
-            onClick={(ev) => {
-              ev.preventDefault()
-              props.removeField(props.column.id)
-            }}
-          >
-          <FontAwesomeIcon
+        {/* Action Menu */}
+        <div className="col-md-1 ">
+          <span className="menu-options">
+            <span className="menu-dropdown">
+              <Dropdown
+                isOpen={isDetails}
+                toggle={() => setIsDetails(!isDetails)}
+                direction="start"
+              >
+                <DropdownToggle>
+                  <FontAwesomeIcon icon={faEllipsisV} className="fa-icon" />
+                </DropdownToggle>
+                <DropdownMenu>
+                  <DropdownItem onClick={() => setModalOpen(true)}>
+                    Add Schema Constraints
+                  </DropdownItem>
+                  <DropdownItem divider />
+                  <DropdownItem>Another Action</DropdownItem>
+                </DropdownMenu>
+              </Dropdown>
+
+              <Modal
+                centered
+                isOpen={modalOpen}
+                size="xl"
+                toggle={() => setModalOpen(false)}
+              >
+                <ModalHeader toggle={() => setModalOpen(false)}>
+                  Constraints/Validations
+                </ModalHeader>
+                <ModalBody>
+                  <Constraints
+                    column={props.column}
+                    toggleModal={() => setModalOpen(false)}
+                    saveConstraint={(val: any) => props.saveConstraint(val, props.column)}
+                    removeConstraint={(val: any) =>
+                      props.removeConstraint(val, props.column)
+                    }
+                  />
+                </ModalBody>
+              </Modal>
+            </span>
+
+            {/* Remove */}
+            <button
+              type="button"
+              className="btn btn-light btn-lg button-remove"
               onClick={(ev) => {
                 ev.preventDefault()
                 props.removeField(props.column.id)
               }}
-              icon={faTimesCircle}
-              className="fa-icon"
-          />
-          {/* <i className="danger far fa-times-circle"></i> */}
-           </button>
+            >
+              <FontAwesomeIcon
+                onClick={(ev: any) => {
+                  ev.preventDefault()
+                  props.removeField(props.column.id)
+                }}
+                icon={faTimesCircle}
+                className="fa-icon"
+              />
+            </button>
+          </span>
         </div>
       </div>
     </div>
@@ -143,7 +204,6 @@ export function SchemaField(props: ISchemaFieldProps) {
 }
 
 // Internal
-
 function Format(props: { formats: string[]; format: string; onChange: any }) {
   if (!props.formats.includes('custom')) {
     return (
@@ -165,15 +225,11 @@ function Format(props: { formats: string[]; format: string; onChange: any }) {
   }
 }
 
+// Internal
 function Checkbox(props: { format: boolean; onChange: any }) {
-    return (
-      <div className="form-control">
-        <input
-          type="checkbox"
-          checked={props.format}
-          onChange={props.onChange}
-        />
-      </div>
-    )
-  
+  return (
+    <div className="form-control">
+      <input type="checkbox" checked={props.format} onChange={props.onChange} />
+    </div>
+  )
 }
