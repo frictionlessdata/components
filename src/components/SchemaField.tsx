@@ -10,7 +10,7 @@ import {
   Dropdown,
   DropdownToggle,
   DropdownMenu,
-  DropdownItem
+  DropdownItem,
 } from 'reactstrap'
 import { Constraints } from './Constraints'
 export interface ISchemaFieldProps {
