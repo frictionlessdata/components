@@ -14,6 +14,8 @@ export interface ISchemaProps {
   source?: string | File
   schema: IDict | File
   onSave: any
+  oldIndex?: number
+  newIndex?: number
   onSchemaChange?: (schema: any, error: any) => void
   disablePreview: boolean
   disableSave?: boolean
