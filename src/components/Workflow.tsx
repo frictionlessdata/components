@@ -253,12 +253,23 @@ async function loadReport(props: {
     })
   }
 
-  // Run
-  async function getRunId() {
-    const path = `/repos/${user}/${repo}/actions/workflows/${flow}.yaml/runs`
+  // Workflow
+  async function getWorkflowId() {
+    const path = `/repos/${user}/${repo}/actions/workflows`
     const res = await makeRequest(path)
     const data = await res.json()
-    const run = data.workflow_runs.filter((item: IDict) => item.status === 'completed')[0]
+    const predicat = (item: IDict) => item.name.toLowerCase() === flow
+    const workflow = data.workflows.filter(predicat)[0]
+    return workflow.id
+  }
+
+  // Run
+  async function getRunId(workflowId: string) {
+    const path = `/repos/${user}/${repo}/actions/workflows/${workflowId}/runs`
+    const res = await makeRequest(path)
+    const data = await res.json()
+    const predicat = (item: IDict) => item.status === 'completed'
+    const run = data.workflow_runs.filter(predicat)[0]
     return run.id
   }
 
@@ -267,7 +278,8 @@ async function loadReport(props: {
     const path = `/repos/${user}/${repo}/actions/runs/${runId}/artifacts`
     const res = await makeRequest(path)
     const data = await res.json()
-    const artifact = data.artifacts.filter((item: IDict) => item.name === 'report')[0]
+    const predicat = (item: IDict) => item.name === 'report'
+    const artifact = data.artifacts.filter(predicat)[0]
     return artifact.id
   }
 
@@ -290,7 +302,7 @@ async function loadReport(props: {
   // Main
   try {
     setProgress(20)
-    const runId = run || (await getRunId())
+    const runId = run || (await getRunId(await getWorkflowId()))
     setRun(runId.toString())
     setProgress(40)
     const artifactId = await getArtifactId(runId)
