@@ -22,6 +22,33 @@ export function Report(props: IReportProps) {
   const { debug } = props
   const [report, setReport] = useState(props.report)
 
+  // Frictionless Framework (v5) (compat)
+  if ('warnings' in report) {
+    report.version = '5'
+    // @ts-ignore
+    report.time = report.stats.seconds
+    report.errors.forEach((error: any) => {
+      error.code = error.type
+    })
+    for (const task of report.tasks as any[]) {
+      task.scope = []
+      task.partial = false
+      task.time = task.stats.seconds
+      task.errors.forEach((error: any) => {
+        error.code = error.type
+        error.name = error.title
+        error.rowPosition = error.rowNumber
+        error.fieldPosition = error.fieldNumber
+      })
+      task.resource = { name: task.name, path: task.place }
+      if (task.type === 'table') {
+        task.resource.schema = {
+          fields: task.labels.map((label: string) => ({ name: label })),
+        }
+      }
+    }
+  }
+
   // Broken report
   const reportValidation = jsonschema.validate(report, profile)
   if (!reportValidation.valid) {
