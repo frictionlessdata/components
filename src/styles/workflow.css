@@ -183,12 +183,13 @@
 }
 
 .frictionless-components-workflow .btn {
+    white-space: nowrap;
+    color: white !important;
 	display: inline-block;
 	font-weight: 400;
-	color: #212529;
 	text-align: center;
 	vertical-align: middle;
-	cursor: pointer;
+	cursor: pointer !important;
 	-webkit-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
@@ -210,7 +211,7 @@
 
 .frictionless-components-workflow .btn:hover {
 	color: #212529;
-	text-decoration: none;
+	text-decoration: none !important;
 }
 
 .frictionless-components-workflow .btn:focus {
@@ -224,44 +225,44 @@
 
 .frictionless-components-workflow .btn-primary {
 	color: #fff;
-	background-color: #007bff;
+	background-color: #007bff !important;
 	border-color: #007bff;
 }
 
 .frictionless-components-workflow .btn-primary:hover {
 	color: #fff;
-	background-color: #0069d9;
+	background-color: #0069d9 !important;
 	border-color: #0062cc;
 }
 
 .frictionless-components-workflow .btn-primary:focus {
 	color: #fff;
-	background-color: #0069d9;
+	background-color: #0069d9 !important;
 	border-color: #0062cc;
 	box-shadow: 0 0 0 .2rem rgba(38, 143, 255, .5);
 }
 
 .frictionless-components-workflow .btn-primary:disabled {
 	color: #fff;
-	background-color: #007bff;
+	background-color: #007bff !important;
 	border-color: #007bff;
 }
 
 .frictionless-components-workflow .btn-success {
 	color: #fff;
-	background-color: #28a745;
+	background-color: #28a745 !important;
 	border-color: #28a745;
 }
 
 .frictionless-components-workflow .btn-success:hover {
 	color: #fff;
-	background-color: #218838;
+	background-color: #218838 !important;
 	border-color: #1e7e34;
 }
 
 .frictionless-components-workflow .btn-success:focus {
 	color: #fff;
-	background-color: #218838;
+	background-color: #218838 !important;
 	border-color: #1e7e34;
 	box-shadow: 0 0 0 .2rem rgba(72, 180, 97, .5);
 }
@@ -274,19 +275,19 @@
 
 .frictionless-components-workflow .btn-info {
 	color: #fff;
-	background-color: #17a2b8;
+	background-color: #17a2b8 !important;
 	border-color: #17a2b8;
 }
 
 .frictionless-components-workflow .btn-info:hover {
 	color: #fff;
-	background-color: #138496;
+	background-color: #138496 !important;
 	border-color: #117a8b;
 }
 
 .frictionless-components-workflow .btn-info:focus {
 	color: #fff;
-	background-color: #138496;
+	background-color: #138496 !important;
 	border-color: #117a8b;
 	box-shadow: 0 0 0 .2rem rgba(58, 176, 195, .5);
 }

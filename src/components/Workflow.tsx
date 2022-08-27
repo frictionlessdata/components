@@ -162,7 +162,6 @@ export function Workflow(props: IWorkflowProps) {
                       disabled: !badge && isLinkDisabled,
                     })}
                     onClick={() => setBadge(!badge)}
-                    style={{ color: 'white' }}
                   >
                     Badge
                   </a>
