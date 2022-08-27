@@ -214,7 +214,7 @@ export function Workflow(props: IWorkflowProps) {
                 className="form-control"
                 defaultValue={`[![${
                   flow.charAt(0).toUpperCase() + flow.slice(1)
-                }](https://github.com/${user}/${repo}/actions/workflows/${flow}.yaml/badge.svg)](https://repository.frictionlessdata.io/report?user=${user}&repo=${repo}&flow=${flow})`}
+                }](https://github.com/${user}/${repo}/actions/workflows/${flow}.yaml/badge.svg)](https://repository.frictionlessdata.io/pages/dashboard.html?user=${user}&repo=${repo}&flow=${flow})`}
               ></textarea>
             </div>
           </div>
