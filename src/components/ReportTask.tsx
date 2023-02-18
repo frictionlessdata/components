@@ -19,7 +19,7 @@ export function ReportTask(props: IReportTaskProps) {
       {/* Heading */}
       <h4 className="file-heading">
         <div className="inner">
-          <a className="file-name" href={task.resource.path}>
+          <a className="file-name">
             {task.resource.path ? (
               <span>
                 <strong>{splitTableFile.base}</strong>
